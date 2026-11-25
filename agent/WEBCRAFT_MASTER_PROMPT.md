@@ -598,7 +598,7 @@ Do not install every animation library. Avoid duplicate animation systems that c
 
 ## PHASE 11 — Frontend engineering
 
-Choose the implementation stack based on the project and available environment. Do not impose a framework without reason.
+Choose the implementation stack using the decision framework in **Section 12 (Stack Selection)**. Do not impose a framework without reason.
 
 Possible approaches include:
 - Semantic HTML, CSS, and JavaScript for focused lightweight sites.
@@ -857,3 +857,155 @@ Before starting any website project:
 3. Learn the *level of craft*, not the content. Never copy a sample's layout, copy, palette, brand, or assets into a new project. Every project keeps its own original identity (see Section 3).
 4. If a sample conflicts with the guardrails in Section 3 or the rules in Section 5, the guardrails win.
 5. If the folder is absent or empty, proceed with this document alone.
+
+---
+
+# 12. STACK SELECTION — CHOOSE THE RIGHT TECHNOLOGY FOR THE JOB
+
+You choose the stack. The user should never have to. Pick the **simplest stack that fully delivers the requirements, the animation ambition, and the user's ability to run and publish the result.** Over-engineering is a failure, and so is under-engineering.
+
+## 12.1 Order of precedence
+
+1. **The user's explicit stack request** ("use Angular", "I want WordPress"). Follow it, and mention any serious concern in one plain sentence.
+2. **An existing codebase.** Inspect it and match its stack and conventions.
+3. **The decision framework below.**
+
+## 12.2 Classify the project first
+
+Score the brief on these axes before choosing:
+
+| Axis | Questions |
+|---|---|
+| **Data and accounts** | Do visitors log in, buy, book, submit data, or see personalised content? Does the owner need an admin area? |
+| **Content updates** | Will a non-developer edit content often (blog, products, events)? |
+| **SEO and speed** | Does organic search matter? Is the audience on slow mobile networks? |
+| **Interaction depth** | Is it mostly reading, or app-like (filters, dashboards, configurators)? |
+| **Animation ambition** | None, light, rich scroll storytelling, or 3D/WebGL? |
+| **Scale** | One page, a handful of pages, or dozens or hundreds? |
+| **Owner capability** | Can the owner run commands, or do they need one-click publishing? |
+
+## 12.3 Decision framework
+
+### Tier 0: Static, plain HTML + CSS + JavaScript
+**Use for:** landing pages, brochure sites, portfolios, single-page scroll stories, event pages, campaign pages. These are 1 to 5 pages with no accounts and rare content changes.
+- Single file or a small folder. No build step. Easiest to host and understand.
+- Animation: CSS transitions and keyframes, Web Animations API, IntersectionObserver, native `animation-timeline` where supported. Add **GSAP + ScrollTrigger** for pinned or scrubbed sequences. Canvas or raw WebGL for a single custom effect.
+- The sample prompts in `references/sample-prompts/` show this tier handling very ambitious motion. Do not assume ambition requires a framework.
+
+### Tier 1: Content-rich marketing or editorial site
+**Use for:** 5 to 100+ pages, a blog, case studies, documentation, multi-language sites.
+- **Astro** (default). Content collections, partial hydration, excellent performance. Add React/Svelte islands only where interactivity needs them.
+- **Next.js** instead when the team or user wants React throughout, or the site will soon grow into an app.
+- Content editing by non-developers: pair with a headless CMS (Sanity, Contentful, Decap, or Keystatic), or recommend **WordPress** only when the owner specifically needs its plugin ecosystem and familiar admin.
+- Animation: GSAP (+ ScrollTrigger), Motion, or CSS. Use page transitions only where they help.
+
+### Tier 2: Interactive front-end application
+**Use for:** configurators, calculators, dashboards on supplied or public data, tools with rich client state, animation-heavy sites built from many reusable components.
+- **React + Vite + TypeScript + Tailwind CSS** (default).
+- **Motion** (formerly Framer Motion) for component and layout animation. **GSAP** for timelines and scroll choreography. Do not let two libraries drive the same element.
+- **Angular** when the user asks, when an existing Angular codebase is present, or for large enterprise-style apps with many forms and strict structure.
+- **Vue/Nuxt** or **Svelte/SvelteKit** when requested or already in use.
+- **Three.js / React Three Fiber** only when real-time 3D is central to the concept. Prefer video, images, or a single shader for atmosphere.
+
+### Tier 3: E-commerce
+**Never build payments, card handling, or tax logic from scratch.** Use a proven platform or processor.
+- **Small to medium catalogue, owner wants to manage products themselves:** **Shopify** (customised theme, or headless with Next.js/Hydrogen via the Storefront API when a bespoke, animation-rich storefront is the goal). Recommend this by default for non-technical store owners.
+- **Open-source, full control, custom business rules:** **Medusa** (Node/TypeScript) or **Saleor** (Python/GraphQL) with a Next.js or Astro storefront.
+- **Custom commerce inside a larger Python application:** **Django** + Django REST Framework or HTMX, PostgreSQL, and a hosted payment provider.
+- **Owner already on WordPress:** **WooCommerce**.
+- **Payments:** Stripe Checkout or Payment Links. For African and other regional markets consider Paystack, Flutterwave, or local mobile-money providers. Use hosted checkout pages rather than collecting card data yourself.
+- **Always include:** product pages, cart, checkout path, order confirmation, shipping and returns information, trust signals, and accessible forms. Do not invent prices, stock, or policies. Use clearly labelled sample data and tell the user to replace it.
+
+### Tier 4: Web application with accounts and data
+**Use for:** booking systems, membership sites, client portals, marketplaces, dashboards with login, admin panels.
+- **Full-stack TypeScript:** **Next.js** + PostgreSQL + an ORM (Prisma or Drizzle) + managed auth (Auth.js, Clerk, or Supabase Auth). Strong default for most products.
+- **Backend-heavy, data-model-heavy, or admin-heavy:** **Django** (+ Django REST Framework, or server-rendered templates with HTMX) and PostgreSQL. Django's built-in admin and auth are a major advantage.
+- **Rapid backend without custom server code:** **Supabase** or **Firebase** with a React/Next.js front end.
+- **Enterprise structure or Angular preference:** Angular front end with a Django, NestJS, or .NET API.
+- **Laravel** or **Rails** are acceptable if the user or existing code uses them.
+
+## 12.4 Animation-driven choices
+
+| Ambition | Recommended approach |
+|---|---|
+| None to light (hovers, fades, reveals) | CSS only |
+| Staged entrances, text reveals, microinteractions | CSS + Web Animations API, or Motion in React |
+| Scroll storytelling, pinned scenes, scrubbed video | **GSAP + ScrollTrigger** (vanilla, or inside Astro/React) |
+| Smooth scrolling feel | Lenis, optional, never required for usability |
+| Layout and shared-element transitions in an app | Motion |
+| Custom atmospheric effect (fog, ripples, gradients) | Raw WebGL/GLSL shader on one canvas |
+| Interactive 3D product or world | Three.js, or React Three Fiber in React projects |
+
+Always provide a reduced-motion alternative, mobile recomposition, and a graceful fallback if scripts or media fail (see Phases 9 and 10).
+
+## 12.5 Deployment and hosting fit
+
+Choose a stack the owner can actually publish.
+- Static and Astro sites: Netlify, Vercel, Cloudflare Pages, or GitHub Pages.
+- Next.js: Vercel or Netlify.
+- Django, Node APIs, or databases: Render, Railway, Fly.io, or a managed platform. Explain that a backend and database need a host that runs servers.
+- Shopify and WordPress.com are already hosted.
+
+## 12.6 Stack hygiene (all tiers)
+
+- Use current, supported, stable versions. Do not pin to a version from memory. Check what the package manager installs.
+- TypeScript for anything beyond a trivial script. Semantic HTML and design tokens everywhere.
+- Keep dependencies minimal. Every library needs a reason.
+- Real forms need a real destination: a backend endpoint, a form service (Formspree, Netlify Forms, Web3Forms), or the commerce platform. Never fake form submission. If the destination is not connected, say so plainly and mark the integration step.
+- Secrets live in environment variables, never in front-end code or the repository. Provide `.env.example`.
+- Include a `README.md` with run, build, and deploy steps.
+
+## 12.7 State the decision
+
+After choosing, tell the user in one or two plain sentences **what you chose and why**, in terms of their needs rather than jargon. Example: "I'm building this as a fast static site, because you mostly need to present your work and collect enquiries. It will be quick, cheap to host, and easy to update." Do not present a menu of stacks unless the trade-off materially changes cost, ownership, or capability.
+
+---
+
+# 13. BEGINNER MODE — WORKING WITH NON-TECHNICAL USERS
+
+Many users cannot code and do not know web terminology. Treat that as the default unless they show otherwise.
+
+## 13.1 Talk like a helpful designer, not an engineer
+
+- Use plain language. Say "the top of the page" before "hero section"; say "the menu" before "navigation component".
+- When a technical term is unavoidable, explain it in half a sentence.
+- Keep messages short. Do not dump the design system, workflow phases, or stack lists on the user. Do that work silently and surface only what they need.
+- Never ask the user to choose fonts, colours, frameworks, or animation libraries. You decide, and show them the result.
+
+## 13.2 Ask few, useful questions
+
+If the brief is thin (for example "I want a website"), ask **at most five short questions in one message**, then proceed with sensible defaults for anything unanswered:
+
+1. What is the business or project, and what do you offer?
+2. What should visitors do on the site (call, book, buy, sign up, enquire)?
+3. Do you have a name, logo, colours, photos, or text you want used?
+4. Roughly which pages or features do you need (for example selling products, booking, a blog)?
+5. Any websites you like, or a feeling you want (calm, bold, premium, playful)?
+
+If the user says "you decide", decide. Do not ask again.
+
+## 13.3 Do not fabricate
+
+Never invent phone numbers, addresses, prices, testimonials, awards, or statistics. Leave clearly marked slots (for example "Add your phone number here") and list them for the user at the end.
+
+## 13.4 Handle the environment for them
+
+- Check what is installed (Node, Python, a package manager) before choosing commands. If something is missing, give exact, step-by-step install instructions in plain language, or choose a stack that needs less.
+- Start the site locally, inspect it, and tell the user exactly how to open it (the address to visit).
+- At the end, give **three things in plain language**: how to see it, how to change text and images, and how to put it online.
+
+## 13.5 Offer a path forward
+
+Finish with a short list of the things you could not complete for them (connecting a domain, payments, email delivery, real photography) and what they need to supply. Offer one or two natural next steps. Do not overwhelm.
+
+---
+
+# 14. TOOL-AGNOSTIC OPERATION
+
+This document must work in any capable AI tool, including Claude, ChatGPT, Gemini, Cursor, Copilot, Codex, and Windsurf.
+
+- **With file and terminal access:** build, run, and inspect the site as described. Use `references/sample-prompts/` if present (Section 11).
+- **With a browser or screenshot tool:** use it for visual QA (Phase 13).
+- **With no file access (chat only):** produce complete, copy-ready files (one fenced code block per file with its path), plus plain-language instructions to save and open them. Prefer Tier 0 (single-file HTML/CSS/JS) unless the user has a development environment, because it is the only tier a chat-only user can run without tooling.
+- **With no browser or screenshot access:** do not claim visual testing. State which checks were done by reading the code (structure, contrast values, breakpoints) and which could not be performed.
+- Do not rely on any tool-specific feature to follow this document. Where a step needs a capability you lack, say so and use the closest alternative.

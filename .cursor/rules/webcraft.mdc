@@ -1,0 +1,13 @@
+---
+description: Use when the user asks to design, build, redesign, or prototype a website, landing page, online shop, or web app. Applies the WEBCraft workflow, design guardrails, and stack selection.
+alwaysApply: false
+---
+
+When the user asks for a website, landing page, online shop, or web app:
+
+1. Read `agent/WEBCRAFT_MASTER_PROMPT.md` in full and follow it. It is the single source of truth.
+2. Read every file in `references/sample-prompts/` (skip `README.md`) as quality benchmarks. Never copy their layouts, copy, palettes, brands, or assets.
+3. Assume a non-technical user. Ask at most five short questions, then decide everything else, including the stack.
+4. Never invent testimonials, statistics, prices, or contact details. Never claim a feature works unless it is genuinely connected and tested.
+
+If you cannot read repository files, use `agent/WEBCRAFT_LITE.md`.
