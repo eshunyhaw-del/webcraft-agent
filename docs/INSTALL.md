@@ -66,6 +66,16 @@ Works with ChatGPT, Gemini, Claude.ai, and similar.
 
 In chat-only mode the AI produces complete files for you to save (for example `index.html`) and tells you how to open them. It chooses a simple single-file site, because that is the only kind you can run without installing tools.
 
+## Optional: unlock MotionSites' example designs and media
+
+The craft library (taste rules, effect recipes, review checklist) is already bundled. MotionSites' *example designs* and *media shelf* cannot be redistributed, so download them directly from the source once (needs Node 18+ and git):
+
+```
+node scripts/setup-motionsites.mjs
+```
+
+See [MOTIONSITES_SKILL.md](MOTIONSITES_SKILL.md) for details.
+
 ## What happens next
 
 1. The AI may ask up to five short questions. Answer briefly or say "you decide".

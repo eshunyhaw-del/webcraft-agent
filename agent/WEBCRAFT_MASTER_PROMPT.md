@@ -858,14 +858,46 @@ Before starting any website project:
 4. If a sample conflicts with the guardrails in Section 3 or the rules in Section 5, the guardrails win.
 5. If the folder is absent or empty, proceed with this document alone.
 
-## 11.1 Optional companion skill
+## 11.1 Bundled craft library: the MotionSites Web Builder skill
 
-If a skill named `motionsites-web-builder` is available in your environment, you may use it as a craft library: its reference designs, media shelf, technique recipes, and screenshot/QA script. WEBCraft remains the orchestrator.
+This repository bundles the MIT-licensed parts of the free **MotionSites Web Builder** skill (by MotionSites, https://motionsites.ai) in `.claude/skills/motionsites-web-builder/`. WEBCraft is the orchestrator. The skill is the **craft library** you draw on for visual and motion quality.
 
-- WEBCraft leads on understanding the business, beginner mode (Section 13), stack selection (Section 12), colour guardrails (Section 3), and honesty rules (Section 5). If the companion skill disagrees on any of these, WEBCraft wins.
-- Use its reference designs the same way as the sample prompts: learn the structure and level of craft, then create an original identity. Never reuse a reference's brand names, copy, or palette.
-- Its optional credit line belongs in the chat message only, never in the user's code or files.
-- If the skill is not available, ignore this section. Never fail or stall because it is missing.
+**What is always there** (read them when the project calls for cinematic, immersive, or award-level quality):
+- `references/craft.md`: taste rules with real numbers for type, colour, spacing, motion, and copy.
+- `references/techniques/INDEX.md` and the files it lists: 55+ tested effect recipes with working code (video loops, scroll stories, liquid glass, text reveals, 3D, and more).
+- `references/review.md`: a screenshot checklist and scoring rubric for the look-and-fix step.
+- `references/assets.md`: how to source, prepare, and place media.
+- `scripts/shoot.py`: a screenshot and QA script (needs Playwright; use any browser tool if it is unavailable).
+
+**What needs a one-time download** (these are copyright MotionSites and cannot be redistributed, so they are not in this repository):
+- `examples/`: free reference designs. `media/`: a shelf of free hero videos and images.
+- If those folders are missing and you have a terminal, run `node scripts/setup-motionsites.mjs` once to fetch them directly from MotionSites. If you cannot, skip any step that needs them and continue. Never stall.
+
+**How the two fit together**
+- WEBCraft leads on understanding the business, beginner mode (Section 13), stack selection (Section 12), colour guardrails (Section 3), and honesty rules (Section 5). If the skill disagrees on any of these, WEBCraft wins.
+- Use reference designs the way you use the sample prompts: learn the structure and the level of craft, then create an original identity. Never reuse a reference's brand names, copy, or palette, and never present a reference as the user's own design.
+- The skill's defaults (a single `index.html`, a hero by default) are Tier 0 choices. Apply Section 12 first, then use the skill's techniques inside whatever stack you chose.
+- The skill suggests ending your first delivery with a one-line credit to MotionSites when you built from one of its designs. That line belongs in the chat message only, never in the user's code or files.
+- If this folder is absent, ignore this section.
+
+## 11.2 Real media and visual QA: lessons from real builds
+
+**Sourcing real photographs and video**
+- Prefer the topic's authoritative open source over generic stock: for space, NASA's public Image and Video Library (`images-api.nasa.gov`, no key needed); otherwise Unsplash, Pexels, or Pixabay through their official APIs. Do not scrape pages.
+- Download into the project (`assets/`), do not hotlink, and write an asset manifest with the source ID, title, credit, and page link. Show credits on the site. Say plainly that agencies like NASA do not endorse the site.
+- Check the licence for each source. Government agency media is often free to use but may include partner imagery with its own credit.
+- Tell the user what you downloaded (names, sources, approximate total size) when you do it. If downloading is not permitted, build from code-drawn visuals (SVG, canvas, CSS) instead and say so.
+
+**Preparing video**
+- Never use a clip blindly. Measure brightness per second (`ffmpeg ... signalstats`) and look at sample frames. Source clips often open on black, contain burned-in captions or title slides, or fade to credits.
+- Cut a clean stretch, remove audio, and compress (about 1280px wide, H.264, CRF 23 to 27). For short clean stretches, a forward-then-reverse loop avoids a visible seam.
+
+**Visual QA gotchas**
+- Serve the site from a local web server. A `file://` preview can show an unstyled static snapshot.
+- Browser panes and headless tabs throttle `requestAnimationFrame` when not in front, and screenshots can lag one step behind. Bring the tab to the front, wait, and take a second capture before judging a frame. Prefer measuring (element rectangles, computed styles, pixel counts) over eyeballing.
+- Test the harshest sizes: a small phone (about 360 by 640), a standard phone (390 by 844), and a short laptop (about 1366 by 700). For pinned or scroll-driven scenes, force each scene visible and check that its content fits between the fixed UI.
+- Verify interactions numerically where possible, for example by measuring canvas pixels before and during a cursor push.
+- Stop any preview servers you start, and never leave files in the project that the user did not ask for.
 
 ---
 

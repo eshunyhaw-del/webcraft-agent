@@ -4,3 +4,10 @@ Thumbs.db
 .env
 .env.*
 *.log
+
+# Local test builds (never commit)
+test-builds/
+
+# MotionSites examples and media: (c) MotionSites, not redistributable. Fetch with: node scripts/setup-motionsites.mjs
+.claude/skills/motionsites-web-builder/examples/
+.claude/skills/motionsites-web-builder/media/

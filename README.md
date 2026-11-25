@@ -35,6 +35,12 @@ The agent chooses the simplest technology that fully delivers what you asked for
 
 An explicit request ("use Angular") or an existing codebase always overrides the defaults.
 
+## Built on a cinematic craft library
+
+WEBCraft bundles the free **MotionSites Web Builder** skill (MIT licence, by [MotionSites](https://motionsites.ai)) for award-level visual craft: exact type and spacing numbers, 55+ tested effects such as scroll stories, video heroes and text reveals, and a screenshot-and-fix checklist. WEBCraft adds what it lacks: understanding the business, **choosing the stack**, beginner-friendly conversation, honesty rules, and support for other AI tools.
+
+MotionSites' own example designs and media are copyright MotionSites and are not redistributed here. To use them, run `node scripts/setup-motionsites.mjs` once, which downloads them straight from MotionSites. Details: [docs/MOTIONSITES_SKILL.md](docs/MOTIONSITES_SKILL.md).
+
 ## What makes it different
 
 - **Original identity per project.** A bathroom brand does not look like a SaaS dashboard.
@@ -54,7 +60,10 @@ An explicit request ("use Angular") or an existing codebase always overrides the
 | `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, `.cursor/rules/`, `.github/copilot-instructions.md` | Entry points that tell each tool to load the master prompt. |
 | `references/sample-prompts/` | Benchmark prompts for craft and specificity. |
 | `docs/INSTALL.md` | Setup for every supported tool. |
-| `docs/MOTIONSITES_SKILL.md` | Optional companion skill (reference designs, media shelf, effect recipes). Installed from its own source, not bundled here. |
+| `.claude/skills/motionsites-web-builder/` | The bundled, MIT-licensed craft library from [MotionSites](https://motionsites.ai): taste rules, 55+ effect recipes, a review checklist. Its example prompts and media are not included (see below). |
+| `docs/MOTIONSITES_SKILL.md` | How the two fit together, what is and isn't bundled, and licensing. |
+| `scripts/setup-motionsites.mjs` | Downloads MotionSites' example prompts and media directly from MotionSites (they cannot be redistributed). |
+| `THIRD_PARTY_NOTICES.md` | Attribution and licence notices. |
 | `scripts/build-agent.mjs` | Regenerates the Claude subagent file from the master prompt. |
 
 ## Contributing

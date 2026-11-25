@@ -15,6 +15,12 @@
 
 The tool entry files (`AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, `.cursor/rules/webcraft.mdc`, `.github/copilot-instructions.md`) only point to the master prompt. They rarely need changes.
 
+## The bundled MotionSites skill
+
+`.claude/skills/motionsites-web-builder/` is a third-party, MIT-licensed work by MotionSites. Do not edit its files here; changes belong upstream at https://github.com/Motionsites-AI/claude-skill. To update it, copy the new `SKILL.md`, `references/`, `scripts/`, and `LICENSE` from upstream.
+
+**Never commit** its `examples/` or `media/` folders. They are copyright MotionSites and not redistributable. They are git-ignored; keep it that way. Also never add anyone's example prompts or media to `references/sample-prompts/`. See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+
 ## Changing stack guidance
 
 Stack selection is Section 12 of the master prompt. When you add or change a recommendation:

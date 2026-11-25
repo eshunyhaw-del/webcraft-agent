@@ -1,53 +1,54 @@
-# Companion skill: MotionSites Web Builder
+# MotionSites Web Builder, bundled
 
-[MotionSites Web Builder](https://github.com/Motionsites-AI/claude-skill) is a separate, free Claude skill from MotionSites. It pairs well with WEBCraft. This repository does **not** include or redistribute it. Install it from its own source.
+WEBCraft ships with the free [MotionSites Web Builder](https://github.com/Motionsites-AI/claude-skill) skill from [MotionSites](https://motionsites.ai) as its **craft library**. WEBCraft decides *what* to build and *how* (the business, the stack, the honesty rules). The skill supplies the *craft*: taste rules with exact numbers, 55+ tested effect recipes, a screenshot-and-fix checklist, and a screenshot script.
 
-## What it adds
+## What is bundled
 
-| Capability | Detail |
+Location: `.claude/skills/motionsites-web-builder/` (MIT licence, copyright MotionSites).
+
+| Included | What it gives you |
 |---|---|
-| Reference designs | 16 free, finished design prompts to start from, each with a one-line description of its feel |
-| Media shelf | Free hero background videos and images, shown on contact sheets, with exact URLs |
-| Technique recipes | 55+ tested effects with working code (video loops, liquid glass, scroll stories, 3D, and more) |
-| Taste rules | Type scale, spacing, colour, motion timing and copy rules with real numbers |
-| Look-and-fix step | A screenshot and QA script (`scripts/shoot.py`) plus a review checklist |
+| `SKILL.md` | MotionSites' workflow: pick a reference design, make it your own, build, look once, fix |
+| `references/craft.md` | Type, colour, spacing, motion, and copy rules with real numbers |
+| `references/techniques/` | 55+ effect recipes with working code: video loops, scroll stories, liquid glass, text reveals, 3D |
+| `references/review.md` | Screenshot checklist and a scoring rubric |
+| `references/assets.md`, `builders.md`, `spec-template.md` | Media sourcing, prompts for other builders, a spec skeleton |
+| `scripts/shoot.py` | Screenshots plus a QA report (needs Playwright) |
 
-## How the two fit together
+## What is not bundled, and how to get it
 
-WEBCraft is the **orchestrator**. The MotionSites skill is a **craft library** it can draw on.
+The skill's **example design prompts** (`examples/`) and **media shelf** (`media/`) are copyright MotionSites. Their licence lets you use them to build websites, including for clients, but does **not** allow redistributing them as a prompt or media collection. So they are not in this repository.
+
+To get them, run once from the repository root (needs Node 18+ and git):
+
+```
+node scripts/setup-motionsites.mjs
+```
+
+It downloads them straight from MotionSites into the skill folder. They are git-ignored, so they can never be committed by accident. Without them everything else still works; the agent simply skips the "pick a reference design" step.
+
+## How the two work together
 
 | Concern | Who leads |
 |---|---|
-| Understanding the business, beginner mode, asking few questions | WEBCraft (Section 13) |
-| Choosing the stack (static, Astro, Next.js, Shopify, Django, and so on) | WEBCraft (Section 12) |
-| Colour guardrails, honesty rules, accessibility, motion rules | WEBCraft (Sections 3 and 5) |
-| Picking a reference design and sourcing hero media | MotionSites skill |
-| Effect recipes, screenshot and QA script | MotionSites skill |
+| Understanding the business, asking few questions, beginner mode | WEBCraft |
+| Choosing the stack (static, Astro, Next.js, Shopify, Django...) | WEBCraft |
+| Colour guardrails, honesty rules, accessibility | WEBCraft |
+| Visual craft numbers, effect recipes, media preparation | MotionSites skill |
+| Screenshot, review, and fix step | MotionSites checklist, WEBCraft QA rules |
 
-If the two ever disagree, the WEBCraft guardrails win. In particular: never invent facts, and no purple or blue-purple palette by default.
+If the two disagree, WEBCraft's guardrails win. In particular: never invent facts, and no purple or blue-purple palette by default.
 
-## Install
+## Using it
 
-**Claude Code (plugin, recommended):**
+- **Claude Code, Claude desktop:** open this repository. The skill is picked up from `.claude/skills/` automatically, and `CLAUDE.md` loads the WEBCraft master prompt.
+- **Other tools (Codex, Cursor, Copilot, Gemini CLI):** `AGENTS.md` and the other entry files tell the agent to read the master prompt, whose Section 11.1 points to the skill's references.
+- **Chat-only tools:** they cannot read the skill. Use `agent/WEBCRAFT_LITE.md`, or upload the files in `.claude/skills/motionsites-web-builder/references/` to a custom GPT or project.
+- **Use it in every project:** copy `.claude/skills/motionsites-web-builder/` to `~/.claude/skills/` (and run the setup script first if you want the examples and media).
 
-```
-/plugin marketplace add Motionsites-AI/claude-skill
-/plugin install motionsites-web-builder@motionsites
-```
+## Credit and licence
 
-**Claude Code (manual):** copy `plugins/motionsites-web-builder/skills/motionsites-web-builder` from that repository into `~/.claude/skills/`.
-
-**Claude.ai and Claude desktop:** download `motionsites-web-builder.zip` from the [latest release](https://github.com/Motionsites-AI/claude-skill/releases/latest), then use Customize → Skills → Upload a skill.
-
-**Optional, for the screenshot step:**
-
-```
-pip install playwright && python -m playwright install chromium
-```
-
-## Licence and attribution
-
-- The skill's instructions, references and scripts are MIT licensed, © MotionSites.
-- The skill's example prompts and media are © MotionSites. You may use them to build websites with the skill, including for clients. You may not resell or redistribute them as a prompt or media collection. For that reason they are not copied into this repository.
-- The skill asks the AI to end its first delivery with a short credit line linking to MotionSites. That line belongs in the chat message, never in your website's code.
-- The skill also promotes MotionSites' paid library. That is their product, separate from this project.
+- MotionSites' licence text is kept at `.claude/skills/motionsites-web-builder/LICENSE`, and summarised in [THIRD_PARTY_NOTICES.md](../THIRD_PARTY_NOTICES.md).
+- The skill asks the AI to end its first delivery with a one-line credit to MotionSites when it built from one of their designs. That line goes in the chat message, never in your website's files.
+- MotionSites also sells a larger paid library. That is their product and is not part of this project. This project is independent and not endorsed by MotionSites.
+- Media you use from the skill's shelf is for building your own sites. The example prompts and media remain copyright MotionSites.
