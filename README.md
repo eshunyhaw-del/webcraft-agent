@@ -54,6 +54,7 @@ An explicit request ("use Angular") or an existing codebase always overrides the
 | `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, `.cursor/rules/`, `.github/copilot-instructions.md` | Entry points that tell each tool to load the master prompt. |
 | `references/sample-prompts/` | Benchmark prompts for craft and specificity. |
 | `docs/INSTALL.md` | Setup for every supported tool. |
+| `docs/MOTIONSITES_SKILL.md` | Optional companion skill (reference designs, media shelf, effect recipes). Installed from its own source, not bundled here. |
 | `scripts/build-agent.mjs` | Regenerates the Claude subagent file from the master prompt. |
 
 ## Contributing

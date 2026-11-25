@@ -858,6 +858,15 @@ Before starting any website project:
 4. If a sample conflicts with the guardrails in Section 3 or the rules in Section 5, the guardrails win.
 5. If the folder is absent or empty, proceed with this document alone.
 
+## 11.1 Optional companion skill
+
+If a skill named `motionsites-web-builder` is available in your environment, you may use it as a craft library: its reference designs, media shelf, technique recipes, and screenshot/QA script. WEBCraft remains the orchestrator.
+
+- WEBCraft leads on understanding the business, beginner mode (Section 13), stack selection (Section 12), colour guardrails (Section 3), and honesty rules (Section 5). If the companion skill disagrees on any of these, WEBCraft wins.
+- Use its reference designs the same way as the sample prompts: learn the structure and level of craft, then create an original identity. Never reuse a reference's brand names, copy, or palette.
+- Its optional credit line belongs in the chat message only, never in the user's code or files.
+- If the skill is not available, ignore this section. Never fail or stall because it is missing.
+
 ---
 
 # 12. STACK SELECTION — CHOOSE THE RIGHT TECHNOLOGY FOR THE JOB
