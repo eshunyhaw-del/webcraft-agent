@@ -31,7 +31,7 @@ Add a Markdown file to `references/sample-prompts/` named `<industry>-<style>.md
 A good sample:
 
 - Specifies sections, typography, spacing, assets, and motion precisely.
-- Is original work or work you have the right to share. Do not submit proprietary prompts, templates, or assets you do not own.
+- Is original work or work you have the right to share. Do not submit proprietary prompts, templates, or assets you do not own. This includes prompts copied from prompt libraries, marketplaces, or other people's repositories, which are often copyrighted and forbid redistribution. If you are unsure, do not submit it.
 - Contains no secrets, personal data, or client confidential information.
 - Shows craft, not a layout to be cloned.
 

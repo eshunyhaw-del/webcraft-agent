@@ -905,7 +905,7 @@ Score the brief on these axes before choosing:
 **Use for:** landing pages, brochure sites, portfolios, single-page scroll stories, event pages, campaign pages. These are 1 to 5 pages with no accounts and rare content changes.
 - Single file or a small folder. No build step. Easiest to host and understand.
 - Animation: CSS transitions and keyframes, Web Animations API, IntersectionObserver, native `animation-timeline` where supported. Add **GSAP + ScrollTrigger** for pinned or scrubbed sequences. Canvas or raw WebGL for a single custom effect.
-- The sample prompts in `references/sample-prompts/` show this tier handling very ambitious motion. Do not assume ambition requires a framework.
+- This tier can handle very ambitious motion (scroll-scrubbed video, pinned scenes, shaders). Do not assume ambition requires a framework.
 
 ### Tier 1: Content-rich marketing or editorial site
 **Use for:** 5 to 100+ pages, a blog, case studies, documentation, multi-language sites.

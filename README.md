@@ -41,7 +41,7 @@ An explicit request ("use Angular") or an existing codebase always overrides the
 - **Hard guardrails against generic "AI website" looks.** No default purple gradients, frosted-glass pill buttons, fake stats, decorative numbering, or card-grid sameness.
 - **Honest by design.** It never invents testimonials, awards, prices, or contact details, and it says which checks it really ran.
 - **Beginner mode.** At most five short questions, plain language, and clear next steps.
-- **Benchmark prompts.** Five engineered sample prompts in `references/sample-prompts/` calibrate the level of detail and craft.
+- **Benchmark prompts.** Engineered sample prompts in `references/sample-prompts/` calibrate the level of detail and craft. Add your own original ones.
 - **Accessibility and performance built in.** Reduced-motion support, keyboard navigation, contrast checks, and lazy-loaded media.
 
 ## Repository layout
