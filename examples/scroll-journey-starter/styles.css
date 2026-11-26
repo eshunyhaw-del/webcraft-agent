@@ -23,12 +23,11 @@ html.js .ch__pin{position:sticky;top:0;height:100vh;height:100dvh;min-height:0}
 html:not(.js) .beat,html.calm .beat{position:relative;opacity:1;visibility:visible;min-height:60vh;pointer-events:auto}
 .beat h2{font-size:clamp(36px,6vw,88px);line-height:1;letter-spacing:-.04em;font-weight:400}
 .beat p{margin-top:18px;max-width:34rem;color:rgba(238,241,245,.82);font-size:clamp(15px,1.3vw,18px)}
-.kick{font:500 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.18em;text-transform:uppercase;color:#7cc7ff;margin-bottom:16px}
 
 /* The live readout. */
 #readout{position:fixed;left:clamp(20px,5vw,72px);bottom:max(20px,env(safe-area-inset-bottom));z-index:10;pointer-events:none;text-shadow:0 2px 16px #000}
 #readout b{display:block;font:300 clamp(28px,4vw,48px)/1.05 "Helvetica Neue",Arial,sans-serif;letter-spacing:-.04em;font-variant-numeric:tabular-nums}
-#readout span{font:500 10px/1 ui-monospace,Menlo,monospace;letter-spacing:.18em;text-transform:uppercase;color:rgba(238,241,245,.6)}
+#readout span{font:400 13px/1.2 "Helvetica Neue",Arial,sans-serif;color:rgba(238,241,245,.65)}
 
 /* Reduced motion: static, stacked, readable. */
 html.calm .ch{height:auto!important}

@@ -2,19 +2,21 @@
 
 "Farfield": an immersive guide that takes a visitor from Earth orbit to the edge of the visible universe, using real NASA photographs and footage. It demonstrates the pattern in [docs/recipes/scroll-journey.md](../../docs/recipes/scroll-journey.md).
 
-This folder contains **code only**. The photos and videos are rebuilt from NASA's public library by the media tool, so no media is stored in the repository.
+The prepared NASA photos and videos are included in `assets/` (about 14 MB), so it runs as it is. It also appears in the [showcase](../../showcase/).
 
 ## Run it
 
-You need Python 3.9+, Pillow (`pip install pillow`), and ffmpeg on your PATH.
-
 ```
-# from the repository root: download and prepare the media (about 135 MB of source video, a few minutes)
-python scripts/media/webcraft_media.py build examples/cosmos-journey/media-plan.json --out examples/cosmos-journey
-
-# then serve the folder and open it
 cd examples/cosmos-journey
 python -m http.server 8000      # visit http://localhost:8000
+```
+
+## Rebuild the media yourself (optional)
+
+`media-plan.json` records the exact NASA IDs and clip windows. To regenerate every asset from NASA's library (needs Python 3.9+, Pillow, and ffmpeg; downloads about 135 MB of source video):
+
+```
+python scripts/media/webcraft_media.py build examples/cosmos-journey/media-plan.json --out examples/cosmos-journey
 ```
 
 Fonts load from Google Fonts. Offline, the page falls back to system fonts.

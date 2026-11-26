@@ -88,13 +88,13 @@ var rail=$('#rail'),sheet=$('#sheet');
 chapters.forEach(function(c,i){
   var b=document.createElement('button');b.setAttribute('aria-label','Go to '+c.name);b.title=c.name;
   b.addEventListener('click',function(){go(c.el)});rail.appendChild(b);c.dot=b;
-  var a=document.createElement('a');a.href='#'+c.el.id;a.innerHTML='<span>'+c.name+'</span><small>'+(i===0?'Start':'Stop '+i)+'</small>';sheet.appendChild(a);
+  var a=document.createElement('a');a.href='#'+c.el.id;a.innerHTML='<span>'+c.name+'</span>';sheet.appendChild(a);
 });
-(function(){var a=document.createElement('a');a.href='#quiz';a.innerHTML='<span>Quiz</span><small>Back home</small>';sheet.appendChild(a);
+(function(){var a=document.createElement('a');a.href='#quiz';a.innerHTML='<span>Quiz</span>';sheet.appendChild(a);
  var b=document.createElement('button');b.setAttribute('aria-label','Go to the quiz');b.title='Quiz';b.addEventListener('click',function(){go(quiz)});rail.appendChild(b);chapters.quizDot=b})();
 function go(el){window.scrollTo({top:el.getBoundingClientRect().top+scrollY+(el.id==='quiz'?0:2),behavior:isCalm()?'auto':'smooth'})}
 var mb=$('#menuBtn');
-function menu(o){document.body.classList.toggle('menu-open',o);mb.setAttribute('aria-expanded',o);mb.textContent=o?'Close':'Stops'}
+function menu(o){document.body.classList.toggle('menu-open',o);mb.setAttribute('aria-expanded',o);mb.textContent=o?'Close':'Menu'}
 mb.addEventListener('click',function(){menu(!document.body.classList.contains('menu-open'))});
 $$('a',sheet).forEach(function(a){a.addEventListener('click',function(){menu(false)})});
 addEventListener('keydown',function(e){if(e.key==='Escape')menu(false)});
@@ -145,9 +145,9 @@ var PL=[
 var slots=$('#planetSlots');
 PL.forEach(function(p,i){
   var a=document.createElement('article');a.className='pl';a.setAttribute('aria-label',p.n);
-  a.innerHTML='<figure class="pl__img"><img src="assets/img/'+p.img+'.jpg" alt="'+p.alt+'" loading="lazy"><figcaption class="mono">'+p.cap+'</figcaption></figure>'+
-   '<div class="pl__txt"><p class="kick mono">'+p.k+' · '+(i+1)+' of 8</p><h3>'+p.n+'</h3><p>'+p.w+'</p><dl class="pl__stats">'+
-   [['Diameter',p.d.toLocaleString('en-US')+' km'],['One day',p.day],['One year',p.yr],['Gravity',p.g],['Average temp.',p.t],['Moons',p.m]].map(function(r){return '<div><dt class="mono">'+r[0]+'</dt><dd>'+r[1]+'</dd></div>'}).join('')+'</dl></div>';
+  a.innerHTML='<figure class="pl__img"><img src="assets/img/'+p.img+'.jpg" alt="'+p.alt+'" loading="lazy"></figure>'+
+   '<div class="pl__txt"><h3>'+p.n+'</h3><p>'+p.w+'</p><dl class="pl__stats">'+
+   [['Type',p.k],['Diameter',p.d.toLocaleString('en-US')+' km'],['One day',p.day],['One year',p.yr],['Gravity',p.g],['Average temp.',p.t],['Moons',p.m]].map(function(r){return '<div><dt class="mono">'+r[0]+'</dt><dd>'+r[1]+'</dd></div>'}).join('')+'</dl></div>';
   slots.appendChild(a);
 });
 var BODIES=[['Mercury',.38],['Venus',.91],['The Moon',.165],['Mars',.38],['Jupiter',2.53],['Saturn',1.06],['Uranus',.89],['Neptune',1.14],['Pluto',.063],['The Sun',27.9]];
@@ -196,7 +196,6 @@ function update(){
   warp=travel;
   var d0=Math.log(chapters[cur].dist),d1=Math.log(chapters[Math.min(cur+1,chapters.length-1)].dist);
   lnTarget=lerp(d0,d1,ease(travel));
-  hudN.textContent=cur===0?'Start':'Stop '+cur+' of 6';
   hudL.textContent=travel>.04?'Heading to '+chapters[cur+1].name:cc.name;
   chapters.forEach(function(c,i){c.dot.setAttribute('aria-current',(!atQuiz&&i===cur))});
   chapters.quizDot.setAttribute('aria-current',atQuiz);
@@ -302,8 +301,7 @@ function setStage(i){
   var im=$('#artImg'),sv=$('#art');
   if(s.img){im.hidden=false;im.src='assets/img/'+s.img+'.jpg';im.alt=s.a;sv.style.display='none'}
   else{im.hidden=true;sv.style.display='';sv.innerHTML=s.s;sv.setAttribute('aria-label',s.a)}
-  $('#artCap').textContent=s.a;
-  $('#stIdx').textContent='Stage '+(sti+1)+' of '+L.length;$('#stName').textContent=s.n;$('#stText').textContent=s.t;$('#stDur').textContent=s.d;
+  $('#stName').textContent=s.n;$('#stText').textContent=s.t;$('#stDur').textContent=s.d;
   $('#stPrev').disabled=sti===0;$('#stNext').disabled=sti===L.length-1;
 }
 function setPath(p){path=p;$('#pathSun').setAttribute('aria-pressed',p==='sun');$('#pathBig').setAttribute('aria-pressed',p==='big');renderSteps();setStage(0)}
@@ -327,7 +325,7 @@ function moon(){
   var a=moonAge(dt.getTime()),f=a/SYN,ill=(1-Math.cos(2*Math.PI*f))/2,nm=phaseName(a);
   $('#moonSvg').innerHTML='<defs><clipPath id="mc"><circle cx="100" cy="100" r="84"/></clipPath></defs><circle cx="100" cy="100" r="84" fill="#0d0e10" stroke="rgba(255,255,255,.18)"/><path d="'+moonPath(f)+'" fill="#e9e6dc" clip-path="url(#mc)"/>'+(f>.4661&&f<.5339?'<circle cx="100" cy="100" r="84" fill="#e9e6dc"/>':'');
   $('#moonSvg').setAttribute('aria-label',nm+', about '+Math.round(ill*100)+' percent lit');
-  $('#mName').textContent=nm;$('#mMeta').textContent=Math.round(ill*100)+'% lit · day '+a.toFixed(1)+' of '+SYN.toFixed(1);
+  $('#mName').textContent=nm;$('#mMeta').textContent='About '+Math.round(ill*100)+'% of the Moon is lit. This uses the average lunar cycle, so it can be a day off.';
   $('#nNew').textContent=fmtDays((SYN-a)%SYN);$('#nFull').textContent=fmtDays(((SYN/2-a)%SYN+SYN)%SYN);
 }
 (function(){var d=new Date(),p=function(n){return String(n).padStart(2,'0')};$('#mDate').value=d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate())})();

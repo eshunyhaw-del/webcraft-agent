@@ -1,0 +1,716 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Farfield: a plain guide to the universe</title>
+<meta name="description" content="A free, plain-language guide to astronomy and space. Explore the scale of the universe, the planets, the life of stars, our galaxy and tonight's Moon. No background needed.">
+<meta name="theme-color" content="#000000">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M12 1l2.2 8.8L23 12l-8.8 2.2L12 23l-2.2-8.8L1 12l8.8-2.2z'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+html,body{background:#000;color:#e9eaec}
+:root{
+  --bg:#000;--fg:#e9eaec;--accent:#8cc8ff;--warm:#ffc27a;
+  --f80:rgba(233,234,236,.8);--f60:rgba(233,234,236,.6);--f40:rgba(233,234,236,.4);
+  --line:rgba(255,255,255,.12);--panel:#0a0a0a;
+  --sans:"Inter Tight","Helvetica Neue",Arial,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+  --ease:cubic-bezier(.16,1,.3,1);
+  --pad:clamp(20px,5vw,64px);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;overflow-x:clip}
+body{font-family:var(--sans);font-weight:400;font-size:16px;line-height:1.55;letter-spacing:-.01em;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;overflow-x:clip;position:relative}
+::selection{background:rgba(140,200,255,.3)}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+.skip{position:absolute;left:-999px;top:8px;background:#fff;color:#000;padding:8px 14px;border-radius:99px;z-index:200}
+.skip:focus{left:12px}
+.mono{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;font-weight:500}
+.grain{position:fixed;inset:0;z-index:150;pointer-events:none;opacity:.07;mix-blend-mode:screen;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+/* NAV */
+.nav{position:fixed;top:16px;left:0;right:0;z-index:100;display:flex;justify-content:center;pointer-events:none;padding:0 var(--pad)}
+.nav__bar{pointer-events:auto;display:flex;align-items:center;gap:6px;padding:6px 6px 6px 18px;border-radius:99px;
+  background:rgba(10,10,10,.55);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border:1px solid var(--line)}
+.logo{display:flex;align-items:center;gap:9px;font-weight:500;font-size:17px;letter-spacing:-.03em;margin-right:14px}
+.logo svg{width:16px;height:16px}
+.nav__links{display:flex;gap:2px}
+.nav__links a{padding:8px 13px;font-size:13.5px;color:var(--f80);border-radius:99px;transition:background .25s,color .25s}
+.nav__links a:hover{background:rgba(255,255,255,.1);color:#fff}
+.btn{display:inline-flex;align-items:center;gap:10px;height:44px;padding:0 22px;border-radius:99px;font-size:14px;font-weight:500;letter-spacing:-.01em;transition:transform .25s var(--ease),background .25s,color .25s}
+.btn:active{transform:scale(.97)}
+.btn--solid{background:#f4f4f2;color:#050505}
+.btn--solid:hover{background:#fff}
+.btn--solid i{display:grid;place-items:center;width:22px;height:22px;margin-right:-10px;border-radius:50%;background:#050505;color:#fff;font-style:normal;font-size:12px;transition:transform .3s var(--ease)}
+.btn--solid:hover i{transform:translateY(2px)}
+.btn--ghost{border:1px solid rgba(255,255,255,.28);color:#fff;background:rgba(255,255,255,.06);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+.btn--ghost:hover{background:rgba(255,255,255,.14)}
+.nav .btn{height:36px;padding:0 16px;font-size:13px}
+.menu-btn{display:none;height:36px;padding:0 14px;border-radius:99px;font-size:13px;border:1px solid var(--line)}
+.sheet{position:fixed;inset:0;z-index:90;display:none;flex-direction:column;justify-content:center;gap:6px;padding:90px var(--pad) 40px;background:rgba(0,0,0,.92);-webkit-backdrop-filter:blur(24px);backdrop-filter:blur(24px)}
+.sheet a{font-size:clamp(34px,10vw,52px);letter-spacing:-.04em;line-height:1.15;padding:6px 0;border-bottom:1px solid var(--line)}
+body.menu-open .sheet{display:flex}
+body.menu-open{overflow:hidden}
+
+/* HERO */
+.hero{position:relative;height:100vh;height:100dvh;min-height:620px;display:flex;flex-direction:column;overflow:hidden;background:#000;isolation:isolate}
+.hero__media{position:absolute;inset:0;z-index:-1;opacity:0;animation:mediaIn 1.4s .15s ease both}
+.hero__media video{width:100%;height:100%;object-fit:cover;object-position:50% 100%;display:block}
+.hero__media::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.55) 0%,rgba(0,0,0,0) 38%,rgba(0,0,0,0) 78%,#000 100%)}
+.hero__copy{padding:clamp(120px,19vh,200px) var(--pad) 0;max-width:1280px;width:100%;margin:0 auto;text-align:center}
+.eyebrow{display:inline-flex;align-items:center;gap:12px;color:var(--f60);margin-bottom:26px}
+.eyebrow::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--accent)}
+h1{font-weight:400;font-size:clamp(42px,7.4vw,108px);line-height:.98;letter-spacing:-.045em;text-shadow:0 16px 38px rgba(0,0,0,.32)}
+h1 span{display:block}
+h1 .dim{color:var(--f40)}
+.lede{max-width:34rem;margin:26px auto 0;font-size:clamp(15px,1.4vw,18px);line-height:1.55;color:var(--f80);text-shadow:0 2px 18px rgba(0,0,0,.42)}
+.cta{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:30px}
+.hero__facts{margin-top:auto;padding:0 var(--pad) max(34px,env(safe-area-inset-bottom));display:flex;justify-content:center;flex-wrap:wrap;gap:6px 0;color:var(--f60)}
+.hero__facts span{padding:0 22px;border-left:1px solid var(--line)}
+.hero__facts span:first-child{border-left:0}
+.e{animation:up .95s var(--ease) both;animation-delay:var(--d,0s)}
+@keyframes up{from{opacity:0;transform:translateY(26px);filter:blur(8px)}to{opacity:1;transform:none;filter:blur(0)}}
+@keyframes mediaIn{from{opacity:0;transform:scale(1.05)}to{opacity:1;transform:none}}
+.e.is-in,.hero__media.is-in{animation:none;opacity:1;transform:none;filter:none}
+
+/* SECTIONS */
+section.s{position:relative;padding:clamp(88px,12vw,168px) var(--pad);border-top:1px solid var(--line)}
+.wrap{max-width:1280px;margin:0 auto}
+.head{display:grid;grid-template-columns:1fr;gap:18px;margin-bottom:clamp(40px,6vw,80px)}
+.head .mono{color:var(--f60)}
+.head h2{font-weight:400;font-size:clamp(34px,5.2vw,76px);line-height:1;letter-spacing:-.045em;max-width:15em}
+.head h2 em{font-style:normal;color:var(--f40)}
+.head p{max-width:34rem;color:var(--f80);font-size:clamp(15px,1.3vw,17px)}
+@media(min-width:1000px){.head{grid-template-columns:7fr 4fr;align-items:end}.head .mono{grid-column:1/-1}}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:18px}
+.rv{opacity:1}
+html.js .rv{opacity:0;transform:translateY(26px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+html.js .rv.in{opacity:1;transform:none}
+
+/* SCALE */
+.scale{padding:clamp(22px,3.4vw,46px)}
+.scale__num{font-weight:300;font-size:clamp(56px,11vw,150px);line-height:.9;letter-spacing:-.05em;font-variant-numeric:tabular-nums;min-height:1em}
+.scale__name{margin-top:18px;font-size:clamp(22px,2.6vw,34px);letter-spacing:-.03em;line-height:1.1}
+.scale__light{margin-top:8px;color:var(--accent);font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase}
+.scale__note{margin-top:14px;max-width:38rem;color:var(--f80)}
+.scale__track{position:relative;margin:clamp(20px,3vw,40px) 0 14px;height:44px}
+.scale__track::before{content:"";position:absolute;left:0;right:0;top:22px;height:1px;background:var(--line)}
+.scale__fill{position:absolute;left:0;top:22px;height:1px;background:var(--accent);transition:width .5s var(--ease)}
+.ticks{position:absolute;inset:0;display:flex;justify-content:space-between;align-items:center}
+.tick{width:32px;height:44px;display:grid;place-items:center;margin:0 -16px}
+.tick::before{content:"";width:7px;height:7px;border-radius:50%;background:#2a2c30;transition:background .3s,transform .3s var(--ease)}
+.tick.on::before{background:var(--accent);transform:scale(1.9)}
+.tick.past::before{background:var(--f60)}
+.scale__ctl{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.scale__ctl .count{margin-left:auto;color:var(--f60)}
+.btn--sm{height:42px;padding:0 20px}
+.btn[disabled]{opacity:.35;pointer-events:none}
+
+/* WORLDS */
+.worlds{display:grid;gap:18px}
+@media(min-width:1000px){.worlds{grid-template-columns:5fr 6fr}}
+.plist{padding:8px}
+.prow{display:grid;grid-template-columns:90px 1fr auto;gap:14px;align-items:center;width:100%;padding:13px 14px;border-radius:12px;text-align:left;transition:background .25s}
+.prow:hover{background:rgba(255,255,255,.05)}
+.prow[aria-pressed=true]{background:rgba(255,255,255,.09)}
+.prow b{font-weight:500;font-size:16px;letter-spacing:-.02em}
+.prow .bar{height:6px;border-radius:99px;background:rgba(255,255,255,.08);position:relative;overflow:hidden}
+.prow .bar i{position:absolute;left:0;top:0;bottom:0;border-radius:99px;background:var(--f60);min-width:3px}
+.prow[aria-pressed=true] .bar i{background:var(--accent)}
+.prow small{font-family:var(--mono);font-size:11px;color:var(--f60);letter-spacing:.05em;font-variant-numeric:tabular-nums}
+.pdet{padding:clamp(22px,3vw,40px)}
+.pdet .kind{color:var(--accent)}
+.pdet h3{font-weight:400;font-size:clamp(40px,5vw,72px);letter-spacing:-.045em;line-height:1;margin:10px 0 14px}
+.pdet p{color:var(--f80);max-width:32rem}
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:0;margin-top:26px;border-top:1px solid var(--line)}
+.stats div{padding:16px 0;border-bottom:1px solid var(--line)}
+.stats div:nth-child(odd){padding-right:16px}
+.stats dt{color:var(--f60)}
+.stats dd{margin-top:4px;font-size:20px;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+@media(min-width:560px){.stats{grid-template-columns:repeat(3,1fr)}.stats div:nth-child(odd){padding-right:0}.stats div{padding-right:16px}}
+.weigh{margin-top:18px;padding:clamp(22px,3vw,40px);display:grid;gap:26px}
+@media(min-width:1000px){.weigh{grid-template-columns:4fr 8fr;align-items:start}}
+.weigh h3{font-weight:400;font-size:clamp(24px,2.6vw,36px);letter-spacing:-.035em;line-height:1.1}
+.weigh p{color:var(--f80);margin-top:10px;max-width:26rem}
+.field{display:flex;align-items:center;gap:10px;margin-top:20px}
+.field input{width:120px;height:46px;padding:0 16px;border-radius:99px;border:1px solid rgba(255,255,255,.28);background:#000;color:#fff;font:inherit;font-size:18px;font-variant-numeric:tabular-nums}
+.field span{color:var(--f60)}
+.wgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border-top:1px solid var(--line)}
+@media(min-width:560px){.wgrid{grid-template-columns:repeat(3,1fr)}}
+@media(min-width:1200px){.wgrid{grid-template-columns:repeat(4,1fr)}}
+.wgrid div{padding:14px 0;border-bottom:1px solid var(--line);padding-right:12px}
+.wgrid dt{color:var(--f60)}
+.wgrid dd{margin-top:2px;font-size:clamp(20px,2vw,26px);letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+
+/* STARS */
+.stars{display:grid;gap:18px}
+@media(min-width:1000px){.stars{grid-template-columns:4fr 8fr}}
+.seg{display:inline-flex;padding:4px;border-radius:99px;border:1px solid var(--line);background:rgba(255,255,255,.03);margin-bottom:18px}
+.seg button{height:40px;padding:0 18px;border-radius:99px;font-size:13.5px;color:var(--f80);transition:background .25s,color .25s}
+.seg button[aria-pressed=true]{background:#f4f4f2;color:#050505}
+.steps{padding:8px;list-style:none}
+.steps button{display:grid;grid-template-columns:22px 1fr;gap:14px;align-items:center;width:100%;padding:13px 14px;border-radius:12px;text-align:left;color:var(--f60);transition:background .25s,color .25s}
+.steps button:hover{background:rgba(255,255,255,.05)}
+.steps button[aria-current=step]{background:rgba(255,255,255,.09);color:#fff}
+.steps i{width:9px;height:9px;border-radius:50%;border:1px solid var(--f40);justify-self:center}
+.steps button[aria-current=step] i{background:var(--accent);border-color:var(--accent)}
+.stage{display:grid;gap:0;overflow:hidden}
+@media(min-width:700px){.stage{grid-template-columns:1fr 1fr}}
+.stage__art{display:grid;place-items:center;min-height:300px;background:#000;border-bottom:1px solid var(--line);position:relative}
+@media(min-width:700px){.stage__art{border-bottom:0;border-right:1px solid var(--line)}}
+.stage__art svg{width:min(78%,300px);height:auto;overflow:visible}
+.stage__art figcaption{position:absolute;left:18px;bottom:14px;color:var(--f40)}
+.stage__txt{padding:clamp(22px,3vw,40px)}
+.stage__txt h3{font-weight:400;font-size:clamp(28px,3.2vw,46px);letter-spacing:-.04em;line-height:1.02;margin:10px 0 14px}
+.stage__txt p{color:var(--f80)}
+.stage__txt .dur{margin-top:20px;padding-top:16px;border-top:1px solid var(--line);color:var(--accent)}
+.stage__ctl{display:flex;gap:10px;margin-top:22px}
+
+/* GALAXY */
+.gx{position:relative;height:clamp(460px,78vh,780px);border:1px solid var(--line);border-radius:18px;overflow:hidden;background:#000}
+.gx canvas{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:pan-y;cursor:crosshair}
+.gx__hint{position:absolute;left:20px;bottom:16px;color:var(--f60);pointer-events:none}
+.facts{display:grid;grid-template-columns:repeat(2,1fr);margin-top:20px;border-top:1px solid var(--line)}
+@media(min-width:1000px){.facts{grid-template-columns:repeat(4,1fr)}}
+.facts div{padding:18px 16px 18px 0;border-bottom:1px solid var(--line)}
+.facts dd{font-weight:300;font-size:clamp(28px,3.2vw,46px);letter-spacing:-.045em;line-height:1}
+.facts dt{margin-top:8px;color:var(--f60);order:2}
+.facts div{display:flex;flex-direction:column}
+
+/* SKY */
+.sky{display:grid;gap:18px}
+@media(min-width:1000px){.sky{grid-template-columns:5fr 7fr}}
+.moon{padding:clamp(22px,3vw,40px);display:grid;justify-items:center;text-align:center;gap:18px}
+.moon svg{width:min(70%,260px);height:auto;transition:transform .4s var(--ease)}
+.moon.south svg{transform:scaleX(-1)}
+.moon h3{font-weight:400;font-size:clamp(30px,3.4vw,48px);letter-spacing:-.04em;line-height:1}
+.moon .meta{color:var(--f60)}
+.moon__row{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;align-items:center}
+.moon input[type=date]{height:42px;padding:0 14px;border-radius:99px;border:1px solid rgba(255,255,255,.28);background:#000;color:#fff;font:inherit;font-size:14px;color-scheme:dark}
+.chk{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;color:var(--f80);cursor:pointer}
+.chk input{accent-color:#8cc8ff;width:16px;height:16px}
+.nextrow{display:grid;grid-template-columns:1fr 1fr;width:100%;border-top:1px solid var(--line)}
+.nextrow div{padding:14px 0}
+.nextrow dt{color:var(--f60)}
+.nextrow dd{margin-top:4px;font-size:20px;letter-spacing:-.03em}
+.tips{list-style:none;display:grid;gap:0;align-content:start}
+.tips li{display:grid;grid-template-columns:1fr;gap:6px;padding:22px 0;border-top:1px solid var(--line)}
+.tips li:last-child{border-bottom:1px solid var(--line)}
+.tips .mono{color:var(--accent);padding-top:5px}
+.tips h4{font-weight:400;font-size:clamp(20px,2vw,26px);letter-spacing:-.03em;line-height:1.15}
+.tips p{color:var(--f80);margin-top:6px;max-width:32rem}
+
+/* QUIZ + GLOSSARY */
+.quiz{padding:clamp(22px,3.4vw,46px);min-height:420px;display:flex;flex-direction:column}
+.quiz__top{display:flex;justify-content:space-between;color:var(--f60);margin-bottom:22px}
+.quiz__bar{height:2px;background:var(--line);margin-bottom:28px}
+.quiz__bar i{display:block;height:100%;background:var(--accent);transition:width .5s var(--ease)}
+.quiz h3{font-weight:400;font-size:clamp(24px,3.2vw,44px);letter-spacing:-.04em;line-height:1.08;max-width:22em}
+.opts{display:grid;gap:10px;margin-top:26px;max-width:640px}
+.opt{display:flex;gap:14px;align-items:center;padding:15px 18px;border:1px solid var(--line);border-radius:14px;text-align:left;font-size:16px;transition:border-color .25s,background .25s}
+.opt:hover{border-color:rgba(255,255,255,.4)}
+.opt .k{font-family:var(--mono);font-size:11px;color:var(--f60);width:16px}
+.opt.right{border-color:#7fe0a8;background:rgba(127,224,168,.1)}
+.opt.wrong{border-color:#ff8a7a;background:rgba(255,138,122,.1)}
+.opt[disabled]{pointer-events:none}
+.why{margin-top:20px;max-width:640px;color:var(--f80);min-height:3.4em}
+.quiz__nav{margin-top:auto;padding-top:24px;display:flex;gap:10px;align-items:center}
+.score{font-weight:300;font-size:clamp(70px,12vw,150px);letter-spacing:-.05em;line-height:.9}
+.gloss{margin-top:clamp(56px,8vw,110px)}
+.gloss__top{display:flex;flex-wrap:wrap;gap:16px;align-items:end;justify-content:space-between;margin-bottom:20px}
+.gloss__top h3{font-weight:400;font-size:clamp(28px,3.4vw,48px);letter-spacing:-.04em;line-height:1}
+.gloss input[type=search]{height:46px;width:min(100%,340px);padding:0 18px;border-radius:99px;border:1px solid rgba(255,255,255,.28);background:#000;color:#fff;font:inherit;font-size:15px}
+.gloss dl{border-top:1px solid var(--line)}
+.gloss .term{display:grid;gap:4px 24px;padding:18px 0;border-bottom:1px solid var(--line)}
+@media(min-width:760px){.gloss .term{grid-template-columns:260px 1fr}}
+.gloss dt{font-size:20px;letter-spacing:-.03em}
+.gloss dd{color:var(--f80);max-width:44rem}
+.gloss .none{padding:24px 0;color:var(--f60)}
+
+/* FOOTER */
+footer{border-top:1px solid var(--line);padding:clamp(56px,8vw,110px) var(--pad) max(36px,env(safe-area-inset-bottom))}
+.foot{display:grid;gap:40px}
+@media(min-width:900px){.foot{grid-template-columns:6fr 3fr 3fr}}
+.foot .big{font-weight:300;font-size:clamp(46px,9vw,140px);letter-spacing:-.06em;line-height:.85}
+.foot h5{color:var(--f60);margin-bottom:14px}
+.foot ul{list-style:none;display:grid;gap:8px}
+.foot a{color:var(--f80);transition:color .25s}
+.foot a:hover{color:#fff}
+.fine{max-width:1280px;margin:clamp(40px,6vw,80px) auto 0;padding-top:20px;border-top:1px solid var(--line);color:var(--f40);font-size:13px;display:flex;flex-wrap:wrap;gap:8px 28px;justify-content:space-between}
+
+/* MOBILE */
+@media(max-width:860px){.nav__links,.nav .btn{display:none}.menu-btn{display:inline-flex;align-items:center;height:44px;padding:0 18px}.nav__bar{padding-right:4px}}
+@media(max-width:560px){
+  .hero__copy{padding-top:112px}
+  .cta .btn{width:100%;justify-content:center}.btn--solid i{margin-right:0;margin-left:6px}
+  .hero__facts span{padding:0 12px;font-size:10px;letter-spacing:.12em}
+  .prow{grid-template-columns:76px 1fr auto;padding:12px 10px}
+  h1 span{display:inline}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+  .e,.hero__media{opacity:1!important;transform:none!important;filter:none!important}
+  html.js .rv{opacity:1;transform:none}
+}
+
+/* Owner's rule: no small-print micro-labels. Labels that carry data stay, as plain text. */
+.mono{font-family:inherit!important;font-size:13px!important;letter-spacing:0!important;text-transform:none!important;font-weight:400!important}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="grain" aria-hidden="true"></div>
+
+<header class="nav">
+  <div class="nav__bar">
+    <a class="logo" href="#top" aria-label="Farfield, back to top">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 1l2.2 8.8L23 12l-8.8 2.2L12 23l-2.2-8.8L1 12l8.8-2.2z"/></svg>Farfield
+    </a>
+    <nav class="nav__links" aria-label="Primary">
+      <a href="#scale">Scale</a><a href="#worlds">Worlds</a><a href="#stars">Stars</a><a href="#galaxy">Galaxy</a><a href="#quiz">Quiz</a>
+    </nav>
+    <a class="btn btn--solid" href="#scale">Start</a>
+    <button class="menu-btn mono" id="menuBtn" aria-expanded="false" aria-controls="sheet">Menu</button>
+  </div>
+</header>
+<div class="sheet" id="sheet">
+  <a href="#scale">Scale</a><a href="#worlds">Worlds</a><a href="#stars">Stars</a><a href="#galaxy">Galaxy</a><a href="#sky">Tonight</a><a href="#quiz">Quiz</a>
+</div>
+
+<main id="main">
+<section class="hero" id="top">
+  <div class="hero__media" id="heroMedia" aria-hidden="true">
+    <video id="heroVideo" autoplay muted loop playsinline preload="auto" src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260613_180732_a54afbf6-b30d-470e-861f-669871f09f67.mp4"></video>
+  </div>
+  <div class="hero__copy">
+    <h1><span class="e" style="--d:.3s">Look up.</span> <span class="dim e" style="--d:.45s">Then understand it.</span></h1>
+    <p class="lede e" style="--d:.7s">A free, plain-language guide to space: how big it is, how stars live and die, and what is overhead tonight. No background needed.</p>
+    <div class="cta e" style="--d:.85s">
+      <a class="btn btn--solid" href="#scale">Start exploring <i aria-hidden="true">↓</i></a>
+      <a class="btn btn--ghost" href="#quiz">Test what you know</a>
+    </div>
+  </div>
+</section>
+
+<section class="s" id="scale" aria-labelledby="scale-h">
+  <div class="wrap">
+    <header class="head rv">
+      <h2 id="scale-h">Eleven steps from your own height <em>to the edge of what we can see.</em></h2>
+      <p>Each stop is far bigger than the last. Step through them and watch how quickly everyday ideas of distance stop working. Light, the fastest thing there is, tells the story.</p>
+    </header>
+    <div class="panel scale rv" role="group" aria-label="Scale of the universe explorer">
+      <div class="scale__num" id="scNum" aria-live="polite">1.7 m</div>
+      <h3 class="scale__name" id="scName">A person</h3>
+      <p class="scale__light" id="scLight"></p>
+      <p class="scale__note" id="scNote"></p>
+      <div class="scale__track"><div class="scale__fill" id="scFill"></div><div class="ticks" id="ticks"></div></div>
+      <div class="scale__ctl">
+        <button class="btn btn--ghost btn--sm" id="scPrev">← Smaller</button>
+        <button class="btn btn--solid btn--sm" id="scNext">Bigger →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="s" id="worlds" aria-labelledby="worlds-h">
+  <div class="wrap">
+    <header class="head rv">
+      <h2 id="worlds-h">Eight planets. <em>No two alike.</em></h2>
+      <p>Pick a planet to see how big it is, how long its day and year last, and how hot it gets. Then see what you would weigh there.</p>
+    </header>
+    <div class="worlds rv">
+      <div class="panel plist" id="plist" role="group" aria-label="Choose a planet"></div>
+      <article class="panel pdet" id="pdet" aria-live="polite"></article>
+    </div>
+    <div class="panel weigh rv">
+      <div>
+        <h3>What would you weigh there?</h3>
+        <p>Your mass stays the same everywhere. Your weight changes with gravity. Enter your weight on Earth.</p>
+        <label class="field"><input type="number" id="kg" value="60" min="1" max="500" inputmode="decimal" aria-label="Your weight on Earth in kilograms"><span>kg on Earth</span></label>
+      </div>
+      <dl class="wgrid" id="wgrid"></dl>
+    </div>
+  </div>
+</section>
+
+<section class="s" id="stars" aria-labelledby="stars-h">
+  <div class="wrap">
+    <header class="head rv">
+      <h2 id="stars-h">Every star is born, burns <em>and dies. Its weight decides how.</em></h2>
+      <p>Choose a star and step through its life. Our Sun is an average one. Heavier stars live fast and end violently.</p>
+    </header>
+    <div class="seg rv" role="group" aria-label="Star size">
+      <button id="pathSun" aria-pressed="true">Like our Sun</button>
+      <button id="pathBig" aria-pressed="false">Massive star</button>
+    </div>
+    <div class="stars rv">
+      <ol class="panel steps" id="steps"></ol>
+      <div class="panel stage">
+        <figure class="stage__art"><svg id="art" viewBox="0 0 200 200" role="img" aria-label=""></svg></figure>
+        <div class="stage__txt" aria-live="polite">
+          <h3 id="stName"></h3>
+          <p id="stText"></p>
+          <p class="dur mono" id="stDur"></p>
+          <div class="stage__ctl">
+            <button class="btn btn--ghost btn--sm" id="stPrev">← Earlier</button>
+            <button class="btn btn--solid btn--sm" id="stNext">Later →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="s" id="galaxy" aria-labelledby="galaxy-h">
+  <div class="wrap">
+    <header class="head rv">
+      <h2 id="galaxy-h">You live in a spiral <em>of hundreds of billions of stars.</em></h2>
+      <p>This is the Milky Way as it would look from far above, tilted. Move through it and watch the stars fall back into orbit. The amber ring marks roughly where we are.</p>
+    </header>
+    <div class="gx rv">
+      <canvas id="gx" aria-label="Animated model of the Milky Way galaxy. Moving the cursor pushes the stars, which then fall back into place." role="img"></canvas>
+    </div>
+    <dl class="facts rv">
+      <div><dd>~100,000</dd><dt class="mono">light-years across</dt></div>
+      <div><dd>~26,000</dd><dt class="mono">light-years from centre to the Sun</dt></div>
+      <div><dd>~230M</dd><dt class="mono">years for the Sun to orbit once</dt></div>
+      <div><dd>~4M</dd><dt class="mono">Suns of mass in the central black hole</dt></div>
+    </dl>
+  </div>
+</section>
+
+<section class="s" id="sky" aria-labelledby="sky-h">
+  <div class="wrap">
+    <header class="head rv">
+      <h2 id="sky-h">Go outside. <em>Here is what you are looking at.</em></h2>
+      <p>The Moon is the easiest place to start. Find its phase for any date, then try these four habits that make the night sky far easier to enjoy.</p>
+    </header>
+    <div class="sky rv">
+      <div class="panel moon" id="moon">
+        <svg id="moonSvg" viewBox="0 0 200 200" role="img" aria-label=""></svg>
+        <div><h3 id="mName"></h3><p class="meta" id="mMeta" style="margin-top:10px"></p></div>
+        <div class="moon__row">
+          <label class="mono" for="mDate" style="color:var(--f60)">Date</label>
+          <input type="date" id="mDate">
+          <label class="chk"><input type="checkbox" id="south"> Southern Hemisphere view</label>
+        </div>
+        <dl class="nextrow"><div><dt class="mono">Next new Moon</dt><dd id="nNew"></dd></div><div><dt class="mono">Next full Moon</dt><dd id="nFull"></dd></div></dl>
+      </div>
+      <ul class="tips">
+        <li><div><h4>Give your eyes twenty minutes</h4><p>Dark adaptation takes about 20 minutes. Fainter stars appear that you could not see when you first stepped outside.</p></div></li>
+        <li><div><h4>Protect your night vision</h4><p>Phone screens ruin it in seconds. Turn the brightness down, or use a red light, which disturbs dark adaptation far less.</p></div></li>
+        <li><div><h4>Choose the dark half of the month</h4><p>Faint things such as the Milky Way are easiest near a new Moon, when moonlight is not washing the sky out.</p></div></li>
+        <li><div><h4>Start with binoculars</h4><p>A basic pair shows lunar craters, Jupiter's four largest moons and star clusters, and it is far easier to aim than a telescope.</p></div></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="s" id="quiz" aria-labelledby="quiz-h">
+  <div class="wrap">
+    <header class="head rv">
+      <h2 id="quiz-h">Five questions. <em>Every answer teaches something.</em></h2>
+      <p>No timer and no sign-up. You get the explanation after each answer, right or wrong.</p>
+    </header>
+    <div class="panel quiz rv" id="quizBox" aria-live="polite"></div>
+
+    <div class="gloss rv" id="glossary">
+      <div class="gloss__top">
+        <h3>Plain-language glossary</h3>
+        <input type="search" id="gq" placeholder="Search a term, e.g. redshift" aria-label="Search the glossary">
+      </div>
+      <dl id="gl"></dl>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="foot wrap">
+    <div><p class="big">Farfield</p></div>
+    <div><h5 class="mono">Explore</h5><ul><li><a href="#scale">Scale</a></li><li><a href="#worlds">Worlds</a></li><li><a href="#stars">Stars</a></li><li><a href="#galaxy">Galaxy</a></li><li><a href="#sky">Tonight</a></li></ul></div>
+    <div><h5 class="mono">Go further</h5><ul><li><a href="https://www.nasa.gov" rel="noopener">NASA</a></li><li><a href="https://www.esa.int" rel="noopener">European Space Agency</a></li><li><a href="#quiz">Take the quiz</a></li></ul></div>
+  </div>
+  <div class="fine"><span>Figures are rounded for clarity. For the latest values, see NASA and ESA.</span><span>An independent educational guide.</span></div>
+</footer>
+
+<script>
+(function(){
+'use strict';
+var $=function(s,r){return (r||document).querySelector(s)};
+var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+var calm=matchMedia('(prefers-reduced-motion: reduce)').matches;
+document.documentElement.classList.add('js');
+
+/* ---------- entrance fallback: never leave the page blank ---------- */
+requestAnimationFrame(function(){requestAnimationFrame(function(){
+  var all=$$('.e,.hero__media');
+  var running=all.some(function(el){return el.getAnimations&&el.getAnimations().some(function(a){return a.playState==='running'||a.playState==='finished'})});
+  if(!running)all.forEach(function(el){el.classList.add('is-in')});
+  all.forEach(function(el){el.addEventListener('animationend',function(){el.classList.add('is-in')},{once:true})});
+})});
+var vid=$('#heroVideo');
+if(vid){var p=vid.play();if(p&&p.catch)p.catch(function(){})}
+
+/* ---------- menu ---------- */
+var mb=$('#menuBtn');
+function menu(open){document.body.classList.toggle('menu-open',open);mb.setAttribute('aria-expanded',open);mb.textContent=open?'Close':'Menu'}
+mb.addEventListener('click',function(){menu(!document.body.classList.contains('menu-open'))});
+$$('#sheet a').forEach(function(a){a.addEventListener('click',function(){menu(false)})});
+addEventListener('keydown',function(e){if(e.key==='Escape')menu(false)});
+matchMedia('(min-width:861px)').addEventListener('change',function(m){if(m.matches)menu(false)});
+
+/* ---------- scroll reveal (starts before the block is on screen) ---------- */
+if('IntersectionObserver' in window){
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{rootMargin:'0px 0px 240px 0px',threshold:0});
+  $$('.rv').forEach(function(el){io.observe(el)});
+}else{$$('.rv').forEach(function(el){el.classList.add('in')})}
+
+/* ---------- 01 scale ---------- */
+var STOPS=[
+ {n:'1.7 m',t:'A person',l:'Light crosses you in about 6 billionths of a second.',d:'Start here. Everything else is measured against this.'},
+ {n:'8.8 km',t:'Mount Everest',l:'Light crosses it in about 30 millionths of a second.',d:'The tallest mountain above sea level. From orbit it is a wrinkle.'},
+ {n:'12,742 km',t:'The Earth',l:'Light could circle it 7.5 times in one second.',d:'Everyone you have ever known lived on this one ball of rock.'},
+ {n:'384,400 km',t:'Earth to the Moon',l:'Light takes about 1.3 seconds.',d:'Every human who has left Earth’s orbit went about this far, and no further.'},
+ {n:'1.39 million km',t:'The Sun, across',l:'Light takes about 4.6 seconds to cross it.',d:'More than a million Earths would fit inside it by volume.'},
+ {n:'150 million km',t:'Earth to the Sun',l:'Light takes about 8 minutes 20 seconds.',d:'This distance is one astronomical unit, the yardstick for the solar system.'},
+ {n:'4.5 billion km',t:'The Sun to Neptune',l:'Light takes about 4 hours 10 minutes.',d:'The orbit of the outermost planet. We are not even at the edge of the Sun’s influence yet.'},
+ {n:'4.2 light-years',t:'The nearest other star',l:'Light takes about 4.2 years.',d:'Proxima Centauri. Our fastest spacecraft would need tens of thousands of years to get there.'},
+ {n:'~100,000 light-years',t:'The Milky Way, across',l:'Light takes about 100,000 years to cross our galaxy.',d:'Hundreds of billions of stars, and we sit in the suburbs.'},
+ {n:'2.5 million light-years',t:'The Andromeda Galaxy',l:'The light you see left it 2.5 million years ago.',d:'The nearest big galaxy. You can spot it from a dark site with the naked eye.'},
+ {n:'~93 billion light-years',t:'The observable universe, across',l:'Light has had 13.8 billion years to reach us.',d:'The part we can see. It is a horizon, not an edge: the universe likely goes on.'}
+];
+var si=0,ticks=$('#ticks');
+STOPS.forEach(function(s,i){var b=document.createElement('button');b.className='tick';b.setAttribute('aria-label','Go to step '+(i+1)+': '+s.t);b.addEventListener('click',function(){setStop(i)});ticks.appendChild(b)});
+function setStop(i){
+  si=Math.max(0,Math.min(STOPS.length-1,i));var s=STOPS[si];
+  $('#scNum').textContent=s.n;$('#scName').textContent=s.t;$('#scLight').textContent=s.l;$('#scNote').textContent=s.d;
+  $('#scFill').style.width=(si/(STOPS.length-1)*100)+'%';
+  $$('.tick').forEach(function(t,j){t.classList.toggle('on',j===si);t.classList.toggle('past',j<si)});
+  $('#scPrev').disabled=si===0;$('#scNext').disabled=si===STOPS.length-1;
+}
+$('#scPrev').addEventListener('click',function(){setStop(si-1)});
+$('#scNext').addEventListener('click',function(){setStop(si+1)});
+setStop(0);
+
+/* ---------- 02 worlds ---------- */
+var PL=[
+ {n:'Mercury',k:'Rocky planet',d:4879,day:'59 Earth days',yr:'88 days',g:'3.7 m/s²',t:'167 °C',m:'0',w:'The smallest planet and the closest to the Sun. It has almost no air, so days burn and nights freeze.'},
+ {n:'Venus',k:'Rocky planet',d:12104,day:'243 Earth days',yr:'225 days',g:'8.9 m/s²',t:'464 °C',m:'0',w:'Hotter than Mercury, because a thick carbon dioxide atmosphere traps heat. It spins backwards, and one day lasts longer than its year.'},
+ {n:'Earth',k:'Rocky planet',d:12742,day:'24 hours',yr:'365.25 days',g:'9.8 m/s²',t:'15 °C',m:'1',w:'The only place we know has life, and the only planet with liquid water on its surface.'},
+ {n:'Mars',k:'Rocky planet',d:6779,day:'24.6 hours',yr:'687 days',g:'3.7 m/s²',t:'−65 °C',m:'2',w:'A cold desert with Olympus Mons, the tallest volcano known in the solar system.'},
+ {n:'Jupiter',k:'Gas giant',d:139820,day:'9.9 hours',yr:'11.9 years',g:'24.8 m/s²',t:'−110 °C',m:'90+',w:'More massive than all the other planets put together. Its Great Red Spot is a storm bigger than Earth.'},
+ {n:'Saturn',k:'Gas giant',d:116460,day:'10.7 hours',yr:'29.5 years',g:'10.4 m/s²',t:'−140 °C',m:'140+',w:'Its rings are wide enough to span the Earth–Moon gap, yet often only about ten metres thick.'},
+ {n:'Uranus',k:'Ice giant',d:50724,day:'17.2 hours',yr:'84 years',g:'8.7 m/s²',t:'−195 °C',m:'28',w:'Tipped on its side, about 98 degrees, so it rolls around the Sun like a ball.'},
+ {n:'Neptune',k:'Ice giant',d:49244,day:'16.1 hours',yr:'165 years',g:'11.2 m/s²',t:'−200 °C',m:'16',w:'The windiest planet, with winds past 2,000 km/h. It takes 165 years to circle the Sun once.'}
+];
+var pl=$('#plist'),pcur=2,maxd=PL[4].d;
+PL.forEach(function(p,i){
+  var b=document.createElement('button');b.className='prow';b.setAttribute('aria-pressed','false');
+  b.innerHTML='<b>'+p.n+'</b><span class="bar" aria-hidden="true"><i style="width:'+(p.d/maxd*100).toFixed(1)+'%"></i></span><small>'+p.d.toLocaleString('en-US')+' km</small>';
+  b.addEventListener('click',function(){setPlanet(i)});pl.appendChild(b);
+});
+function setPlanet(i){
+  pcur=i;var p=PL[i];
+  $$('.prow').forEach(function(b,j){b.setAttribute('aria-pressed',j===i)});
+  $('#pdet').innerHTML='<h3>'+p.n+'</h3><p>'+p.w+'</p>'+
+   '<dl class="stats"><div><dt class="mono">Type</dt><dd>'+p.k+'</dd></div><div><dt class="mono">Diameter</dt><dd>'+p.d.toLocaleString('en-US')+' km</dd></div><div><dt class="mono">One day</dt><dd>'+p.day+'</dd></div><div><dt class="mono">One year</dt><dd>'+p.yr+'</dd></div><div><dt class="mono">Gravity</dt><dd>'+p.g+'</dd></div><div><dt class="mono">Average temp.</dt><dd>'+p.t+'</dd></div><div><dt class="mono">Moons</dt><dd>'+p.m+'</dd></div></dl>';
+}
+setPlanet(2);
+var BODIES=[['Mercury',.38],['Venus',.91],['The Moon',.165],['Mars',.38],['Jupiter',2.53],['Saturn',1.06],['Uranus',.89],['Neptune',1.14],['Pluto',.063],['The Sun',27.9]];
+function weigh(){
+  var kg=parseFloat($('#kg').value);if(!isFinite(kg)||kg<=0)kg=0;
+  $('#wgrid').innerHTML=BODIES.map(function(b){var v=kg*b[1];return '<div><dt class="mono">'+b[0]+'</dt><dd>'+(v>=100?Math.round(v):v.toFixed(1)).toLocaleString('en-US')+' kg</dd></div>'}).join('');
+}
+$('#kg').addEventListener('input',weigh);weigh();
+
+/* ---------- 03 stars ---------- */
+var NEB='<defs><filter id="bl" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="11"/></filter></defs><g filter="url(#bl)"><circle cx="84" cy="96" r="46" fill="#5b8fc7" opacity=".6"/><circle cx="122" cy="110" r="40" fill="#c9784f" opacity=".42"/><circle cx="104" cy="74" r="32" fill="#7fb7e6" opacity=".42"/><circle cx="96" cy="126" r="26" fill="#d9a066" opacity=".34"/></g><g fill="#fff" opacity=".85"><circle cx="64" cy="78" r="1.5"/><circle cx="134" cy="66" r="1.2"/><circle cx="112" cy="136" r="1.5"/><circle cx="78" cy="124" r="1.1"/><circle cx="146" cy="106" r="1.4"/><circle cx="100" cy="100" r="1.8"/><circle cx="52" cy="108" r="1"/><circle cx="150" cy="140" r="1.1"/></g>';
+var PATHS={
+ sun:[
+  {n:'A cloud of gas and dust',t:'Space is not empty. Cold clouds of mostly hydrogen drift between the stars. Gravity slowly pulls a dense patch of one together.',d:'Takes: millions of years',a:'A nebula of gas and dust',s:NEB},
+  {n:'A protostar switches on',t:'The clump collapses and heats up. It glows from the energy of its own squeezing, but it is not yet fusing hydrogen.',d:'Takes: up to a few million years',a:'A young, forming star with a disc',s:'<ellipse cx="100" cy="100" rx="86" ry="18" fill="none" stroke="#ffc27a" stroke-width="1" opacity=".5"/><circle cx="100" cy="100" r="20" fill="#ff9a4a"/>'},
+  {n:'Main sequence: the long, steady years',t:'Hydrogen fuses into helium in the core, releasing the energy we see as sunlight. Our Sun is about halfway through this stage.',d:'Takes: about 10 billion years for the Sun',a:'A steady yellow star',s:'<circle cx="100" cy="100" r="36" fill="#ffd36b"/><circle cx="100" cy="100" r="46" fill="none" stroke="#ffd36b" stroke-width="1" opacity=".3"/>'},
+  {n:'Red giant',t:'When the core runs out of hydrogen, the outer layers swell and cool to a deep red. The Sun will do this in roughly 5 billion years.',d:'Takes: about a billion years',a:'A swollen red star',s:'<circle cx="100" cy="100" r="82" fill="#e5562f"/><circle cx="100" cy="100" r="22" fill="#ffb36b" opacity=".85"/>'},
+  {n:'A planetary nebula',t:'The star puffs its outer layers away into a glowing shell. The name is misleading: it has nothing to do with planets.',d:'Takes: tens of thousands of years',a:'A glowing shell of gas',s:'<circle cx="100" cy="100" r="68" fill="none" stroke="#8cc8ff" stroke-width="16" opacity=".45"/><circle cx="100" cy="100" r="52" fill="none" stroke="#ffc27a" stroke-width="3" opacity=".5"/><circle cx="100" cy="100" r="5" fill="#fff"/>'},
+  {n:'White dwarf',t:'What is left is the hot core: about as big as Earth, but with roughly the Sun’s mass. It cools over trillions of years, far longer than the universe has existed.',d:'Lasts: longer than the universe is old',a:'A small, hot, dense remnant',s:'<circle cx="100" cy="100" r="9" fill="#fff"/><circle cx="100" cy="100" r="16" fill="none" stroke="#fff" stroke-width="1" opacity=".25"/>'}
+ ],
+ big:[
+  {n:'A cloud of gas and dust',t:'Massive stars begin the same way: in a vast cloud. Only the biggest, densest clumps become heavy enough.',d:'Takes: millions of years',a:'A nebula of gas and dust',s:NEB},
+  {n:'A protostar switches on',t:'A heavier clump collapses faster and gets far hotter. The newborn star blasts gas away around it.',d:'Takes: far less than for the Sun',a:'A young, forming star with a disc',s:'<ellipse cx="100" cy="100" rx="86" ry="18" fill="none" stroke="#8cc8ff" stroke-width="1" opacity=".5"/><circle cx="100" cy="100" r="26" fill="#ffb36b"/>'},
+  {n:'Main sequence: fast and bright',t:'Heavy stars burn blue-white and hot. They squander their fuel at a ferocious rate, so they shine brilliantly for a short time.',d:'Takes: only a few million years',a:'A hot blue-white star',s:'<circle cx="100" cy="100" r="50" fill="#9fc7ff"/><circle cx="100" cy="100" r="64" fill="none" stroke="#9fc7ff" stroke-width="1" opacity=".3"/>'},
+  {n:'Red supergiant',t:'The star swells enormously and fuses heavier and heavier elements in layers, until the core is mostly iron. Iron cannot release energy by fusing.',d:'Takes: about a million years',a:'An enormous red star',s:'<circle cx="100" cy="100" r="92" fill="#d9442a"/><circle cx="100" cy="100" r="34" fill="#ff9a4a" opacity=".8"/>'},
+  {n:'Supernova',t:'With no fuel to hold it up, the core collapses in a fraction of a second. The rebound blasts the star apart, scattering elements such as the oxygen we breathe.',d:'Lasts: weeks of brilliance',a:'A star exploding',s:'<g stroke="#ffd9a0" stroke-width="2" opacity=".8"><path d="M100 4v34M100 162v34M4 100h34M162 100h34M32 32l24 24M144 144l24 24M168 32l-24 24M56 144l-24 24"/></g><circle cx="100" cy="100" r="34" fill="#fff"/>'},
+  {n:'A neutron star or a black hole',t:'What the core leaves behind depends on its mass. A lighter core becomes a neutron star, about 20 km wide yet heavier than the Sun. The heaviest become black holes.',d:'Lasts: effectively forever',a:'A neutron star, left, and a black hole, right',s:'<g transform="translate(-34 0)"><circle cx="100" cy="100" r="7" fill="#8cc8ff"/><path d="M100 30v50M100 120v50" stroke="#8cc8ff" stroke-width="1.5" opacity=".6"/></g><g transform="translate(46 0)"><circle cx="100" cy="100" r="22" fill="#000" stroke="#fff" stroke-width="1.5"/><ellipse cx="100" cy="100" rx="42" ry="9" fill="none" stroke="#ffc27a" stroke-width="2" opacity=".8"/></g>'}
+ ]
+};
+var path='sun',sti=0;
+function renderSteps(){
+  var st=$('#steps');st.innerHTML='';
+  PATHS[path].forEach(function(s,i){var li=document.createElement('li'),b=document.createElement('button');b.innerHTML='<i></i><span>'+s.n+'</span>';b.addEventListener('click',function(){setStage(i)});li.appendChild(b);st.appendChild(li)});
+}
+function setStage(i){
+  var L=PATHS[path];sti=Math.max(0,Math.min(L.length-1,i));var s=L[sti];
+  $$('#steps button').forEach(function(b,j){if(j===sti)b.setAttribute('aria-current','step');else b.removeAttribute('aria-current')});
+  $('#art').innerHTML=s.s;$('#art').setAttribute('aria-label',s.a);
+  $('#stName').textContent=s.n;$('#stText').textContent=s.t;$('#stDur').textContent=s.d;
+  $('#stPrev').disabled=sti===0;$('#stNext').disabled=sti===L.length-1;
+}
+function setPath(p){path=p;$('#pathSun').setAttribute('aria-pressed',p==='sun');$('#pathBig').setAttribute('aria-pressed',p==='big');renderSteps();setStage(0)}
+$('#pathSun').addEventListener('click',function(){setPath('sun')});
+$('#pathBig').addEventListener('click',function(){setPath('big')});
+$('#stPrev').addEventListener('click',function(){setStage(sti-1)});
+$('#stNext').addEventListener('click',function(){setStage(sti+1)});
+renderSteps();setStage(0);
+
+/* ---------- 04 galaxy: a particle spiral you can stir ---------- */
+(function(){
+  var cv=$('#gx'),ctx=cv.getContext('2d');if(!ctx)return;
+  var small=matchMedia('(max-width:760px)').matches,N=small?4800:15000;
+  var W=0,H=0,DPR=1,cx=0,cy=0,R=0,live=false,t0=performance.now();
+  var TH=new Float32Array(N),RR=new Float32Array(N),OM=new Float32Array(N),CL=new Uint8Array(N),SZ=new Float32Array(N);
+  var DX=new Float32Array(N),DY=new Float32Array(N),VX=new Float32Array(N),VY=new Float32Array(N),PX=new Float32Array(N),PY=new Float32Array(N);
+  function g(){return (Math.random()+Math.random()+Math.random()+Math.random()-2)/2}
+  for(var i=0;i<N;i++){
+    var bulge=Math.random()<.22,r,th;
+    if(bulge){r=Math.abs(g())*.17+.012;th=Math.random()*6.2832;CL[i]=0;SZ[i]=Math.random()<.12?2.6:1.5}
+    else{r=.1+Math.pow(Math.random(),.72)*.9;th=(i%2)*Math.PI+3.2*Math.log(r/.1)+g()*.3;r+=g()*.03;CL[i]=Math.random()<.16?2:1;SZ[i]=Math.random()<.07?2.6:1.4}
+    TH[i]=th;RR[i]=r;OM[i]=.035/(.25+Math.abs(r));
+  }
+  var TILT=.42,SQ=.56,CT=Math.cos(TILT),ST=Math.sin(TILT);
+  var mx=-9999,my=-9999,on=false;
+  function size(){
+    var b=cv.getBoundingClientRect();DPR=Math.min(devicePixelRatio||1,small?1.5:2);
+    W=Math.max(1,b.width);H=Math.max(1,b.height);cv.width=W*DPR;cv.height=H*DPR;ctx.setTransform(DPR,0,0,DPR,0,0);
+    cx=W/2;cy=H/2;R=Math.min(W*.44,H*.86);
+  }
+  function frame(now){
+    var t=calm?0:(now-t0)/1000;
+    ctx.clearRect(0,0,W,H);
+    var rad=small?70:110,rad2=rad*rad;
+    for(var i=0;i<N;i++){
+      var a=TH[i]+OM[i]*t,ex=Math.cos(a)*RR[i]*R,ey=Math.sin(a)*RR[i]*R*SQ;
+      var x=cx+ex*CT-ey*ST,y=cy+ex*ST+ey*CT;
+      if(!calm){
+        var px=x+DX[i],py=y+DY[i];
+        if(on){var ddx=px-mx,ddy=py-my,d2=ddx*ddx+ddy*ddy;if(d2<rad2&&d2>1){var d=Math.sqrt(d2),f=Math.pow(1-d/rad,2)*2.4;VX[i]+=ddx/d*f;VY[i]+=ddy/d*f}}
+        VX[i]+=-DX[i]*.018;VY[i]+=-DY[i]*.018;VX[i]*=.92;VY[i]*=.92;DX[i]+=VX[i];DY[i]+=VY[i];
+        x+=DX[i];y+=DY[i];
+      }
+      PX[i]=x;PY[i]=y;
+    }
+    var cols=['#ffd9a8','#cfe4ff','#6f7f99'],al=[.62,.55,.34];
+    ctx.globalCompositeOperation='lighter';
+    for(var c=0;c<3;c++){
+      ctx.fillStyle=cols[c];ctx.globalAlpha=al[c];
+      for(var j=0;j<N;j++){if(CL[j]===c){ctx.fillRect(PX[j],PY[j],SZ[j],SZ[j])}}
+    }
+    ctx.globalAlpha=1;ctx.globalCompositeOperation='source-over';
+    /* "you are here": about 26,000 of ~50,000 light-years out, between two arms */
+    var rs=.52,as=3.2*Math.log(rs/.1)+Math.PI/2+.35*t*.1/(.25+rs)*0+(.035/(.25+rs))*t;
+    var ex2=Math.cos(as)*rs*R,ey2=Math.sin(as)*rs*R*SQ,sx=cx+ex2*CT-ey2*ST,sy=cy+ex2*ST+ey2*CT;
+    ctx.strokeStyle='#ffc27a';ctx.lineWidth=1.2;ctx.beginPath();ctx.arc(sx,sy,9,0,6.2832);ctx.stroke();
+    ctx.fillStyle='#ffc27a';ctx.beginPath();ctx.arc(sx,sy,2.4,0,6.2832);ctx.fill();
+    ctx.font='500 10.5px "JetBrains Mono",monospace';ctx.fillStyle='rgba(255,194,122,.95)';ctx.textBaseline='middle';
+    var lab='YOU ARE HERE',lw=ctx.measureText(lab).width,lx=sx+16;if(lx+lw>W-8)lx=sx-16-lw;ctx.fillText(lab,lx,sy);
+  }
+  function loop(now){if(!live)return;frame(now);requestAnimationFrame(loop)}
+  function pos(e){var b=cv.getBoundingClientRect();mx=e.clientX-b.left;my=e.clientY-b.top;on=true}
+  cv.addEventListener('pointermove',pos);cv.addEventListener('pointerdown',pos);
+  cv.addEventListener('pointerleave',function(){on=false});cv.addEventListener('pointerup',function(){if(e_isTouch)on=false});
+  var e_isTouch=matchMedia('(hover:none)').matches;
+  size();frame(performance.now());
+  addEventListener('resize',function(){size();frame(performance.now())});
+  if('IntersectionObserver' in window&&!calm){
+    new IntersectionObserver(function(es){var v=es[0].isIntersecting;if(v&&!live){live=true;requestAnimationFrame(loop)}else if(!v)live=false},{threshold:0}).observe(cv);
+  }
+})();
+
+/* ---------- 05 the Moon ---------- */
+var SYN=29.530588853,REF=Date.UTC(2000,0,6,18,14);
+function moonAge(ms){var d=(ms-REF)/86400000;return ((d%SYN)+SYN)%SYN}
+function phaseName(a){var f=a/SYN;
+  if(f<.0339||f>=.9661)return'New Moon';if(f<.2161)return'Waxing crescent';if(f<.2839)return'First quarter';if(f<.4661)return'Waxing gibbous';
+  if(f<.5339)return'Full Moon';if(f<.7161)return'Waning gibbous';if(f<.7839)return'Last quarter';return'Waning crescent'}
+function moonPath(f){
+  var k=Math.cos(2*Math.PI*f),r=84,c=100,rx=Math.abs(k)*r,waxing=f<.5;
+  if(Math.abs(k)>.9995&&k>0)return'';
+  var s1=waxing?1:0,s2=waxing?(k>0?0:1):(k>0?1:0);
+  return 'M'+c+' '+(c-r)+' A'+r+' '+r+' 0 0 '+s1+' '+c+' '+(c+r)+' A'+rx.toFixed(2)+' '+r+' 0 0 '+s2+' '+c+' '+(c-r)+'Z';
+}
+function fmtDays(d){var n=Math.round(d);return n<=0?'today':n===1?'in 1 day':'in '+n+' days'}
+function moon(){
+  var v=$('#mDate').value,dt=v?new Date(v+'T20:00:00'):new Date();
+  var ms=dt.getTime(),a=moonAge(ms),f=a/SYN,ill=(1-Math.cos(2*Math.PI*f))/2,nm=phaseName(a);
+  var s='<defs><clipPath id="mc"><circle cx="100" cy="100" r="84"/></clipPath></defs><circle cx="100" cy="100" r="84" fill="#0d0e10" stroke="rgba(255,255,255,.18)"/><path d="'+moonPath(f)+'" fill="#e9e6dc" clip-path="url(#mc)"/>'+(f>.4661&&f<.5339?'<circle cx="100" cy="100" r="84" fill="#e9e6dc"/>':'');
+  $('#moonSvg').innerHTML=s;$('#moonSvg').setAttribute('aria-label',nm+', about '+Math.round(ill*100)+' percent lit');
+  $('#mName').textContent=nm;$('#mMeta').textContent='About '+Math.round(ill*100)+'% of the Moon is lit. This uses the average lunar cycle, so it can be a day off.';
+  var toNew=(SYN-a)%SYN,toFull=((SYN/2-a)%SYN+SYN)%SYN;
+  $('#nNew').textContent=fmtDays(toNew);$('#nFull').textContent=fmtDays(toFull);
+}
+(function(){var d=new Date(),p=function(n){return String(n).padStart(2,'0')};$('#mDate').value=d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate())})();
+$('#mDate').addEventListener('input',moon);
+$('#south').addEventListener('change',function(e){$('#moon').classList.toggle('south',e.target.checked)});
+moon();
+
+/* ---------- 06 quiz ---------- */
+var Q=[
+ {q:'How long does sunlight take to reach Earth?',o:['About 8 seconds','About 8 minutes','About 8 hours','It arrives instantly'],a:1,w:'Light travels at about 300,000 km every second, and the Sun is 150 million km away. That is roughly 8 minutes 20 seconds. You always see the Sun as it was a little while ago.'},
+ {q:'Which planet is the hottest?',o:['Mercury','Venus','Mars','Jupiter'],a:1,w:'Venus. Mercury is nearer the Sun, but Venus’s thick carbon dioxide atmosphere traps heat and holds the surface near 464 °C, hot enough to melt lead.'},
+ {q:'What will our Sun turn into after its red giant stage?',o:['A black hole','A neutron star','A white dwarf','A supernova'],a:2,w:'The Sun is too light to explode or collapse into a black hole. It will shed its outer layers and leave a white dwarf, which then cools for a very long time.'},
+ {q:'Which star is the nearest to us after the Sun?',o:['Sirius','Proxima Centauri','Polaris','Betelgeuse'],a:1,w:'Proxima Centauri, about 4.2 light-years away. It is a small red star and far too faint to see without a telescope.'},
+ {q:'About how old is the universe?',o:['4.6 billion years','13.8 billion years','100 million years','1 trillion years'],a:1,w:'About 13.8 billion years. The Earth is much younger, around 4.5 billion years old, so the universe was already more than two-thirds of its present age when our planet formed.'}
+];
+var qi=0,score=0,answered=false,box=$('#quizBox');
+function renderQ(){
+  if(qi>=Q.length){
+    var msg=score===5?'Perfect. You could teach this.':score>=3?'Solid. A few things to revisit above.':'A good start. The sections above will help.';
+    box.innerHTML='<p class="quiz__top mono"><span>Finished</span><span>'+Q.length+' / '+Q.length+'</span></p><div class="quiz__bar"><i style="width:100%"></i></div><p class="score">'+score+'<span style="color:var(--f40)">/'+Q.length+'</span></p><h3 style="margin-top:20px">'+msg+'</h3><div class="quiz__nav"><button class="btn btn--solid" id="qAgain">Try again</button><a class="btn btn--ghost" href="#scale">Back to the start</a></div>';
+    $('#qAgain').addEventListener('click',function(){qi=0;score=0;renderQ()});return;
+  }
+  var it=Q[qi];answered=false;
+  box.innerHTML='<p class="quiz__top mono"><span>Question '+(qi+1)+' of '+Q.length+'</span><span>Score '+score+'</span></p><div class="quiz__bar"><i style="width:'+(qi/Q.length*100)+'%"></i></div><h3>'+it.q+'</h3><div class="opts" role="group" aria-label="Answers">'+
+   it.o.map(function(t,i){return '<button class="opt" data-i="'+i+'"><span class="k">'+'ABCD'[i]+'</span>'+t+'</button>'}).join('')+'</div><p class="why" id="why"></p><div class="quiz__nav"><button class="btn btn--solid" id="qNext" disabled>'+(qi===Q.length-1?'See my score':'Next question')+'</button></div>';
+  $$('.opt',box).forEach(function(b){b.addEventListener('click',function(){
+    if(answered)return;answered=true;var i=+b.dataset.i;
+    $$('.opt',box).forEach(function(o,j){o.disabled=true;if(j===it.a)o.classList.add('right');else if(j===i)o.classList.add('wrong')});
+    if(i===it.a)score++;$('#why').textContent=(i===it.a?'Correct. ':'Not quite. ')+it.w;$('#qNext').disabled=false;$('#qNext').focus({preventScroll:true});
+  })});
+  $('#qNext').addEventListener('click',function(){qi++;renderQ()});
+}
+renderQ();
+
+/* ---------- glossary ---------- */
+var GL=[
+ ['Astronomical unit (AU)','The average distance from Earth to the Sun, about 150 million kilometres. Used as a yardstick inside the solar system.'],
+ ['Black hole','A region where gravity is so strong that nothing, not even light, can escape once it passes the boundary.'],
+ ['Dark energy','The name for whatever is making the expansion of the universe speed up. It appears to make up about 68% of everything.'],
+ ['Dark matter','Invisible matter that we detect only through its gravity. It appears to make up about 27% of the universe.'],
+ ['Event horizon','The boundary around a black hole beyond which nothing can return.'],
+ ['Exoplanet','A planet that orbits a star other than our Sun. More than 5,000 have been found.'],
+ ['Galaxy','A huge system of stars, gas, dust and dark matter held together by gravity. Ours is the Milky Way.'],
+ ['Light-year','The distance light travels in one year: about 9.46 trillion kilometres. It measures distance, not time.'],
+ ['Nebula','A cloud of gas and dust in space. Some are stellar nurseries, others are the remains of dead stars.'],
+ ['Neutron star','The collapsed core of a massive star, about 20 km wide but heavier than the Sun.'],
+ ['Orbit','The curved path one object takes around another because of gravity.'],
+ ['Redshift','Light stretched to longer, redder wavelengths because its source is moving away from us. It is key evidence that the universe is expanding.'],
+ ['Supernova','The explosion of a massive star at the end of its life. For a few weeks it can outshine a whole galaxy.'],
+ ['White dwarf','The hot, dense, Earth-sized core left behind by a star like the Sun once it has shed its outer layers.']
+];
+function renderGl(q){
+  q=(q||'').toLowerCase().trim();
+  var r=GL.filter(function(g){return !q||g[0].toLowerCase().indexOf(q)>-1||g[1].toLowerCase().indexOf(q)>-1});
+  $('#gl').innerHTML=r.length?r.map(function(g){return '<div class="term"><dt>'+g[0]+'</dt><dd>'+g[1]+'</dd></div>'}).join(''):'<p class="none">No term matches “'+q.replace(/[<>&]/g,'')+'”. Try a shorter word.</p>';
+}
+$('#gq').addEventListener('input',function(e){renderGl(e.target.value)});
+renderGl('');
+})();
+</script>
+</body>
+</html>

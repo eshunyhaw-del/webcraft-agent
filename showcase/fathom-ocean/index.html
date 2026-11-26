@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Fathom: a guided descent into the ocean</title>
+<meta name="description" content="Scroll from the sunlit surface to the deepest seafloor. Real footage and photographs, plain-language explanations, a pressure tool and a short quiz, for anyone curious about the ocean.">
+<meta name="theme-color" content="#031017">
+<meta property="og:title" content="Fathom: a guided descent into the ocean">
+<meta property="og:description" content="Scroll from the sunlit surface to the deepest seafloor, with real footage and plain-language explanations.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%237fe3d0' stroke-width='2.2' stroke-linecap='round'%3E%3Cpath d='M2 8c3-3 5-3 8 0s5 3 8 0M2 15c3-3 5-3 8 0s5 3 8 0'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=Figtree:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip" href="#picture">Skip the descent</a>
+<canvas id="snow" aria-hidden="true"></canvas>
+
+<header class="nav">
+  <a class="logo" href="#c0" aria-label="Fathom, back to the top">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M2 8c3-3 5-3 8 0s5 3 8 0M2 15c3-3 5-3 8 0s5 3 8 0"/></svg>Fathom
+  </a>
+  <nav class="nav__links" aria-label="Sections">
+    <a href="#picture">Big picture</a>
+    <a href="#c1">The descent</a>
+    <a href="#tool">Pressure tool</a>
+    <a href="#change">What is changing</a>
+    <a href="#quiz">Quiz</a>
+  </nav>
+  <div class="nav__r">
+    <button class="tbtn" id="calmBtn" aria-pressed="false" title="Pause videos and moving particles"><span class="lbl">Pause motion</span></button>
+    <button class="tbtn menu" id="menuBtn" aria-expanded="false" aria-controls="sheet">Menu</button>
+  </div>
+</header>
+<nav class="sheet" id="sheet" aria-label="Sections">
+  <a href="#picture">The big picture</a>
+  <a href="#c1">The descent</a>
+  <a href="#tool">Pressure tool</a>
+  <a href="#why">Why it matters</a>
+  <a href="#change">What is changing</a>
+  <a href="#quiz">Quiz</a>
+  <a href="#credits">Credits and sources</a>
+</nav>
+
+<aside class="hud" id="hud" aria-hidden="true">
+  <div class="hud__row">
+    <div><p class="mono">Depth</p><p class="hud__v" id="hudD">0 m</p></div>
+    <div><p class="mono">Pressure</p><p class="hud__s" id="hudP">1 atm</p></div>
+    <div class="hud__light"><p class="mono">Sunlight</p><p class="hud__s" id="hudL">Full</p></div>
+  </div>
+  <p class="hud__z mono" id="hudZ">Surface</p>
+</aside>
+<nav class="rail" id="rail" aria-label="Descent progress"></nav>
+
+<main id="main">
+
+<!-- SURFACE (hero) -->
+<section class="ch hero" id="c0" style="--h:170" data-depth="0" data-name="Surface">
+  <div class="ch__pin">
+    <div class="ch__media" data-media><video data-vid autoplay muted loop playsinline preload="auto" poster="assets/img/poster-surface.jpg" aria-hidden="true"><source src="assets/video/surface.mp4" type="video/mp4"></video></div>
+    <div class="ch__shade"></div>
+    <div class="beat live" data-a="-1" data-b="0.55">
+      <h1 class="big"><span class="e" style="--d:.25s">Go down.</span> <span class="e" style="--d:.4s"><em>Slowly.</em></span></h1>
+      <p class="sub e" style="--d:.6s">The ocean covers most of our planet, and most of it has never been seen by a human. Scroll to sink from sunlit surface water to the deepest seafloor, with real footage from divers and scientists and plain explanations of what you are looking at.</p>
+      <div class="cta e" style="--d:.8s"><a class="btn" href="#c1">Start the descent <span aria-hidden="true">↓</span></a><a class="link" href="#picture">Or read the quick facts first</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- BIG PICTURE (normal reading section) -->
+<section class="sec" id="picture">
+  <div class="wrap">
+    <h2 class="h2">One ocean, <em>not five.</em></h2>
+    <div class="cols">
+      <p class="lead">Geographers give it names: Pacific, Atlantic, Indian, Southern and Arctic. But the water is connected, and so is almost everything that depends on it. Before the descent, here is the scale of what you are about to enter.</p>
+      <dl class="stats">
+        <div><dt>About 71%</dt><dd>of Earth's surface is covered by ocean.</dd></div>
+        <div><dt>About 97%</dt><dd>of all the water on Earth is in the ocean. Most of the rest is ice or underground.</dd></div>
+        <div><dt>About 11 km</dt><dd>is the depth of the deepest known point, the Challenger Deep in the Mariana Trench.</dd></div>
+        <div><dt>Roughly 1 in 4</dt><dd>square kilometres of seafloor has been mapped in detail so far. The figure keeps rising.</dd></div>
+      </dl>
+    </div>
+    <p class="note">Figures are rounded and written from general knowledge of NOAA and similar sources. Check the sources listed at the bottom before you quote them.</p>
+  </div>
+</section>
+
+<!-- STOP 1: SUNLIT -->
+<section class="ch" id="c1" style="--h:330" data-depth="200" data-name="Sunlit zone">
+  <div class="ch__pin">
+    <div class="ch__media" data-media><video data-vid muted loop playsinline preload="none" poster="assets/img/poster-reef.jpg" aria-hidden="true"><source src="assets/video/reef.mp4" type="video/mp4"></video></div>
+    <div class="ch__shade"></div>
+    <div class="beat" data-a="-1" data-b="0.36">
+      <h2 class="big">Where the light <em>does the work.</em></h2>
+      <p class="sub">Sunlight reaches this top layer, so tiny drifting algae and reef-building corals can use it to make food. Most of the ocean life people meet, from reefs to turtles to tuna, lives here.</p>
+    </div>
+    <div class="beat" data-a="0.3" data-b="0.68">
+      <h2 class="big small">The thin, bright skin of the sea.</h2>
+      <dl class="facts">
+        <div><b>About half</b><span>of the oxygen we breathe comes from tiny ocean algae called phytoplankton. Estimates vary.</span></div>
+        <div><b>Under 1%</b><span>of the seafloor is coral reef, yet reefs shelter roughly a quarter of marine species.</span></div>
+        <div><b>Red goes first</b><span>Water absorbs red light within the first few metres. That is why deeper views turn blue and green.</span></div>
+        <div><b>About 200 m</b><span>is as deep as there is enough light for photosynthesis.</span></div>
+      </dl>
+    </div>
+    <div class="beat" data-a="0.62" data-b="2">
+      <div class="split">
+        <figure class="photo"><img src="assets/img/manta.jpg" alt="A giant oceanic manta ray glides past a scuba diver in blue water, with small fish all around" loading="lazy"></figure>
+        <div>
+          <h2 class="big small">Rays, turtles, tuna, <em>and a crowd of plankton.</em></h2>
+          <p class="sub">Manta rays, among the biggest fish in the sea, filter plankton from sunlit water. Everything bigger than the plankton depends, in some way, on this layer's food.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STOP 2: TWILIGHT -->
+<section class="ch" id="c2" style="--h:300" data-depth="1000" data-name="Twilight zone">
+  <div class="ch__pin">
+    <div class="ch__media" data-media><video data-vid muted loop playsinline preload="none" poster="assets/img/poster-twilight.jpg" aria-hidden="true"><source src="assets/video/twilight.mp4" type="video/mp4"></video></div>
+    <div class="ch__shade"></div>
+    <div class="beat" data-a="-1" data-b="0.42">
+      <h2 class="big">The last of the light, <em>fading to blue.</em></h2>
+      <p class="sub">Only a faint glow remains here, too dim for plants. This footage shows a deep-sea crab clinging to a black coral, filmed by a robot submarine. The lights you see are the robot's, not the sea's.</p>
+    </div>
+    <div class="beat" data-a="0.36" data-b="2">
+      <h2 class="big small">Cold, dim and busy at night.</h2>
+      <dl class="facts">
+        <div><b>About 1%</b><span>of surface sunlight is left by around 200 m, and it keeps fading below that.</span></div>
+        <div><b>A nightly climb</b><span>Many animals rise toward the surface after dark to feed, then sink back before dawn. It is often called the largest daily migration on Earth.</span></div>
+        <div><b>Living light</b><span>Many animals here make their own light, called bioluminescence, to find food, mates or escape.</span></div>
+        <div><b>10 m = +1 atm</b><span>Pressure grows by about one atmosphere with every 10 metres you descend.</span></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<!-- STOP 3: MIDNIGHT -->
+<section class="ch" id="c3" style="--h:320" data-depth="4000" data-name="Midnight zone">
+  <div class="ch__pin">
+    <div class="ch__media" data-media><video data-vid muted loop playsinline preload="none" poster="assets/img/poster-midnight.jpg" aria-hidden="true"><source src="assets/video/midnight.mp4" type="video/mp4"></video></div>
+    <div class="ch__shade"></div>
+    <div class="beat" data-a="-1" data-b="0.38">
+      <h2 class="big">No sunlight. <em>Ever.</em></h2>
+      <p class="sub">From here on, the only light is made by animals. The water is a few degrees above freezing, and the pressure is more than a hundred times what you feel at the beach. This jellyfish was filmed on the seafloor by a NOAA expedition.</p>
+    </div>
+    <div class="beat" data-a="0.32" data-b="2">
+      <div class="split">
+        <figure class="photo"><img src="assets/img/ipnops.jpg" alt="A slender dark-bodied deep-sea fish lying on pale sediment, with a flat yellow-green plate on its head where eyes would be" loading="lazy"></figure>
+        <div>
+          <h2 class="big small">Slow, patient, <em>and strange.</em></h2>
+          <p class="sub">Food is scarce, so animals here save energy. This deep-sea fish has flat, plate-like eyes instead of round ones. Many animals in the dark sea are soft-bodied, slow, or glow.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STOP 4: THE DEEP FLOOR -->
+<section class="ch" id="c4" style="--h:360" data-depth="10935" data-name="The deep seafloor">
+  <div class="ch__pin">
+    <div class="ch__media" data-media><video data-vid muted loop playsinline preload="none" poster="assets/img/poster-vents.jpg" aria-hidden="true"><source src="assets/video/vents.mp4" type="video/mp4"></video></div>
+    <div class="ch__shade"></div>
+    <div class="beat" data-a="-1" data-b="0.36">
+      <h2 class="big">Life that never <em>needed the sun.</em></h2>
+      <p class="sub">On the seafloor, cracks called hydrothermal vents release hot, mineral-rich water heated by the Earth's crust. Microbes turn those chemicals into food, and whole communities grow around them. The chimneys on screen are real, filmed by a NOAA expedition.</p>
+    </div>
+    <div class="beat" data-a="0.3" data-b="0.68">
+      <h2 class="big small">The deepest places we know.</h2>
+      <dl class="facts">
+        <div><b>About 10,935 m</b><span>is the Challenger Deep, the deepest known spot, in the Mariana Trench. Measurements differ by a few tens of metres.</span></div>
+        <div><b>Over 1,000 atm</b><span>The pressure there is more than a thousand times the pressure at the surface.</span></div>
+        <div><b>Chemosynthesis</b><span>is making food from chemicals instead of light. It powers vent communities.</span></div>
+        <div><b>Still unmapped</b><span>Most of the deep seafloor has been seen only at low resolution. New species are still being found.</span></div>
+      </dl>
+    </div>
+    <div class="beat" data-a="0.62" data-b="2">
+      <div class="split">
+        <figure class="photo"><img src="assets/img/relicanthus.jpg" alt="A deep-sea animal with a pale, bulb-shaped base and a thick mass of long, trailing grey tentacles, on dark volcanic rock" loading="lazy"></figure>
+        <div>
+          <h2 class="big small">You have reached <em>the bottom.</em></h2>
+          <p class="sub">Keep scrolling to come back to the surface. Next: a tool to feel the pressure, and why all of this matters to people living far from any coast.</p>
+          <p class="cta"><a class="btn" href="#tool">Try the pressure tool <span aria-hidden="true">↓</span></a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TOOL -->
+<section class="sec sec--tool" id="tool">
+  <div class="wrap">
+    <h2 class="h2">How deep would <em>you</em> go?</h2>
+    <p class="lead">Drag the slider to choose a depth. The numbers update as you go. Pressure is calculated as roughly one extra atmosphere (the pressure of the air around you right now) for every 10 metres of seawater.</p>
+    <div class="tool" id="toolBox">
+      <div class="tool__ctl">
+        <label for="depth" class="mono">Depth below the surface</label>
+        <output id="depthOut" for="depth">0 m</output>
+        <input type="range" id="depth" min="0" max="10935" step="5" value="0" aria-describedby="toolNote">
+        <div class="presets" role="group" aria-label="Jump to a depth">
+          <button type="button" data-d="10">Scuba dive: 10 m</button>
+          <button type="button" data-d="200">Edge of sunlight: 200 m</button>
+          <button type="button" data-d="1000">Midnight zone: 1,000 m</button>
+          <button type="button" data-d="10935">Challenger Deep</button>
+        </div>
+        <p class="small" id="toolNote">A recreational scuba limit is about 40 m. Crewed submersibles have reached the Challenger Deep only a handful of times.</p>
+      </div>
+      <dl class="tool__out" aria-live="polite">
+        <div><dt class="mono">Zone</dt><dd id="oZone">Sunlit zone</dd></div>
+        <div><dt class="mono">Pressure</dt><dd id="oP">1 atm</dd></div>
+        <div><dt class="mono">Sunlight</dt><dd id="oL">Full daylight</dd></div>
+        <div class="wide"><dt class="mono">Who you might meet</dt><dd id="oW">Turtles, rays, tuna and coral reefs.</dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<!-- WHY -->
+<section class="sec" id="why">
+  <div class="wrap">
+    <h2 class="h2">You do not need to live <em>near the coast.</em></h2>
+    <ol class="why">
+      <li><h3>It helps you breathe.</h3><p>Ocean algae make a large share of Earth's oxygen, and the sea absorbs a great deal of the carbon dioxide we release.</p></li>
+      <li><h3>It steadies the climate.</h3><p>Water holds heat well. The ocean has absorbed the large majority of the extra heat trapped by greenhouse gases, which slows how fast the air warms.</p></li>
+      <li><h3>It feeds and employs people.</h3><p>Billions of people rely on fish as an important source of protein, and many millions work in fishing, shipping and coastal tourism.</p></li>
+      <li><h3>It is still mostly unknown.</h3><p>More of the Moon's surface has been mapped in detail than the seafloor. Every expedition finds animals or places no one has recorded.</p></li>
+    </ol>
+  </div>
+</section>
+
+<!-- CHANGE -->
+<section class="sec sec--change" id="change">
+  <div class="wrap">
+    <h2 class="h2">The ocean is under <em>pressure from us.</em></h2>
+    <div class="two">
+      <article>
+        <figure class="photo"><img src="assets/img/bleach.jpg" alt="A pale, bleached white coral colony on a shallow reef floor" loading="lazy"></figure>
+        <h3>Warmer water bleaches coral</h3>
+        <p>When seawater stays too warm, corals expel the algae that live inside them and turn white. Bleached coral is not dead yet, but it is starving, and if the heat lasts it dies. Marine heatwaves are becoming more frequent.</p>
+      </article>
+      <article>
+        <figure class="photo"><img src="assets/img/debris.jpg" alt="A tangle of washed-up bottles, packaging, rope and fishing net lying on a beach" loading="lazy"></figure>
+        <h3>Plastic does not go away</h3>
+        <p>Millions of tonnes of plastic reach the sea every year. It breaks into smaller and smaller pieces that animals swallow and that have now been found from beaches to the deep seafloor.</p>
+      </article>
+    </div>
+    <h3 class="sub-h">Small things that add up</h3>
+    <ul class="acts">
+      <li><b>Cut single-use plastic</b> where you can, and join or organise a local clean-up.</li>
+      <li><b>Choose seafood</b> with a recognised sustainability label, or ask where it was caught.</li>
+      <li><b>Use less energy.</b> Warming and acidification both come mainly from carbon dioxide.</li>
+      <li><b>Learn and share.</b> Ocean literacy is the first step for voters and consumers.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- QUIZ -->
+<section class="sec" id="quiz">
+  <div class="wrap">
+    <h2 class="h2">Five questions. <em>No pressure.</em></h2>
+    <div class="quiz" id="quizBox" aria-live="polite">
+      <noscript><p>The quiz needs JavaScript. The answers are all in the descent above.</p></noscript>
+    </div>
+  </div>
+</section>
+
+<!-- CREDITS -->
+<footer class="foot" id="credits">
+  <div class="wrap">
+    <h2 class="h3">Credits and sources</h2>
+    <p class="lead small">Every photograph and video on this page is real and was downloaded from Wikimedia Commons, which publishes each file with its creator and licence. Licence names below are copied from those pages. They have not been independently verified. Videos were trimmed, silenced and compressed for the web. Government agencies such as NOAA do not endorse this site.</p>
+    <ul class="credits">
+      <li><b>Humpback whale tail from above, filmed by drone</b><br>assets/video/surface.mp4. By NOAA Sanctuaries. <a href="https://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. <a href="https://commons.wikimedia.org/wiki/File%3AHumpback_whale_Tail_Sailing_behaviour.webm">Source page</a>. <span>Cropped, trimmed to 14 s, audio removed, recompressed (a small permit caption at the bottom edge was cropped out).</span></li>
+      <li><b>Deep-sea jellyfish, NOAA Okeanos Explorer 2016</b><br>assets/video/midnight.mp4. By oceanexplorergov. Public domain. <a href="https://commons.wikimedia.org/wiki/File%3AJellyfish-_2016_Deepwater_Exploration_of_the_Marianas.webm">Source page</a>. <span>Trimmed, forward-then-reverse loop, audio removed, recompressed (opening logo and closing slide removed).</span></li>
+      <li><b>Hydrothermal vent chimneys, NOAA Okeanos Explorer 2016</b><br>assets/video/vents.mp4. By NOAA. Public domain. <a href="https://commons.wikimedia.org/wiki/File%3A0501-hydrothermal-vents-640x360.webm">Source page</a>. <span>Trimmed to 15 s, audio removed, recompressed (title slide removed).</span></li>
+      <li><b>Giant oceanic manta ray with a diver</b><br>assets/img/manta.jpg. By Daniel Sasse. <a href="https://creativecommons.org/licenses/by-sa/4.0">CC BY-SA 4.0</a>. <a href="https://commons.wikimedia.org/wiki/File%3AGiant_oceanic_manta_ray.jpg">Source page</a>. <span>Resized and recompressed.</span></li>
+      <li><b>Bleached coral colony (Porites lobata)</b><br>assets/img/bleach.jpg. By Francois Seneca. <a href="http://creativecommons.org/publicdomain/zero/1.0/deed.en">CC0</a>. <a href="https://commons.wikimedia.org/wiki/File%3ABleached_Porites_lobata_coral_colony.JPG">Source page</a>. <span>Bottom 10% cropped to remove a date stamp; resized.</span></li>
+      <li><b>Marine debris and plastic waste on a beach</b><br>assets/img/debris.jpg. By VariousPhotography. <a href="http://creativecommons.org/publicdomain/zero/1.0/deed.en">CC0</a>. <a href="https://commons.wikimedia.org/wiki/File%3AMarine_debris_and_plastic_waste_on_beach.jpg">Source page</a>. <span>Resized and recompressed.</span></li>
+      <li><b>Deep-sea corals, Wagner Seamount</b><br>assets/img/deepcoral.jpg. By NOAA Office of Ocean Exploration and Research, Deep-Sea Symphony: Exploring the Musicians Seamounts. Public domain. <a href="https://commons.wikimedia.org/wiki/File%3ADeep_sea_corals%2C_Wagner_Seamount.jpg">Source page</a>. <span>Resized and recompressed.</span></li>
+      <li><b>Ipnops meadi, a deep-sea fish</b><br>assets/img/ipnops.jpg. By Astrid Leitner, NOAA Office of Exploration. Public domain. <a href="https://commons.wikimedia.org/wiki/File%3AIpnops_meadi.jpg">Source page</a>. <span>Resized and recompressed.</span></li>
+      <li><b>Relicanthus daphneae, deep-sea anemone-like animal</b><br>assets/img/relicanthus.jpg. By NOAA Ocean Exploration, Deepwater Exploration of the Marianas. Public domain. <a href="https://commons.wikimedia.org/wiki/File%3ARelicanthus_daphneae_2016.jpg">Source page</a>. <span>Recompressed.</span></li>
+      <li><b>Coral reef, Chesterfield Islands</b><br>assets/video/reef.mp4. By Dominique Pelletier. <a href="https://creativecommons.org/licenses/by/4.0">CC BY 4.0</a>. <a href="https://commons.wikimedia.org/wiki/File%3AFirst_record_of_the_species_Balistoides_viridescens_at_the_Chesterfield-Bellona_reef_complex_in_the_Coral_Sea_Marine_Park_%28Ifremer_00675-78687%29.webm">Source page</a>. <span>Trimmed to 17 s, played forward then reversed for a seamless loop, audio removed, recompressed.</span></li>
+      <li><b>Deep-sea crab on black coral, NOAA Okeanos Explorer</b><br>assets/video/twilight.mp4. By NOAA Okeanos Explorer. Public domain. <a href="https://commons.wikimedia.org/wiki/File%3AEx1402-dive03.webm">Source page</a>. <span>Trimmed to 7 s, forward-then-reverse loop, audio removed, recompressed.</span></li>
+    </ul>
+    <p class="small">The text is original. Numbers are rounded and should be checked against NOAA Ocean Service (oceanservice.noaa.gov), NOAA Ocean Exploration (oceanexplorer.noaa.gov), and Seabed 2030 (seabed2030.org) before being quoted.</p>
+    <p class="small">Fathom is a demonstration site. It has no accounts, forms or tracking.</p>
+  </div>
+</footer>
+</main>
+<script src="app.js"></script>
+</body>
+</html>

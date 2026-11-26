@@ -944,7 +944,7 @@ For subjects with a natural sequence of places, scales, or stages, and strong re
 
 - Read `docs/recipes/scroll-journey.md` for the architecture, the numbers, the mobile rules, and the pitfalls.
 - **Start from `examples/scroll-journey-starter/`**: a small, subject-neutral engine (about 80 lines of JavaScript), styles, and a 3-chapter page that runs as it is. Replace its gradients with real media, its copy with yours, and its readout units in `engine.js`.
-- A complete, tested, richer reference is in `examples/cosmos-journey/` (plain HTML, CSS, and JavaScript). Rebuild its media with the media tool and study it for effects such as the starfield, the horizontal fly-by, and the particle galaxy. Never copy its subject matter, copy, or identity into an unrelated project.
+- A complete, tested, richer reference is in `examples/cosmos-journey/` (plain HTML, CSS, and JavaScript). Its NASA media is included (and can be rebuilt with the media tool from `media-plan.json`). Study it for effects such as the starfield, the horizontal fly-by, and the particle galaxy. More finished sites are in `showcase/`. Never copy its subject matter, copy, or identity into an unrelated project.
 - Use it only when it helps the visitor. For simple brochure sites, shops, and anything people scan quickly, choose a calmer design (Section 12).
 - Always ship the fallbacks: a no-JavaScript stacked layout, a reduced-motion layout, a pause button, and mobile layouts verified with `scripts/qa/beat-fit.js` at 360 by 640, 390 by 844, and 1366 by 700.
 

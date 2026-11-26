@@ -1,3 +1,2 @@
-# Media is rebuilt from media-plan.json, never committed.
-assets/
+# Source downloads are rebuilt on demand, never committed.
 .media-cache/

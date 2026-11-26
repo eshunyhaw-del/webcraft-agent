@@ -78,11 +78,10 @@ See [MOTIONSITES_SKILL.md](MOTIONSITES_SKILL.md) for details.
 
 ## Optional: the media tool and the immersive example
 
-For real photographs and video, the agent uses `scripts/media/webcraft_media.py`. It needs Python 3.9+, [ffmpeg](https://ffmpeg.org) on your PATH, and Pillow (`pip install pillow`). To see the full immersive pattern, build the reference example:
+For real photographs and video, the agent uses `scripts/media/webcraft_media.py`. It needs Python 3.9+, [ffmpeg](https://ffmpeg.org) on your PATH, and Pillow (`pip install pillow`). To see finished sites built with this repository, open the [showcase](../showcase/):
 
 ```
-python scripts/media/webcraft_media.py build examples/cosmos-journey/media-plan.json --out examples/cosmos-journey
-cd examples/cosmos-journey && python -m http.server 8000
+python -m http.server 8000      # from the repository root, then visit http://localhost:8000/showcase/
 ```
 
 Details: [examples/cosmos-journey/README.md](../examples/cosmos-journey/README.md) and [docs/recipes/scroll-journey.md](recipes/scroll-journey.md).

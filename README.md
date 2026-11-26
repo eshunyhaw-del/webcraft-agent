@@ -10,6 +10,10 @@ WEBCraft turns a plain-language brief, from someone who may know nothing about w
 
 It is not a template library. It is one agent workflow that combines creative director, art director, typographer, copywriter, UX architect, motion designer, frontend engineer, accessibility specialist, and QA engineer.
 
+## See what it builds
+
+The [showcase](showcase/) has real sites built from one-line briefs, including **Fathom**, an immersive ocean site built by an AI agent working only from a fresh clone of this repository, and **Farfield**, a journey through space with real NASA footage.
+
 ## Works with any capable AI tool
 
 | Tool | How |
@@ -63,10 +67,12 @@ MotionSites' own example designs and media are copyright MotionSites and are not
 | `.claude/skills/motionsites-web-builder/` | The bundled, MIT-licensed craft library from [MotionSites](https://motionsites.ai): taste rules, 55+ effect recipes, a review checklist. Its example prompts and media are not included (see below). |
 | `docs/MOTIONSITES_SKILL.md` | How the two fit together, what is and isn't bundled, and licensing. |
 | `scripts/media/webcraft_media.py` | Media tool: search NASA and Wikimedia Commons (with licences), scan videos for black frames and burned-in captions, cut clean loops, crop captions, and build all assets from a plan. |
+| `references/react/spell-ui/` | [Spell UI](https://spell.sh) (MIT): catalog of 33 animated React + Tailwind components with install commands and guardrail notes, plus read-only source. Used when the chosen stack is React. |
+| `showcase/` | Real sites built with this repo, viewable as they are. |
 | `examples/scroll-journey-starter/` | A small, subject-neutral, runnable starter for the immersive scroll journey (80-line engine). |
 | `scripts/qa/beat-fit.js` | Paste-in browser snippet that checks every scroll scene fits on phones and laptops. |
 | `docs/recipes/scroll-journey.md` | The immersive scroll-journey pattern: architecture, numbers, mobile rules, pitfalls. |
-| `examples/cosmos-journey/` | Tested reference implementation of that pattern (code only; media is rebuilt with the tool). |
+| `examples/cosmos-journey/` | Tested reference implementation of that pattern, with its NASA media included (rebuildable with the media tool). |
 | `scripts/setup-motionsites.mjs` | Downloads MotionSites' example prompts and media directly from MotionSites (they cannot be redistributed). |
 | `THIRD_PARTY_NOTICES.md` | Attribution and licence notices. |
 | `scripts/build-agent.mjs` | Regenerates the Claude subagent file from the master prompt. |

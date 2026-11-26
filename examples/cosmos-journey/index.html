@@ -23,7 +23,7 @@
   </a>
   <div class="nav__r">
     <button class="pill" id="calmBtn" aria-pressed="false" title="Pause videos and the moving starfield"><span aria-hidden="true">❚❚</span><span class="lbl">Pause motion</span></button>
-    <button class="pill mono" id="menuBtn" aria-expanded="false" aria-controls="sheet">Stops</button>
+    <button class="pill mono" id="menuBtn" aria-expanded="false" aria-controls="sheet">Menu</button>
   </div>
 </header>
 <nav class="sheet" id="sheet" aria-label="Journey stops"></nav>
@@ -32,7 +32,7 @@
   <p class="mono">Distance from Earth</p>
   <p class="hud__v" id="hudV">408 km</p>
   <p class="hud__t mono" id="hudT">Light needs 0.0014 seconds</p>
-  <div class="hud__c"><span class="mono" id="hudN">Stop 0 of 7</span><b id="hudL">Earth orbit</b></div>
+  <div class="hud__c"><b id="hudL">Earth orbit</b></div>
 </aside>
 <nav class="rail" id="rail" aria-label="Journey progress"></nav>
 
@@ -44,13 +44,10 @@
     <div class="ch__media" data-media><video data-vid autoplay muted loop playsinline preload="auto" poster="assets/img/poster-earth.jpg" aria-hidden="true"><source src="assets/video/earth.mp4" type="video/mp4"></video></div>
     <div class="ch__shade"></div>
     <div class="beat live" data-a="-1" data-b="0.5">
-      <p class="kick mono e" style="--d:.15s">A journey outward, in seven stops</p>
       <h1 class="big"><span class="e" style="--d:.3s">Look up.</span> <span class="e" style="--d:.45s"><em>Then understand it.</em></span></h1>
       <p class="sub e" style="--d:.7s">Scroll to leave Earth. At every stop you will see real photographs and footage from NASA, and learn what you are looking at. No background needed.</p>
       <div class="cta e" style="--d:.85s"><a class="btn btn--solid" href="#c1">Begin the journey <i aria-hidden="true">↓</i></a><a class="btn btn--ghost" href="#quiz">Test what you know</a></div>
     </div>
-    <p class="cue mono" aria-hidden="true">Scroll</p>
-    <p class="cap mono">Earth from the International Space Station · NASA</p>
   </div>
 </section>
 
@@ -61,12 +58,10 @@
     <div class="ch__shade"></div>
     <figure class="moonbig" id="moonBig"><img src="assets/img/moon.jpg" alt="The full Moon, showing dark volcanic plains and bright cratered highlands" loading="lazy"></figure>
     <div class="beat" data-a="-1" data-b="0.36">
-      <p class="kick mono">Stop 1 · 384,400 km</p>
       <h2 class="big">The only world <em>we have ever visited.</em></h2>
       <p class="sub">The Moon is our nearest neighbour. Its light reaches you in about 1.3 seconds. Earth is the little blue dot rising over this lunar horizon.</p>
     </div>
     <div class="beat" data-a="0.3" data-b="0.7">
-      <p class="kick mono">What to know</p>
       <h2 class="big" style="font-size:clamp(30px,4.4vw,60px)">Small, close, and always the same face.</h2>
       <dl class="facts">
         <div><b>27%</b><span>of Earth's width. About four Moons would fit across the Earth.</span></div>
@@ -76,18 +71,15 @@
       </dl>
     </div>
     <div class="beat" data-a="0.64" data-b="2">
-      <p class="kick mono">Try it · Tonight's Moon</p>
       <div class="glass moontool" id="moonTool">
         <svg id="moonSvg" viewBox="0 0 200 200" role="img" aria-label=""></svg>
         <div>
-          <h3 id="mName"></h3><p class="meta mono" id="mMeta"></p>
+          <h3 id="mName"></h3><p class="meta" id="mMeta"></p>
           <div class="mrow"><label class="mono" for="mDate" style="color:var(--f60)">Date</label><input type="date" id="mDate"><label class="chk"><input type="checkbox" id="south"> Southern Hemisphere view</label></div>
           <dl class="nextrow"><div><dt class="mono">Next New Moon</dt><dd id="nNew"></dd></div><div><dt class="mono">Next Full Moon</dt><dd id="nFull"></dd></div></dl>
-          <p class="small">Calculated from the average lunar cycle, so it can be a day off.</p>
         </div>
       </div>
     </div>
-    <p class="cap mono">Earthrise over the Moon, Apollo 17 · NASA</p>
   </div>
 </section>
 
@@ -97,12 +89,10 @@
     <div class="ch__media" data-media><video data-vid muted loop playsinline preload="none" poster="assets/img/poster-sun.jpg" aria-hidden="true"><source src="assets/video/sun.mp4" type="video/mp4"></video></div>
     <div class="ch__shade"></div>
     <div class="beat" data-a="-1" data-b="0.5">
-      <p class="kick mono">Stop 2 · 149.6 million km</p>
       <h2 class="big">The star that <em>runs everything.</em></h2>
       <p class="sub">Sunlight left the Sun about 8 minutes and 20 seconds ago. This is the Sun in ultraviolet light, filmed by a NASA satellite, as a flare erupts from its surface.</p>
     </div>
     <div class="beat" data-a="0.44" data-b="2">
-      <p class="kick mono">What to know</p>
       <h2 class="big" style="font-size:clamp(30px,4.4vw,60px)">One star, almost all the mass.</h2>
       <dl class="facts">
         <div><b>99.86%</b><span>of all the mass in the solar system is in the Sun.</span></div>
@@ -111,7 +101,6 @@
         <div><b>Flares</b><span>are blasts of energy from tangled magnetic fields. Most are harmless to us.</span></div>
       </dl>
     </div>
-    <p class="cap mono">Solar flare, Solar Dynamics Observatory · NASA</p>
   </div>
 </section>
 
@@ -120,13 +109,11 @@
   <div class="ch__pin">
     <div class="ptrack" id="ptrack">
       <article class="pl pl--intro">
-        <p class="kick mono">Stop 3 · 4.5 billion km</p>
         <h2 class="big" style="font-size:clamp(38px,5.6vw,84px)">Eight worlds. <em>No two alike.</em></h2>
         <p class="sub">Keep scrolling and the planets drift past, from the nearest the Sun to the farthest. Real spacecraft images, with the numbers that matter.</p>
       </article>
       <div id="planetSlots" style="display:contents"></div>
       <article class="pl pl--weigh glass">
-        <p class="kick mono">Try it</p>
         <h3>What would you weigh there?</h3>
         <p class="sub" style="margin-top:10px">Your mass stays the same everywhere. Your weight changes with gravity. Enter your weight on Earth.</p>
         <label class="field"><input type="number" id="kg" value="60" min="1" max="500" inputmode="decimal" aria-label="Your weight on Earth in kilograms"><span>kg on Earth</span></label>
@@ -142,23 +129,20 @@
     <div class="ch__media" data-media><video data-vid muted loop playsinline preload="none" poster="assets/img/poster-nebula.jpg" aria-hidden="true"><source src="assets/video/nebula.mp4" type="video/mp4"></video></div>
     <div class="ch__shade"></div>
     <div class="beat" data-a="-1" data-b="0.4">
-      <p class="kick mono">Stop 4 · 4.2 light-years</p>
       <h2 class="big">Even the nearest star <em>is 40 trillion km away.</em></h2>
       <p class="sub">That star is Proxima Centauri. Stars are not points of light: they are suns, born in clouds like the Orion Nebula behind you, and every one of them will die.</p>
     </div>
     <div class="beat" data-a="0.34" data-b="2">
-      <p class="kick mono">Try it · The life of a star</p>
       <div class="seg" role="group" aria-label="Star size"><button id="pathSun" aria-pressed="true">Like our Sun</button><button id="pathBig" aria-pressed="false">Massive star</button></div>
       <div class="glass life">
         <ol class="steps" id="steps"></ol>
-        <figure class="life__art" id="artWrap"><svg id="art" viewBox="0 0 200 200" role="img" aria-label=""></svg><img id="artImg" alt="" hidden><figcaption class="mono" id="artCap"></figcaption></figure>
+        <figure class="life__art" id="artWrap"><svg id="art" viewBox="0 0 200 200" role="img" aria-label=""></svg><img id="artImg" alt="" hidden></figure>
         <div class="life__txt" aria-live="polite">
-          <p class="mono" id="stIdx" style="color:var(--f60)"></p><h3 id="stName"></h3><p id="stText"></p><p class="dur mono" id="stDur"></p>
+          <h3 id="stName"></h3><p id="stText"></p><p class="dur mono" id="stDur"></p>
           <div class="life__ctl"><button class="btn btn--ghost btn--sm" id="stPrev">← Earlier</button><button class="btn btn--solid btn--sm" id="stNext">Later →</button></div>
         </div>
       </div>
     </div>
-    <p class="cap mono">Orion Nebula visualization · NASA, ESA</p>
   </div>
 </section>
 
@@ -168,12 +152,10 @@
     <canvas id="gx" aria-label="Animated model of the Milky Way galaxy. Moving the cursor pushes the stars, which then fall back into place." role="img"></canvas>
     <div class="ch__shade c"></div>
     <div class="beat" data-a="-1" data-b="0.36">
-      <p class="kick mono">Stop 5 · 26,000 light-years</p>
       <h2 class="big">A spiral of <em>hundreds of billions of stars.</em></h2>
       <p class="sub">This is home: the Milky Way as it would look from far above. The amber ring marks roughly where we are. Move through it and watch the stars fall back into orbit.</p>
     </div>
     <div class="beat" data-a="0.3" data-b="0.66">
-      <p class="kick mono">What to know</p>
       <h2 class="big" style="font-size:clamp(30px,4.4vw,60px)">Big even by galaxy standards.</h2>
       <dl class="facts">
         <div><b>~100,000</b><span>light-years across</span></div>
@@ -183,13 +165,10 @@
       </dl>
     </div>
     <div class="beat" data-a="0.6" data-b="2">
-      <p class="kick mono">Next door · 2.5 million light-years</p>
       <h2 class="big" style="font-size:clamp(30px,4.4vw,60px)">The Andromeda Galaxy is coming for us.</h2>
       <p class="sub">It is the nearest large galaxy, and it is drifting toward ours. In a few billion years the two will merge.</p>
     </div>
-    <figure class="inset" id="inset"><img src="assets/img/andromeda.jpg" alt="The Andromeda Galaxy seen in ultraviolet light, a bright core surrounded by blue spiral arms" loading="lazy"><span class="mono">Andromeda</span></figure>
-    <p class="gxhint mono" id="gxhint">Move through the galaxy</p>
-    <p class="cap mono">Andromeda: GALEX ultraviolet image · NASA/JPL-Caltech</p>
+    <figure class="inset" id="inset"><img src="assets/img/andromeda.jpg" alt="The Andromeda Galaxy seen in ultraviolet light, a bright core surrounded by blue spiral arms" loading="lazy"></figure>
   </div>
 </section>
 
@@ -200,12 +179,10 @@
     <div class="zoom" aria-hidden="true"><img src="assets/img/deepfield.jpg" alt="" loading="lazy"></div>
     <div class="ch__shade c"></div>
     <div class="beat" data-a="-1" data-b="0.42">
-      <p class="kick mono">Stop 6 · 13 billion light-years</p>
       <h2 class="big">Look far enough <em>and you look back in time.</em></h2>
       <p class="sub">Light takes time to travel. The farther away something is, the older the light we see from it. Some of the light in the next image left before Earth existed.</p>
     </div>
     <div class="beat" data-a="0.38" data-b="2">
-      <p class="kick mono">The Hubble Extreme Deep Field</p>
       <h2 class="big" style="font-size:clamp(30px,4.4vw,60px)">Every dot is a galaxy.</h2>
       <dl class="facts">
         <div><b>Thousands</b><span>of galaxies in this single image</span></div>
@@ -214,14 +191,12 @@
         <div><b>13.8 billion</b><span>years: the age of the universe</span></div>
       </dl>
     </div>
-    <p class="cap mono">Evolution of galaxies, visualization · NASA · Hubble Extreme Deep Field · NASA, ESA</p>
   </div>
 </section>
 
 <!-- QUIZ + GLOSSARY -->
 <section class="last" id="quiz" aria-labelledby="quiz-h">
   <div class="wrap">
-    <p class="kick mono">Back home</p>
     <h2 id="quiz-h">Five questions. <em>Every answer teaches something.</em></h2>
     <p class="lead">No timer, no sign-up. You get the explanation after every answer, right or wrong.</p>
     <div class="glass quiz" id="quizBox" aria-live="polite"></div>

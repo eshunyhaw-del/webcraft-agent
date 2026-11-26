@@ -1,0 +1,123 @@
+[
+ {
+  "file": "assets/video/surface.mp4",
+  "description": "Humpback whale tail from above, filmed by drone",
+  "title": "Humpback whale Tail Sailing behaviour.webm",
+  "creator": "NOAA Sanctuaries",
+  "license": "CC BY 3.0",
+  "license_url": "https://creativecommons.org/licenses/by/3.0",
+  "source_page": "https://commons.wikimedia.org/wiki/File%3AHumpback_whale_Tail_Sailing_behaviour.webm",
+  "source": "Wikimedia Commons (API)",
+  "edits": "Cropped, trimmed to 14 s, audio removed, recompressed (a small permit caption at the bottom edge was cropped out)"
+ },
+ {
+  "file": "assets/video/midnight.mp4",
+  "description": "Deep-sea jellyfish, NOAA Okeanos Explorer 2016",
+  "title": "Jellyfish- 2016 Deepwater Exploration of the Marianas.webm",
+  "creator": "oceanexplorergov",
+  "license": "Public domain",
+  "license_url": "",
+  "source_page": "https://commons.wikimedia.org/wiki/File%3AJellyfish-_2016_Deepwater_Exploration_of_the_Marianas.webm",
+  "source": "Wikimedia Commons (API)",
+  "edits": "Trimmed, forward-then-reverse loop, audio removed, recompressed (opening logo and closing slide removed)"
+ },
+ {
+  "file": "assets/video/vents.mp4",
+  "description": "Hydrothermal vent chimneys, NOAA Okeanos Explorer 2016",
+  "title": "0501-hydrothermal-vents-640x360.webm",
+  "creator": "NOAA",
+  "license": "Public domain",
+  "license_url": "",
+  "source_page": "https://commons.wikimedia.org/wiki/File%3A0501-hydrothermal-vents-640x360.webm",
+  "source": "Wikimedia Commons (API)",
+  "edits": "Trimmed to 15 s, audio removed, recompressed (title slide removed)"
+ },
+ {
+  "file": "assets/img/manta.jpg",
+  "description": "Giant oceanic manta ray with a diver",
+  "title": "Giant oceanic manta ray.jpg",
+  "creator": "Daniel Sasse",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "source_page": "https://commons.wikimedia.org/wiki/File%3AGiant_oceanic_manta_ray.jpg",
+  "source": "Wikimedia Commons (API)",
+  "edits": "Resized and recompressed"
+ },
+ {
+  "file": "assets/img/bleach.jpg",
+  "description": "Bleached coral colony (Porites lobata)",
+  "title": "Bleached Porites lobata coral colony.JPG",
+  "creator": "Francois Seneca",
+  "license": "CC0",
+  "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "source_page": "https://commons.wikimedia.org/wiki/File%3ABleached_Porites_lobata_coral_colony.JPG",
+  "source": "Wikimedia Commons (API)",
+  "edits": "Bottom 10% cropped to remove a date stamp; resized"
+ },
+ {
+  "file": "assets/img/debris.jpg",
+  "description": "Marine debris and plastic waste on a beach",
+  "title": "Marine debris and plastic waste on beach.jpg",
+  "creator": "VariousPhotography",
+  "license": "CC0",
+  "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "source_page": "https://commons.wikimedia.org/wiki/File%3AMarine_debris_and_plastic_waste_on_beach.jpg",
+  "source": "Wikimedia Commons (API)",
+  "edits": "Resized and recompressed"
+ },
+ {
+  "file": "assets/img/deepcoral.jpg",
+  "description": "Deep-sea corals, Wagner Seamount",
+  "title": "Deep sea corals, Wagner Seamount.jpg",
+  "creator": "NOAA Office of Ocean Exploration and Research, Deep-Sea Symphony: Exploring the Musicians Seamounts",
+  "license": "Public domain",
+  "license_url": "",
+  "source_page": "https://commons.wikimedia.org/wiki/File%3ADeep_sea_corals%2C_Wagner_Seamount.jpg",
+  "source": "Wikimedia Commons (API)",
+  "edits": "Resized and recompressed"
+ },
+ {
+  "file": "assets/img/ipnops.jpg",
+  "description": "Ipnops meadi, a deep-sea fish",
+  "title": "Ipnops meadi.jpg",
+  "creator": "Astrid Leitner, NOAA Office of Exploration",
+  "license": "Public domain",
+  "license_url": "",
+  "source_page": "https://commons.wikimedia.org/wiki/File%3AIpnops_meadi.jpg",
+  "source": "Wikimedia Commons (API)",
+  "edits": "Resized and recompressed"
+ },
+ {
+  "file": "assets/img/relicanthus.jpg",
+  "description": "Relicanthus daphneae, deep-sea anemone-like animal",
+  "title": "Relicanthus daphneae 2016.jpg",
+  "creator": "NOAA Ocean Exploration, Deepwater Exploration of the Marianas",
+  "license": "Public domain",
+  "license_url": "",
+  "source_page": "https://commons.wikimedia.org/wiki/File%3ARelicanthus_daphneae_2016.jpg",
+  "source": "Wikimedia Commons (API)",
+  "edits": "Recompressed"
+ },
+ {
+  "file": "assets/video/reef.mp4",
+  "description": "Coral reef, Chesterfield Islands",
+  "title": "First record of the species Balistoides viridescens at the Chesterfield-Bellona reef complex in the Coral Sea Marine Park (Ifremer 00675-78687).webm",
+  "creator": "Dominique Pelletier",
+  "license": "CC BY 4.0",
+  "license_url": "https://creativecommons.org/licenses/by/4.0",
+  "source_page": "https://commons.wikimedia.org/wiki/File%3AFirst_record_of_the_species_Balistoides_viridescens_at_the_Chesterfield-Bellona_reef_complex_in_the_Coral_Sea_Marine_Park_%28Ifremer_00675-78687%29.webm",
+  "source": "Wikimedia Commons (API)",
+  "edits": "Trimmed to 17 s, played forward then reversed for a seamless loop, audio removed, recompressed"
+ },
+ {
+  "file": "assets/video/twilight.mp4",
+  "description": "Deep-sea crab on black coral, NOAA Okeanos Explorer",
+  "title": "Ex1402-dive03.webm",
+  "creator": "NOAA Okeanos Explorer",
+  "license": "Public domain",
+  "license_url": "",
+  "source_page": "https://commons.wikimedia.org/wiki/File%3AEx1402-dive03.webm",
+  "source": "Wikimedia Commons (API)",
+  "edits": "Trimmed to 7 s, forward-then-reverse loop, audio removed, recompressed"
+ }
+]
