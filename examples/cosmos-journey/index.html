@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Farfield: a journey outward through the universe</title>
+<meta name="description" content="Scroll from Earth orbit to the edge of the visible universe. Real NASA photographs and footage, plain-language explanations, and tools to explore the Moon, the planets, stars and galaxies.">
+<meta name="theme-color" content="#000000">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M12 1l2.2 8.8L23 12l-8.8 2.2L12 23l-2.2-8.8L1 12l8.8-2.2z'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip" href="#quiz">Skip the journey to the quiz</a>
+<div class="grain" aria-hidden="true"></div>
+<canvas id="stars" aria-hidden="true"></canvas>
+
+<header class="nav">
+  <a class="logo" href="#c0" aria-label="Farfield, back to the start">
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 1l2.2 8.8L23 12l-8.8 2.2L12 23l-2.2-8.8L1 12l8.8-2.2z"/></svg>Farfield
+  </a>
+  <div class="nav__r">
+    <button class="pill" id="calmBtn" aria-pressed="false" title="Pause videos and the moving starfield"><span aria-hidden="true">❚❚</span><span class="lbl">Pause motion</span></button>
+    <button class="pill mono" id="menuBtn" aria-expanded="false" aria-controls="sheet">Stops</button>
+  </div>
+</header>
+<nav class="sheet" id="sheet" aria-label="Journey stops"></nav>
+
+<aside class="hud" id="hud" aria-hidden="true">
+  <p class="mono">Distance from Earth</p>
+  <p class="hud__v" id="hudV">408 km</p>
+  <p class="hud__t mono" id="hudT">Light needs 0.0014 seconds</p>
+  <div class="hud__c"><span class="mono" id="hudN">Stop 0 of 7</span><b id="hudL">Earth orbit</b></div>
+</aside>
+<nav class="rail" id="rail" aria-label="Journey progress"></nav>
+
+<main id="main">
+
+<!-- STOP 0: EARTH ORBIT -->
+<section class="ch hero" id="c0" style="--h:190" data-dist="408" data-name="Earth orbit" data-sub="Start">
+  <div class="ch__pin">
+    <div class="ch__media" data-media><video data-vid autoplay muted loop playsinline preload="auto" poster="assets/img/poster-earth.jpg" aria-hidden="true"><source src="assets/video/earth.mp4" type="video/mp4"></video></div>
+    <div class="ch__shade"></div>
+    <div class="beat live" data-a="-1" data-b="0.5">
+      <p class="kick mono e" style="--d:.15s">A journey outward, in seven stops</p>
+      <h1 class="big"><span class="e" style="--d:.3s">Look up.</span> <span class="e" style="--d:.45s"><em>Then understand it.</em></span></h1>
+      <p class="sub e" style="--d:.7s">Scroll to leave Earth. At every stop you will see real photographs and footage from NASA, and learn what you are looking at. No background needed.</p>
+      <div class="cta e" style="--d:.85s"><a class="btn btn--solid" href="#c1">Begin the journey <i aria-hidden="true">↓</i></a><a class="btn btn--ghost" href="#quiz">Test what you know</a></div>
+    </div>
+    <p class="cue mono" aria-hidden="true">Scroll</p>
+    <p class="cap mono">Earth from the International Space Station · NASA</p>
+  </div>
+</section>
+
+<!-- STOP 1: THE MOON -->
+<section class="ch" id="c1" style="--h:360" data-dist="384400" data-name="The Moon" data-sub="Stop 1">
+  <div class="ch__pin">
+    <div class="ch__media" data-media><img src="assets/img/moon-horizon.jpg" alt="The grey, cratered lunar horizon with a small blue Earth rising above it, photographed by Apollo 17 astronauts" loading="lazy"></div>
+    <div class="ch__shade"></div>
+    <figure class="moonbig" id="moonBig"><img src="assets/img/moon.jpg" alt="The full Moon, showing dark volcanic plains and bright cratered highlands" loading="lazy"></figure>
+    <div class="beat" data-a="-1" data-b="0.36">
+      <p class="kick mono">Stop 1 · 384,400 km</p>
+      <h2 class="big">The only world <em>we have ever visited.</em></h2>
+      <p class="sub">The Moon is our nearest neighbour. Its light reaches you in about 1.3 seconds. Earth is the little blue dot rising over this lunar horizon.</p>
+    </div>
+    <div class="beat" data-a="0.3" data-b="0.7">
+      <p class="kick mono">What to know</p>
+      <h2 class="big" style="font-size:clamp(30px,4.4vw,60px)">Small, close, and always the same face.</h2>
+      <dl class="facts">
+        <div><b>27%</b><span>of Earth's width. About four Moons would fit across the Earth.</span></div>
+        <div><b>1 face</b><span>always turned toward us. The Moon spins once for every orbit.</span></div>
+        <div><b>12</b><span>people have walked on it, all between 1969 and 1972.</span></div>
+        <div><b>29.5 days</b><span>from one New Moon to the next: a full cycle of phases.</span></div>
+      </dl>
+    </div>
+    <div class="beat" data-a="0.64" data-b="2">
+      <p class="kick mono">Try it · Tonight's Moon</p>
+      <div class="glass moontool" id="moonTool">
+        <svg id="moonSvg" viewBox="0 0 200 200" role="img" aria-label=""></svg>
+        <div>
+          <h3 id="mName"></h3><p class="meta mono" id="mMeta"></p>
+          <div class="mrow"><label class="mono" for="mDate" style="color:var(--f60)">Date</label><input type="date" id="mDate"><label class="chk"><input type="checkbox" id="south"> Southern Hemisphere view</label></div>
+          <dl class="nextrow"><div><dt class="mono">Next New Moon</dt><dd id="nNew"></dd></div><div><dt class="mono">Next Full Moon</dt><dd id="nFull"></dd></div></dl>
+          <p class="small">Calculated from the average lunar cycle, so it can be a day off.</p>
+        </div>
+      </div>
+    </div>
+    <p class="cap mono">Earthrise over the Moon, Apollo 17 · NASA</p>
+  </div>
+</section>
+
+<!-- STOP 2: THE SUN -->
+<section class="ch" id="c2" style="--h:280" data-dist="149600000" data-name="The Sun" data-sub="Stop 2">
+  <div class="ch__pin">
+    <div class="ch__media" data-media><video data-vid muted loop playsinline preload="none" poster="assets/img/poster-sun.jpg" aria-hidden="true"><source src="assets/video/sun.mp4" type="video/mp4"></video></div>
+    <div class="ch__shade"></div>
+    <div class="beat" data-a="-1" data-b="0.5">
+      <p class="kick mono">Stop 2 · 149.6 million km</p>
+      <h2 class="big">The star that <em>runs everything.</em></h2>
+      <p class="sub">Sunlight left the Sun about 8 minutes and 20 seconds ago. This is the Sun in ultraviolet light, filmed by a NASA satellite, as a flare erupts from its surface.</p>
+    </div>
+    <div class="beat" data-a="0.44" data-b="2">
+      <p class="kick mono">What to know</p>
+      <h2 class="big" style="font-size:clamp(30px,4.4vw,60px)">One star, almost all the mass.</h2>
+      <dl class="facts">
+        <div><b>99.86%</b><span>of all the mass in the solar system is in the Sun.</span></div>
+        <div><b>5,500 °C</b><span>at its visible surface. The core is about 15 million °C.</span></div>
+        <div><b>1.3 million</b><span>Earths would fit inside it, by volume.</span></div>
+        <div><b>Flares</b><span>are blasts of energy from tangled magnetic fields. Most are harmless to us.</span></div>
+      </dl>
+    </div>
+    <p class="cap mono">Solar flare, Solar Dynamics Observatory · NASA</p>
+  </div>
+</section>
+
+<!-- STOP 3: THE PLANETS (horizontal fly-by) -->
+<section class="ch ch--planets" id="c3" style="--h:760" data-dist="4500000000" data-name="The planets" data-sub="Stop 3">
+  <div class="ch__pin">
+    <div class="ptrack" id="ptrack">
+      <article class="pl pl--intro">
+        <p class="kick mono">Stop 3 · 4.5 billion km</p>
+        <h2 class="big" style="font-size:clamp(38px,5.6vw,84px)">Eight worlds. <em>No two alike.</em></h2>
+        <p class="sub">Keep scrolling and the planets drift past, from the nearest the Sun to the farthest. Real spacecraft images, with the numbers that matter.</p>
+      </article>
+      <div id="planetSlots" style="display:contents"></div>
+      <article class="pl pl--weigh glass">
+        <p class="kick mono">Try it</p>
+        <h3>What would you weigh there?</h3>
+        <p class="sub" style="margin-top:10px">Your mass stays the same everywhere. Your weight changes with gravity. Enter your weight on Earth.</p>
+        <label class="field"><input type="number" id="kg" value="60" min="1" max="500" inputmode="decimal" aria-label="Your weight on Earth in kilograms"><span>kg on Earth</span></label>
+        <dl class="wgrid" id="wgrid"></dl>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- STOP 4: STARS -->
+<section class="ch" id="c4" style="--h:360" data-dist="40100000000000" data-name="The stars" data-sub="Stop 4">
+  <div class="ch__pin">
+    <div class="ch__media" data-media><video data-vid muted loop playsinline preload="none" poster="assets/img/poster-nebula.jpg" aria-hidden="true"><source src="assets/video/nebula.mp4" type="video/mp4"></video></div>
+    <div class="ch__shade"></div>
+    <div class="beat" data-a="-1" data-b="0.4">
+      <p class="kick mono">Stop 4 · 4.2 light-years</p>
+      <h2 class="big">Even the nearest star <em>is 40 trillion km away.</em></h2>
+      <p class="sub">That star is Proxima Centauri. Stars are not points of light: they are suns, born in clouds like the Orion Nebula behind you, and every one of them will die.</p>
+    </div>
+    <div class="beat" data-a="0.34" data-b="2">
+      <p class="kick mono">Try it · The life of a star</p>
+      <div class="seg" role="group" aria-label="Star size"><button id="pathSun" aria-pressed="true">Like our Sun</button><button id="pathBig" aria-pressed="false">Massive star</button></div>
+      <div class="glass life">
+        <ol class="steps" id="steps"></ol>
+        <figure class="life__art" id="artWrap"><svg id="art" viewBox="0 0 200 200" role="img" aria-label=""></svg><img id="artImg" alt="" hidden><figcaption class="mono" id="artCap"></figcaption></figure>
+        <div class="life__txt" aria-live="polite">
+          <p class="mono" id="stIdx" style="color:var(--f60)"></p><h3 id="stName"></h3><p id="stText"></p><p class="dur mono" id="stDur"></p>
+          <div class="life__ctl"><button class="btn btn--ghost btn--sm" id="stPrev">← Earlier</button><button class="btn btn--solid btn--sm" id="stNext">Later →</button></div>
+        </div>
+      </div>
+    </div>
+    <p class="cap mono">Orion Nebula visualization · NASA, ESA</p>
+  </div>
+</section>
+
+<!-- STOP 5: THE GALAXY -->
+<section class="ch" id="c5" style="--h:340" data-dist="246000000000000000" data-name="The Milky Way" data-sub="Stop 5">
+  <div class="ch__pin">
+    <canvas id="gx" aria-label="Animated model of the Milky Way galaxy. Moving the cursor pushes the stars, which then fall back into place." role="img"></canvas>
+    <div class="ch__shade c"></div>
+    <div class="beat" data-a="-1" data-b="0.36">
+      <p class="kick mono">Stop 5 · 26,000 light-years</p>
+      <h2 class="big">A spiral of <em>hundreds of billions of stars.</em></h2>
+      <p class="sub">This is home: the Milky Way as it would look from far above. The amber ring marks roughly where we are. Move through it and watch the stars fall back into orbit.</p>
+    </div>
+    <div class="beat" data-a="0.3" data-b="0.66">
+      <p class="kick mono">What to know</p>
+      <h2 class="big" style="font-size:clamp(30px,4.4vw,60px)">Big even by galaxy standards.</h2>
+      <dl class="facts">
+        <div><b>~100,000</b><span>light-years across</span></div>
+        <div><b>~26,000</b><span>light-years from the centre to the Sun</span></div>
+        <div><b>~230 million</b><span>years for the Sun to orbit the centre once</span></div>
+        <div><b>~4 million</b><span>Suns of mass in the black hole at the centre</span></div>
+      </dl>
+    </div>
+    <div class="beat" data-a="0.6" data-b="2">
+      <p class="kick mono">Next door · 2.5 million light-years</p>
+      <h2 class="big" style="font-size:clamp(30px,4.4vw,60px)">The Andromeda Galaxy is coming for us.</h2>
+      <p class="sub">It is the nearest large galaxy, and it is drifting toward ours. In a few billion years the two will merge.</p>
+    </div>
+    <figure class="inset" id="inset"><img src="assets/img/andromeda.jpg" alt="The Andromeda Galaxy seen in ultraviolet light, a bright core surrounded by blue spiral arms" loading="lazy"><span class="mono">Andromeda</span></figure>
+    <p class="gxhint mono" id="gxhint">Move through the galaxy</p>
+    <p class="cap mono">Andromeda: GALEX ultraviolet image · NASA/JPL-Caltech</p>
+  </div>
+</section>
+
+<!-- STOP 6: THE EDGE -->
+<section class="ch edge" id="c6" style="--h:320" data-dist="123000000000000000000000" data-name="The visible edge" data-sub="Stop 6">
+  <div class="ch__pin">
+    <div class="ch__media" data-media><video data-vid muted loop playsinline preload="none" poster="assets/img/poster-galaxies.jpg" aria-hidden="true"><source src="assets/video/galaxies.mp4" type="video/mp4"></video></div>
+    <div class="zoom" aria-hidden="true"><img src="assets/img/deepfield.jpg" alt="" loading="lazy"></div>
+    <div class="ch__shade c"></div>
+    <div class="beat" data-a="-1" data-b="0.42">
+      <p class="kick mono">Stop 6 · 13 billion light-years</p>
+      <h2 class="big">Look far enough <em>and you look back in time.</em></h2>
+      <p class="sub">Light takes time to travel. The farther away something is, the older the light we see from it. Some of the light in the next image left before Earth existed.</p>
+    </div>
+    <div class="beat" data-a="0.38" data-b="2">
+      <p class="kick mono">The Hubble Extreme Deep Field</p>
+      <h2 class="big" style="font-size:clamp(30px,4.4vw,60px)">Every dot is a galaxy.</h2>
+      <dl class="facts">
+        <div><b>Thousands</b><span>of galaxies in this single image</span></div>
+        <div><b>1 / 32,000,000</b><span>of the whole sky: a patch that looks empty to the eye</span></div>
+        <div><b>13+ billion</b><span>years: the age of the oldest light here</span></div>
+        <div><b>13.8 billion</b><span>years: the age of the universe</span></div>
+      </dl>
+    </div>
+    <p class="cap mono">Evolution of galaxies, visualization · NASA · Hubble Extreme Deep Field · NASA, ESA</p>
+  </div>
+</section>
+
+<!-- QUIZ + GLOSSARY -->
+<section class="last" id="quiz" aria-labelledby="quiz-h">
+  <div class="wrap">
+    <p class="kick mono">Back home</p>
+    <h2 id="quiz-h">Five questions. <em>Every answer teaches something.</em></h2>
+    <p class="lead">No timer, no sign-up. You get the explanation after every answer, right or wrong.</p>
+    <div class="glass quiz" id="quizBox" aria-live="polite"></div>
+    <div class="gloss" id="glossary">
+      <div class="gloss__top"><h3>Plain-language glossary</h3><input type="search" id="gq" placeholder="Search a term, e.g. redshift" aria-label="Search the glossary"></div>
+      <dl id="gl"></dl>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="foot">
+    <div><p class="wm">Farfield</p><p class="small" style="margin-top:14px;max-width:26rem">An independent educational guide. Figures are rounded for clarity; for the latest values see <a href="https://www.nasa.gov" rel="noopener" style="border-bottom:1px solid var(--line)">NASA</a> and <a href="https://www.esa.int" rel="noopener" style="border-bottom:1px solid var(--line)">ESA</a>.</p></div>
+    <div class="credits"><h4 class="mono">Image and video credits</h4><ul id="creditList"></ul></div>
+  </div>
+  <div class="fine"><span>All photographs and footage come from NASA's public image and video library. NASA does not endorse this site.</span><span>Videos are trimmed and compressed, with audio removed.</span></div>
+</footer>
+
+<script>window.__MANIFEST=[{"nasa_id": "PIA18033", "title": "Earth", "center": "JPL", "type": "image", "page": "https://images.nasa.gov/details/PIA18033", "credit": "NASA"}, {"nasa_id": "GSFC_20171208_Archive_e001861", "title": "Full Moon", "center": "GSFC", "type": "image", "page": "https://images.nasa.gov/details/GSFC_20171208_Archive_e001861", "credit": "NASA"}, {"nasa_id": "as17-152-23272", "title": "Apollo 17, Earthrise over Moon", "center": "JSC", "type": "image", "page": "https://images.nasa.gov/details/as17-152-23272", "credit": "NASA"}, {"nasa_id": "GSFC_20171208_Archive_e001545", "title": "False Color View of Mercury", "center": "GSFC", "type": "image", "page": "https://images.nasa.gov/details/GSFC_20171208_Archive_e001545", "credit": "NASA"}, {"nasa_id": "PIA00008", "title": "Hemispheric View of Venus Centered at the South Pole", "center": "JPL", "type": "image", "page": "https://images.nasa.gov/details/PIA00008", "credit": "NASA/JPL/USGS"}, {"nasa_id": "PIA01253", "title": "Springtime on Mars: Hubble Best View of the Red Planet", "center": "JPL", "type": "image", "page": "https://images.nasa.gov/details/PIA01253", "credit": "JPL/NASA/STScI"}, {"nasa_id": "PIA21775", "title": "Jupiter's Great Red Spot in True Color", "center": "JPL", "type": "image", "page": "https://images.nasa.gov/details/PIA21775", "credit": "NASA"}, {"nasa_id": "PIA06193", "title": "The Greatest Saturn Portrait ...Yet", "center": "JPL", "type": "image", "page": "https://images.nasa.gov/details/PIA06193", "credit": "NASA/JPL/Space Science Institute"}, {"nasa_id": "PIA18182", "title": "Uranus as seen by NASA Voyager 2", "center": "JPL", "type": "image", "page": "https://images.nasa.gov/details/PIA18182", "credit": "NASA/JPL-Caltech"}, {"nasa_id": "PIA02210", "title": "Neptune", "center": "JPL", "type": "image", "page": "https://images.nasa.gov/details/PIA02210", "credit": "NASA/JPL"}, {"nasa_id": "GSFC_20171208_Archive_e000790", "title": "NASA's SDO Sees Giant Filament on the Sun", "center": "GSFC", "type": "image", "page": "https://images.nasa.gov/details/GSFC_20171208_Archive_e000790", "credit": "NASA"}, {"nasa_id": "GSFC_20171208_Archive_e000842", "title": "Hubble Goes High Def to Revisit the Iconic 'Pillars of Creation'", "center": "GSFC", "type": "image", "page": "https://images.nasa.gov/details/GSFC_20171208_Archive_e000842", "credit": "NASA"}, {"nasa_id": "carina_nebula", "title": "James Webb Space Telescope NIRCam Image of the “Cosmic Cliffs” in Carina Nebula", "center": "STScI (Webb)", "type": "image", "page": "https://images.nasa.gov/details/carina_nebula", "credit": "NASA ESA CSA STScI"}, {"nasa_id": "PIA03606", "title": "Most Detailed Image of the Crab Nebula", "center": "JPL", "type": "image", "page": "https://images.nasa.gov/details/PIA03606", "credit": "NASA/ESA/JPL/Arizona State Univ."}, {"nasa_id": "PIA04921", "title": "Andromeda Galaxy", "center": "JPL", "type": "image", "page": "https://images.nasa.gov/details/PIA04921", "credit": "NASA/JPL/California Institute of Technology"}, {"nasa_id": "GSFC_20171208_Archive_e001651", "title": "Hubble Goes to the eXtreme to Assemble Farthest-Ever View of the Universe", "center": "GSFC", "type": "image", "page": "https://images.nasa.gov/details/GSFC_20171208_Archive_e001651", "credit": "NASA"}, {"nasa_id": "Earth Views from the International Space Station", "title": "Earth Views from the International Space Station", "center": "HQ", "type": "video", "page": "https://images.nasa.gov/details/Earth%20Views%20from%20the%20International%20Space%20Station", "credit": "NASA"}, {"nasa_id": "GSFC_20160426_SDO_m12224_SolarFlare_4K", "title": "NASA’s SDO Captures Stunning 4K View of April 17 Solar Flare", "center": "GSFC", "type": "video", "page": "https://images.nasa.gov/details/GSFC_20160426_SDO_m12224_SolarFlare_4K", "credit": "Genna Duberstein, Tom Bridgman, Sarah Frazier"}, {"nasa_id": "JPL-20221122-SOLSYSf-0001-Orion Dust and Death", "title": "Dust and Drama in the Orion Nebula from NASA and ESA Images", "center": "JPL", "type": "video", "page": "https://images.nasa.gov/details/JPL-20221122-SOLSYSf-0001-Orion%20Dust%20and%20Death", "credit": "ESA/NASA/JPL-Caltech"}, {"nasa_id": "Evolution_of_Galaxies_H264", "title": "Evolution of Galaxies", "center": "GSFC", "type": "video", "page": "https://images.nasa.gov/details/Evolution_of_Galaxies_H264", "credit": "Sophia Roberts, Michael McClare"}];</script>
+<script src="app.js"></script>
+</body>
+</html>

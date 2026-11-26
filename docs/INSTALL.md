@@ -76,6 +76,17 @@ node scripts/setup-motionsites.mjs
 
 See [MOTIONSITES_SKILL.md](MOTIONSITES_SKILL.md) for details.
 
+## Optional: the media tool and the immersive example
+
+For real photographs and video, the agent uses `scripts/media/webcraft_media.py`. It needs Python 3.9+, [ffmpeg](https://ffmpeg.org) on your PATH, and Pillow (`pip install pillow`). To see the full immersive pattern, build the reference example:
+
+```
+python scripts/media/webcraft_media.py build examples/cosmos-journey/media-plan.json --out examples/cosmos-journey
+cd examples/cosmos-journey && python -m http.server 8000
+```
+
+Details: [examples/cosmos-journey/README.md](../examples/cosmos-journey/README.md) and [docs/recipes/scroll-journey.md](recipes/scroll-journey.md).
+
 ## What happens next
 
 1. The AI may ask up to five short questions. Answer briefly or say "you decide".

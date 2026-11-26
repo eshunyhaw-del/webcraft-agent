@@ -905,6 +905,22 @@ This repository bundles the MIT-licensed parts of the free **MotionSites Web Bui
 - Verify interactions numerically where possible, for example by measuring canvas pixels before and during a cursor push.
 - Stop any preview servers you start, and never leave files in the project that the user did not ask for.
 
+**Use the bundled media tool** (`scripts/media/webcraft_media.py`; needs Python 3.9+, ffmpeg, and Pillow):
+- `search "query" --type image|video` lists items from NASA's library with their full IDs.
+- `scan clip.mp4 --sheet frames.jpg` reports brightness per second, dark stretches, and sudden jumps, and writes a contact sheet of frames. **Always open the sheet and look.** It catches black openings, burned-in captions, element labels, logos, and credit slides.
+- `cut in.mp4 out.mp4 --start S --dur D [--boomerang]` trims, strips audio, compresses, and can build a seamless forward-and-reverse loop.
+- `build plan.json --out DIR` downloads and prepares every photo and clip listed in a media plan and writes `assets/manifest.json` for the credits. See `examples/cosmos-journey/media-plan.json`.
+- For sources other than NASA, use the same method (official API, download into the project, manifest, credits, scan the video) and adapt the commands.
+
+## 11.3 The scroll-journey pattern
+
+For subjects with a natural sequence of places, scales, or stages, and strong real imagery (space, the ocean from surface to trench, the body from skin to cell, a product's journey), consider the immersive **scroll journey** instead of stacked sections: full-screen pinned scenes, media that drifts as you scroll, scenes made of timed beats, a live "distance" readout, a starfield that streaks as you travel, a horizontal fly-by, and a cursor-stirred particle effect.
+
+- Read `docs/recipes/scroll-journey.md` for the architecture, the numbers, the mobile rules, and the pitfalls.
+- A complete, tested reference implementation is in `examples/cosmos-journey/` (plain HTML, CSS, and JavaScript). Rebuild its media with the media tool, then adapt it: change the chapters, distances, formatters, media plan, and copy, and keep the engine. Never copy its subject matter, copy, or identity into an unrelated project.
+- Use it only when it helps the visitor. For simple brochure sites, shops, and anything people scan quickly, choose a calmer design (Section 12).
+- Always ship the fallbacks: a no-JavaScript stacked layout, a reduced-motion layout, a pause button, and mobile layouts verified with `scripts/qa/beat-fit.js` at 360 by 640, 390 by 844, and 1366 by 700.
+
 ---
 
 # 12. STACK SELECTION — CHOOSE THE RIGHT TECHNOLOGY FOR THE JOB

@@ -1,0 +1,27 @@
+{
+  "_about": "Everything the cosmos-journey site needs from NASA's public library. Rebuild with: python scripts/media/webcraft_media.py build examples/cosmos-journey/media-plan.json --out examples/cosmos-journey",
+  "images": [
+    {"key": "earth",        "id": "PIA18033",                      "maxWidth": 1800},
+    {"key": "moon",         "id": "GSFC_20171208_Archive_e001861", "maxWidth": 1200, "cropToDisc": true},
+    {"key": "moon-horizon", "id": "as17-152-23272",                "maxWidth": 2200},
+    {"key": "mercury",      "id": "GSFC_20171208_Archive_e001545", "maxWidth": 1400},
+    {"key": "venus",        "id": "PIA00008",                      "maxWidth": 1400},
+    {"key": "mars",         "id": "PIA01253",                      "maxWidth": 1400},
+    {"key": "jupiter",      "id": "PIA21775",                      "maxWidth": 2000},
+    {"key": "saturn",       "id": "PIA06193",                      "maxWidth": 2200},
+    {"key": "uranus",       "id": "PIA18182",                      "maxWidth": 1400},
+    {"key": "neptune",      "id": "PIA02210",                      "maxWidth": 1400},
+    {"key": "sun",          "id": "GSFC_20171208_Archive_e000790", "maxWidth": 1800},
+    {"key": "pillars",      "id": "GSFC_20171208_Archive_e000842", "maxWidth": 2200},
+    {"key": "cliffs",       "id": "carina_nebula",                 "maxWidth": 2400},
+    {"key": "crab",         "id": "PIA03606",                      "maxWidth": 1800},
+    {"key": "andromeda",    "id": "PIA04921",                      "maxWidth": 1800},
+    {"key": "deepfield",    "id": "GSFC_20171208_Archive_e001651", "maxWidth": 2000}
+  ],
+  "videos": [
+    {"key": "earth",    "id": "Earth Views from the International Space Station", "start": 13.3, "dur": 13.4, "crf": 23, "posterAt": 0.2},
+    {"key": "sun",      "id": "GSFC_20160426_SDO_m12224_SolarFlare_4K",           "start": 14,   "dur": 14,   "posterAt": 1},
+    {"key": "galaxies", "id": "Evolution_of_Galaxies_H264",                       "start": 33,   "dur": 8.5,  "boomerang": true, "crf": 23, "posterAt": 1},
+    {"key": "nebula",   "id": "JPL-20221122-SOLSYSf-0001-Orion Dust and Death",   "start": 105.9, "dur": 5.5, "boomerang": true, "posterAt": 0.1, "credit": "ESA/NASA/JPL-Caltech"}
+  ]
+}
