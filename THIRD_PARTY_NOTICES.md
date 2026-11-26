@@ -34,4 +34,14 @@ SOFTWARE.
 
 The skill's `examples/` (example design prompts) and `media/` (media shelf) folders are **copyright MotionSites**. Their licence permits using them to build websites, including for clients, but **forbids reselling or redistributing them as a prompt or media collection**. They are therefore excluded and git-ignored. Run `node scripts/setup-motionsites.mjs` to download them directly from MotionSites for your own use.
 
-This project is independent and is not affiliated with or endorsed by MotionSites. The WEBCraft master prompt, stack-selection guidance, and tool integrations are separate work, licensed under this repository's [MIT licence](LICENSE).
+This project is independent and is not affiliated with or endorsed by MotionSites.
+
+## Spell UI
+
+Bundled in `references/react/spell-ui/source/` as a read-only reference copy of the component source.
+
+- **Author:** Spell UI, https://spell.sh
+- **Source:** https://github.com/xxtomm/spell-ui
+- **Licence:** MIT, copyright (c) 2025 Spell UI. The full text is in `references/react/spell-ui/LICENSE`.
+
+This project is not affiliated with or endorsed by Spell UI. The WEBCraft master prompt, stack-selection guidance, and tool integrations are separate work, licensed under this repository's [MIT licence](LICENSE).

@@ -8,5 +8,7 @@ Tools and patterns in this repository (details are in the master prompt, Section
 - **Immersive scroll journey:** `docs/recipes/scroll-journey.md`, a runnable starter in `examples/scroll-journey-starter/`, and a richer reference in `examples/cosmos-journey/`.
 - **Layout QA for scroll scenes:** `scripts/qa/beat-fit.js`.
 - **Craft library (MotionSites, MIT):** `.claude/skills/motionsites-web-builder/references/`.
+- **React components (Spell UI, MIT):** `references/react/spell-ui/CATALOG.md`, used when the chosen stack is React (Section 12.8).
+- **Design rules that always apply:** no eyebrow labels above headings, no decorative numbering, no small captions or microcopy (Section 3.4).
 
 @agent/WEBCRAFT_MASTER_PROMPT.md

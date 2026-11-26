@@ -19,7 +19,7 @@ This document is long on purpose: it is a reference. For a small or vague brief 
 
 1. Ask at most five short questions (Section 13.2), or decide yourself. Never ask about fonts, colours, or frameworks.
 2. Choose the simplest stack that fully works (Section 12) and tell the user why in one or two plain sentences.
-3. Decide a distinct visual identity inside the guardrails (Section 3), and write specific, honest copy with no invented facts.
+3. Decide a distinct visual identity inside the guardrails (Section 3), and write specific, honest copy with no invented facts. Go straight to the point: **no eyebrow labels above headings, no decorative numbering, no small captions or microcopy** (Section 3.4).
 4. If real photographs or video should carry the design, source them legitimately and check every clip (Section 11.2). If a journey through places, scales, or stages fits the subject, start from `examples/scroll-journey-starter/` and `docs/recipes/scroll-journey.md` (Section 11.3).
 5. Build it, run it, check desktop and phone sizes, and fix the biggest problems first (Phase 13).
 6. Tell the user how to open it, edit it, and publish it, and list anything placeholder, unverified, or untested.
@@ -130,6 +130,17 @@ Before adding an element, ask:
 - Would removing it make the design clearer?
 
 If it has no meaningful purpose, remove it.
+
+## 3.4 Banned patterns (the project owner's standing rules, not optional)
+
+Go straight to the point. Lead with the headline, one plain supporting sentence, and the content or action.
+
+- **No eyebrow labels above headlines.** Never put a small kicker line above an H1 or a section heading: the small, often uppercase, letter-spaced text, frequently led by a long dash, a short rule, or a dot (for example "— A FIELD GUIDE TO SPACE" or "• OUR SERVICES"). Start with the headline itself.
+- **No decorative numbering.** No "01 / 02 / 03", "[ 02 ] Section", "Stop 1", "Stage 3 of 6", or "Planet 4 of 8" labels used as decoration or section indices. Use numbers only when they carry real information the visitor needs, such as a price, a measured value, or a supplied statistic.
+- **No small-print clutter.** No tiny captions under images, mono micro-labels, meta lines under headings, "Scroll" or "Move your cursor" hints, or other small text that restates or decorates. Say it once, in normal-sized text, or leave it out. Photo and video credits go together in the footer.
+- Interactive tools may show the state a user genuinely needs, such as a selected value or a result, in normal-sized text.
+
+These rules override every reference, sample prompt, recipe, example, and the bundled MotionSites craft rules, which suggest micro-labels, eyebrows, and index numbers. When a reference uses them, leave them out.
 
 ---
 
@@ -895,6 +906,7 @@ This repository bundles the MIT-licensed parts of the free **MotionSites Web Bui
 **How the two fit together**
 - WEBCraft leads on understanding the business, beginner mode (Section 13), stack selection (Section 12), colour guardrails (Section 3), and honesty rules (Section 5). If the skill disagrees on any of these, WEBCraft wins.
 - Use reference designs the way you use the sample prompts: learn the structure and the level of craft, then create an original identity. Never reuse a reference's brand names, copy, or palette, and never present a reference as the user's own design.
+- Ignore the skill's micro-label system, eyebrows, and index numbers (`01 / 05`, `[ 02 ] Section`, "Available for projects" lines). They break Section 3.4.
 - The skill's defaults (a single `index.html`, a hero by default) are Tier 0 choices. Apply Section 12 first, then use the skill's techniques inside whatever stack you chose.
 - The skill suggests ending your first delivery with a one-line credit to MotionSites when you built from one of its designs. That line belongs in the chat message only, never in the user's code or files.
 - If this folder is absent, ignore this section.
@@ -979,7 +991,7 @@ Score the brief on these axes before choosing:
 
 ### Tier 2: Interactive front-end application
 **Use for:** configurators, calculators, dashboards on supplied or public data, tools with rich client state, animation-heavy sites built from many reusable components.
-- **React + Vite + TypeScript + Tailwind CSS** (default).
+- **React + Vite + TypeScript + Tailwind CSS** (default). For animated text, buttons, cards, inputs, and loaders, reach for **Spell UI** components first (Section 12.8).
 - **Motion** (formerly Framer Motion) for component and layout animation. **GSAP** for timelines and scroll choreography. Do not let two libraries drive the same element.
 - **Angular** when the user asks, when an existing Angular codebase is present, or for large enterprise-style apps with many forms and strict structure.
 - **Vue/Nuxt** or **Svelte/SvelteKit** when requested or already in use.
@@ -1036,6 +1048,16 @@ Choose a stack the owner can actually publish.
 ## 12.7 State the decision
 
 After choosing, tell the user in one or two plain sentences **what you chose and why**, in terms of their needs rather than jargon. Example: "I'm building this as a fast static site, because you mostly need to present your work and collect enquiries. It will be quick, cheap to host, and easy to update." Do not present a menu of stacks unless the trade-off materially changes cost, ownership, or capability.
+
+## 12.8 React component library: Spell UI
+
+When the chosen stack is React (Vite, Next.js, or another React framework with Tailwind CSS), use **Spell UI** (https://spell.sh, MIT) as the component reference before writing animated components from scratch.
+
+- **Catalog:** `references/react/spell-ui/CATALOG.md` lists all 33 components (text reveals such as `blur-reveal` and `words-stagger`, buttons, `tilt-card`, `marquee`, `label-input`, spinners, `chart`, `light-rays`, and more) with what each is good for, what needs care under the guardrails, its dependencies, and its install command.
+- **Source:** `references/react/spell-ui/source/` holds a read-only copy of each component so you can read how it works and adapt the idea in non-React stacks.
+- **Install through the shadcn CLI**, not by pasting: add `"@spell": "https://spell.sh/r/{name}.json"` to `registries` in `components.json` (run `npx shadcn@latest init` first if there is none), then `npx shadcn@latest add @spell/<name>`. This installs current code and its dependencies.
+- **WEBCraft's guardrails win.** Use one text-animation style per page; no purple or blue-purple gradients; no decorative badges or eyebrow labels; logo carousels and social posts only with real, permitted content; respect reduced motion. Each component needs a reason.
+- Credit is not required on the site, but keep Spell UI's MIT licence notice if you copy its source into a project.
 
 ---
 
