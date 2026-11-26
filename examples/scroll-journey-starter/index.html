@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Scroll journey starter</title>
+<meta name="description" content="A minimal, subject-neutral starter for an immersive scroll journey.">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip" href="#end">Skip the journey</a>
+
+<!-- The live readout. Each chapter sets data-value (a number) and data-label. Change the units and formatting in engine.js. -->
+<aside id="readout" data-label="Start" aria-hidden="true"><b>10</b><span>Start</span></aside>
+
+<main>
+  <!-- CHAPTER A. --h is the scroll length in vh. Replace the CSS gradient with an <img> or <video> inside .ch__media. -->
+  <section class="ch ch--a" id="a" style="--h:260" data-value="10" data-label="First stop">
+    <div class="ch__pin">
+      <div class="ch__media"></div>
+      <div class="ch__shade"></div>
+      <div class="beat" data-a="-1" data-b="0.5">
+        <p class="kick">Stop 1</p>
+        <h2>One idea per scene.</h2>
+        <p>Write the headline here. Keep each beat to a single thought, and let the picture carry the mood.</p>
+      </div>
+      <div class="beat" data-a="0.45" data-b="2">
+        <p class="kick">What to know</p>
+        <h2>A second beat appears as you scroll.</h2>
+        <p>Beats fade in and out at the points you set with <code>data-a</code> and <code>data-b</code>.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="ch ch--b" id="b" style="--h:260" data-value="1000" data-label="Second stop">
+    <div class="ch__pin">
+      <div class="ch__media"></div>
+      <div class="ch__shade"></div>
+      <div class="beat" data-a="-1" data-b="0.5">
+        <p class="kick">Stop 2</p>
+        <h2>The readout travels.</h2>
+        <p>Between stops the number on the bottom left moves to the next chapter's value.</p>
+      </div>
+      <div class="beat" data-a="0.45" data-b="2">
+        <p class="kick">Try it</p>
+        <h2>Put an interactive tool here.</h2>
+        <p><button type="button" onclick="this.textContent='It works. Buttons stay clickable on live beats.'">Click me</button></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="ch ch--c" id="c" style="--h:260" data-value="100000" data-label="Last stop">
+    <div class="ch__pin">
+      <div class="ch__media"></div>
+      <div class="ch__shade"></div>
+      <div class="beat" data-a="-1" data-b="2">
+        <p class="kick">Stop 3</p>
+        <h2>Always ship the fallbacks.</h2>
+        <p>With JavaScript off, or with reduced motion on, this page becomes a plain, readable, stacked layout.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="end" style="padding:15vh 5vw;min-height:60vh"><h2 style="font:400 clamp(30px,5vw,64px)/1 'Helvetica Neue',Arial,sans-serif;letter-spacing:-.04em">The end of the journey.</h2></section>
+</main>
+<script src="engine.js"></script>
+</body>
+</html>

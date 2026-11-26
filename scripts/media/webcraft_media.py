@@ -1,16 +1,22 @@
 #!/usr/bin/env python3
 """WEBCraft media tool: find, fetch, clean, and prepare real photographs and video for a website.
 
-Works with NASA's public Image and Video Library (https://images.nasa.gov), which needs no API key.
-Uses only the official API. It does not scrape web pages.
+Sources (official APIs only; no page scraping, no API key needed):
+  nasa     NASA Image and Video Library, https://images.nasa.gov   (space, Earth observation, aircraft)
+  commons  Wikimedia Commons, https://commons.wikimedia.org        (nature, ocean, cities, people, history;
+           each file carries its own licence, which the tool records. Check it: CC BY needs attribution,
+           CC BY-SA also needs share-alike; public domain and CC0 are the easiest.)
 
 Requires: Python 3.9+, ffmpeg and ffprobe on PATH (for video), Pillow (pip install pillow) for images.
 
 Commands
-  search  "query" [--type image|video] [--n 10]        List matching items with their full IDs.
-  scan    video.mp4 [--window 12] [--sheet out.jpg]    Brightness per second, best clean window, optional frame sheet.
-  cut     in.mp4 out.mp4 --start S --dur D [...]       Trim, remove audio, compress, optional boomerang loop.
-  build   plan.json --out DIR                          Download and prepare everything listed in a media plan.
+  search  "query" [--source nasa|commons] [--type image|video] [--n 10]   List matches with IDs/titles (+ licence for commons).
+  scan    video [--window 12] [--sheet out.jpg]         Brightness per second, best clean window, optional frame sheet.
+  cut     in out.mp4 --start S --dur D [...]            Trim, remove audio, compress, optional --boomerang loop and
+                                                        --crop-bottom PERCENT (to remove a burned-in caption) or --crop W:H:X:Y.
+  build   plan.json --out DIR                           Download and prepare everything listed in a media plan.
+
+A plan item may be {"source": "commons", "title": "File:Example.webm", ...}; the default source is nasa.
 
 Why "scan" matters: source clips often open on black, have captions burned in, or fade to a credits slide.
 Always look at a frame sheet before choosing a window.
@@ -18,7 +24,8 @@ Always look at a frame sheet before choosing a window.
 import argparse, io, json, os, re, shutil, subprocess, sys, tempfile, urllib.parse, urllib.request
 
 API = "https://images-api.nasa.gov"
-UA = {"User-Agent": "Mozilla/5.0 (WEBCraft media tool)"}
+# Identify honestly (Wikimedia and NASA ask automated clients to). Deliberately generic: no personal details.
+UA = {"User-Agent": "WEBCraft-media-tool/1.0 (open-source website design agent; fetches openly licensed media via official APIs)"}
 
 try:
     sys.stdout.reconfigure(encoding="utf-8")
@@ -26,8 +33,21 @@ except Exception:
     pass
 
 
-def http(url, method="GET", timeout=180):
-    return urllib.request.urlopen(urllib.request.Request(url.replace(" ", "%20"), headers=UA, method=method), timeout=timeout)
+def http(url, method="GET", timeout=180, tries=5):
+    """GET/HEAD with polite retries: servers answer 429/503 when asked too fast, so wait and try again."""
+    import time
+    last = None
+    for n in range(tries):
+        try:
+            return urllib.request.urlopen(urllib.request.Request(url.replace(" ", "%20"), headers=UA, method=method), timeout=timeout)
+        except urllib.error.HTTPError as e:
+            last = e
+            if e.code not in (429, 503) or n == tries - 1:
+                raise
+            wait = int(e.headers.get("Retry-After") or 0) or 3 * (2 ** n)
+            print("  (server asked us to slow down; waiting %ds)" % wait, file=sys.stderr)
+            time.sleep(min(wait, 60))
+    raise last
 
 
 def need(binary):
@@ -67,7 +87,48 @@ def content_length(url):
         return 0
 
 
+# ---------------------------------------------------------------- Wikimedia Commons
+COMMONS = "https://commons.wikimedia.org/w/api.php"
+
+
+def commons_api(params):
+    params = dict(params, format="json")
+    return json.load(http(COMMONS + "?" + urllib.parse.urlencode(params)))
+
+
+def commons_search(q, kind, n):
+    ft = {"image": "bitmap", "video": "video"}[kind]
+    d = commons_api({"action": "query", "list": "search", "srsearch": "filetype:%s %s" % (ft, q), "srnamespace": 6, "srlimit": n})
+    return [x["title"] for x in d["query"]["search"]]
+
+
+def commons_info(title, width=None):
+    p = {"action": "query", "titles": title, "prop": "imageinfo", "iiprop": "url|extmetadata|size|mime"}
+    if width:
+        p["iiurlwidth"] = width
+    pages = commons_api(p)["query"]["pages"]
+    page = next(iter(pages.values()))
+    if "imageinfo" not in page:
+        raise ValueError("Commons has no file called %r" % title)
+    ii = page["imageinfo"][0]
+    em = ii.get("extmetadata", {})
+    def strip(k):
+        v = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", "", str((em.get(k) or {}).get("value", "")))).strip()
+        return "" if v.lower() in ("null", "none", "unknown") else v
+    return {"url": ii.get("thumburl") or ii["url"], "orig": ii["url"], "title": title, "license": strip("LicenseShortName"),
+            "creator": strip("Artist"), "desc": strip("ImageDescription")[:200], "page": ii.get("descriptionurl"),
+            "width": ii.get("width"), "height": ii.get("height"), "mime": ii.get("mime")}
+
+
 def cmd_search(a):
+    if a.source == "commons":
+        for t in commons_search(a.query, a.type, a.n):
+            try:
+                i = commons_info(t)
+                print("%s | %s | %s | %sx%s" % (t, i["license"] or "licence unknown", i["creator"][:34] or "unknown", i["width"], i["height"]))
+            except Exception as e:
+                print("%s | (could not read metadata: %s)" % (t, e))
+        return
     for x in nasa_search(a.query, a.type, a.n):
         print("%s | %s | %s | %s" % (x["nasa_id"], x["title"][:70].replace("�", "'"), (x.get("center") or "-"), x["date_created"][:4]))
 
@@ -107,8 +168,12 @@ def frame_sheet(path, times, out_path, cols=4, width=300):
 
 def cmd_scan(a):
     need("ffmpeg"); need("ffprobe")
+    if not os.path.isfile(a.video):
+        sys.exit("File not found: %s" % a.video)
     y = brightness_per_second(a.video)
-    dur = probe_duration(a.video)
+    if not y:
+        sys.exit("ffmpeg could not read any video frames from %s. Is it a real video file? (Try re-encoding it first with the cut command.)" % a.video)
+    dur = probe_duration(a.video) or float(len(y))  # some containers (webm) report no duration; fall back to frames seen
     print("duration: %.1fs" % dur)
     print("mean brightness (0-255) per 10s block: %s" % [round(sum(y[i:i + 10]) / len(y[i:i + 10])) for i in range(0, len(y), 10)])
     w = int(a.window)
@@ -128,9 +193,18 @@ def cmd_scan(a):
         print("frame sheet written to %s (open it and look for burned-in captions, title cards, credits and logos)" % a.sheet)
 
 
-def encode(src, dst, start, dur, width=1280, crf=24, boomerang=False):
+def crop_filter(crop=None, crop_bottom=None):
+    """Return an ffmpeg crop filter string (or ''), e.g. to remove a burned-in caption along the bottom edge."""
+    if crop:
+        return "crop=%s," % crop
+    if crop_bottom:
+        return "crop=iw:trunc(ih*(1-%s/100)/2)*2:0:0," % float(crop_bottom)
+    return ""
+
+
+def encode(src, dst, start, dur, width=1280, crf=24, boomerang=False, crop=None, crop_bottom=None):
     need("ffmpeg")
-    vf = "scale='min(%d,iw)':-2,fps=24" % width
+    vf = crop_filter(crop, crop_bottom) + "scale='min(%d,iw)':-2,fps=24" % width
     if boomerang:
         fc = "[0:v]%s,split[a][b];[b]reverse[r];[a][r]concat=n=2:v=1:a=0[v]" % vf
         cmd = ["ffmpeg", "-y", "-loglevel", "error", "-ss", str(start), "-t", str(dur), "-i", src, "-an", "-filter_complex", fc, "-map", "[v]"]
@@ -145,7 +219,9 @@ def poster(video, out, at=0.2, width=1280):
 
 
 def cmd_cut(a):
-    encode(a.input, a.output, a.start, a.dur, a.width, a.crf, a.boomerang)
+    if not os.path.isfile(a.input):
+        sys.exit("File not found: %s" % a.input)
+    encode(a.input, a.output, a.start, a.dur, a.width, a.crf, a.boomerang, a.crop, a.crop_bottom)
     print("wrote %s (%.1f MB)" % (a.output, os.path.getsize(a.output) / 1e6))
 
 
@@ -199,37 +275,51 @@ def cmd_build(a):
     manifest = []
     for it in plan.get("images", []):
         try:
-            m = nasa_meta(it["id"]); url = pick_image_url(it["id"])
-            if not url:
-                print("SKIP  image %-14s no usable file for %s" % (it["key"], it["id"])); continue
             dst = os.path.join(out, "assets", "img", it["key"] + ".jpg")
-            size = prep_image(http(url).read(), dst, it.get("maxWidth", 2000), it.get("quality", 82), it.get("cropToDisc", False))
-            print("image %-14s %-34s -> %4d KB %dx%d" % (it["key"], it["id"][:34], os.path.getsize(dst) // 1024, size[0], size[1]))
-            manifest.append(entry(it, m, "image", "assets/img/%s.jpg" % it["key"], ""))
+            if it.get("source") == "commons":
+                ci = commons_info(it["title"], it.get("maxWidth", 2000))
+                size = prep_image(http(ci["url"]).read(), dst, it.get("maxWidth", 2000), it.get("quality", 82), it.get("cropToDisc", False))
+                label = it["title"][:34]
+                manifest.append(entry_commons(it, ci, "image", "assets/img/%s.jpg" % it["key"], ""))
+            else:
+                m = nasa_meta(it["id"]); url = pick_image_url(it["id"])
+                if not url:
+                    print("SKIP  image %-14s no usable file for %s" % (it["key"], it["id"])); continue
+                size = prep_image(http(url).read(), dst, it.get("maxWidth", 2000), it.get("quality", 82), it.get("cropToDisc", False))
+                label = it["id"][:34]
+                manifest.append(entry(it, m, "image", "assets/img/%s.jpg" % it["key"], ""))
+            print("image %-14s %-34s -> %4d KB %dx%d" % (it["key"], label, os.path.getsize(dst) // 1024, size[0], size[1]))
         except Exception as e:
             print("FAIL  image %-14s %s" % (it["key"], repr(e)[:140]))
     for it in plan.get("videos", []):
         try:
             need("ffmpeg")
-            m = nasa_meta(it["id"]); src = os.path.join(cache, it["key"] + "_src.mp4")
-            if not os.path.exists(src):
-                url = pick_video_url(it["id"])
-                if not url:
-                    print("SKIP  video %-14s no mp4 for %s" % (it["key"], it["id"])); continue
-                download(url, src)
+            if it.get("source") == "commons":
+                ci = commons_info(it["title"]); label = it["title"][:34]
+                src = os.path.join(cache, it["key"] + "_src" + os.path.splitext(ci["orig"])[1])
+                if not os.path.exists(src):
+                    download(ci["orig"], src)
+            else:
+                m = nasa_meta(it["id"]); label = it["id"][:34]; src = os.path.join(cache, it["key"] + "_src.mp4")
+                if not os.path.exists(src):
+                    url = pick_video_url(it["id"])
+                    if not url:
+                        print("SKIP  video %-14s no mp4 for %s" % (it["key"], it["id"])); continue
+                    download(url, src)
             dst = os.path.join(out, "assets", "video", it["key"] + ".mp4")
-            encode(src, dst, it["start"], it["dur"], it.get("width", 1280), it.get("crf", 24), it.get("boomerang", False))
+            encode(src, dst, it["start"], it["dur"], it.get("width", 1280), it.get("crf", 24), it.get("boomerang", False), it.get("crop"), it.get("cropBottom"))
             poster(dst, os.path.join(out, "assets", "img", "poster-%s.jpg" % it["key"]), it.get("posterAt", 0.2))
-            note = "Trimmed and recompressed, audio removed (source %.1fs-%.1fs%s)." % (it["start"], it["start"] + it["dur"], ", played forward then reversed for a seamless loop" if it.get("boomerang") else "")
-            print("video %-14s %-34s -> %.1f MB" % (it["key"], it["id"][:34], os.path.getsize(dst) / 1e6))
-            manifest.append(entry(it, m, "video", "assets/video/%s.mp4" % it["key"], note))
+            note = "Trimmed and recompressed, audio removed (source %.1fs-%.1fs%s%s)." % (it["start"], it["start"] + it["dur"], ", played forward then reversed for a seamless loop" if it.get("boomerang") else "", ", bottom %s%% cropped to remove a caption" % it["cropBottom"] if it.get("cropBottom") else "")
+            print("video %-14s %-34s -> %.1f MB" % (it["key"], label, os.path.getsize(dst) / 1e6))
+            manifest.append(entry_commons(it, ci, "video", "assets/video/%s.mp4" % it["key"], note) if it.get("source") == "commons" else entry(it, m, "video", "assets/video/%s.mp4" % it["key"], note))
         except Exception as e:
             print("FAIL  video %-14s %s" % (it["key"], repr(e)[:140]))
     json.dump(manifest, open(os.path.join(out, "assets", "manifest.json"), "w", encoding="utf-8"), indent=1, ensure_ascii=False)
     if not a.keep_cache:
         shutil.rmtree(cache, ignore_errors=True)
     print("\nmanifest: %d entries -> %s" % (len(manifest), os.path.join(out, "assets", "manifest.json")))
-    print("Reminder: credit NASA (and partners named in the manifest) on the site, and do not imply NASA endorsement.")
+    print("Reminder: credit every source on the site as its licence requires (manifest has the creator and licence).")
+    print("          NASA: do not imply NASA endorsement. Commons CC BY / CC BY-SA: attribution required (CC BY-SA also share-alike for derivatives).")
 
 
 def entry(it, m, kind, file, note):
@@ -239,13 +329,20 @@ def entry(it, m, kind, file, note):
             "file": file, **({"note": note} if note else {})}
 
 
+def entry_commons(it, ci, kind, file, note):
+    return {"key": it["key"], "type": kind, "source": "commons", "title": ci["title"].replace("File:", ""), "license": ci["license"] or "unknown",
+            "creator": ci["creator"] or "unknown", "credit": ci["creator"] or "unknown", "desc": ci["desc"], "page": ci["page"], "file": file,
+            **({"note": note} if note else {})}
+
+
 def main():
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     s = p.add_subparsers(dest="cmd", required=True)
-    a = s.add_parser("search"); a.add_argument("query"); a.add_argument("--type", default="image", choices=["image", "video"]); a.add_argument("--n", type=int, default=10); a.set_defaults(f=cmd_search)
+    a = s.add_parser("search"); a.add_argument("query"); a.add_argument("--source", default="nasa", choices=["nasa", "commons"]); a.add_argument("--type", default="image", choices=["image", "video"]); a.add_argument("--n", type=int, default=10); a.set_defaults(f=cmd_search)
     a = s.add_parser("scan"); a.add_argument("video"); a.add_argument("--window", type=int, default=12); a.add_argument("--sheet"); a.add_argument("--frames", type=int, default=12); a.set_defaults(f=cmd_scan)
     a = s.add_parser("cut"); a.add_argument("input"); a.add_argument("output"); a.add_argument("--start", type=float, default=0); a.add_argument("--dur", type=float, default=12)
-    a.add_argument("--width", type=int, default=1280); a.add_argument("--crf", type=int, default=24); a.add_argument("--boomerang", action="store_true"); a.set_defaults(f=cmd_cut)
+    a.add_argument("--width", type=int, default=1280); a.add_argument("--crf", type=int, default=24); a.add_argument("--boomerang", action="store_true")
+    a.add_argument("--crop", help="ffmpeg crop W:H:X:Y"); a.add_argument("--crop-bottom", type=float, help="remove this percent from the bottom edge (burned-in captions)"); a.set_defaults(f=cmd_cut)
     a = s.add_parser("build"); a.add_argument("plan"); a.add_argument("--out", required=True); a.add_argument("--keep-cache", action="store_true"); a.set_defaults(f=cmd_build)
     args = p.parse_args(); args.f(args)
 

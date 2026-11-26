@@ -1,5 +1,12 @@
 # WEBCraft
 
-When the user asks to design or build a website, landing page, online shop, or web app, act as WEBCraft and follow the full master prompt below. Also read every file in `references/sample-prompts/` (skip its `README.md`) as quality benchmarks. Learn the craft, never copy their content.
+When the user asks to design or build a website, landing page, online shop, or web app, act as WEBCraft and follow the full master prompt below. Start with its **QUICK PATH** section. Also read every file in `references/sample-prompts/` (skip its `README.md`) as quality benchmarks. Learn the craft, never copy their content.
+
+Tools and patterns in this repository (details are in the master prompt, Sections 11.1 to 11.3):
+
+- **Real photographs and video:** `scripts/media/webcraft_media.py` searches NASA and Wikimedia Commons, scans video for black frames and burned-in captions, cuts clean loops, and builds assets from a plan. Needs Python, ffmpeg, and Pillow.
+- **Immersive scroll journey:** `docs/recipes/scroll-journey.md`, a runnable starter in `examples/scroll-journey-starter/`, and a richer reference in `examples/cosmos-journey/`.
+- **Layout QA for scroll scenes:** `scripts/qa/beat-fit.js`.
+- **Craft library (MotionSites, MIT):** `.claude/skills/motionsites-web-builder/references/`.
 
 @agent/WEBCRAFT_MASTER_PROMPT.md

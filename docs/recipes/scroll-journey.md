@@ -4,6 +4,10 @@ An immersive, pinned, scroll-driven story where the visitor travels through a su
 
 Use it when the subject has a natural **sequence of places, scales, or stages** and strong real imagery: space, the ocean from surface to trench, the human body from skin to cell, a product's journey, a city's history. Do **not** use it for a simple brochure site, a shop, or anything where visitors need to scan quickly. See Section 12 of the master prompt for stack choice; this pattern is plain HTML, CSS, and JavaScript with no libraries.
 
+## Start here: the starter
+
+[`examples/scroll-journey-starter/`](../../examples/scroll-journey-starter/) is a small, subject-neutral version of everything below: an 80-line engine, the pin and fallback CSS, and a 3-chapter page that runs as it is (open `index.html` through any static server). Copy that folder, replace the gradients with real media, rewrite the copy, and change the readout units in `engine.js`. Reach for the larger cosmos example only when you want its extras (starfield, horizontal fly-by, particle galaxy).
+
 ## The idea in one paragraph
 
 The page is a stack of tall sections. Inside each, a full-screen "stage" is pinned while you scroll. The stage holds a media layer (photo or looping video), a dark scrim, and several **beats**: text or tool blocks that fade in and out at chosen points of the section's scroll progress. One scroll position drives everything: media zoom, beat visibility, a distance readout, and the starfield. Between stops the readout "travels" and the starfield streaks.
@@ -73,7 +77,7 @@ About 15,000 points on desktop (4,800 on mobile) on a 2D canvas. Spiral: `theta 
 
 - Only the hero video autoplays. Others use `preload="none"`, and an IntersectionObserver plays them when the chapter is near the viewport and pauses them otherwise.
 - Give every video a poster image.
-- Prepare clips with `scripts/media/webcraft_media.py`: scan for black openings, burned-in captions, and fades; cut a clean stretch; boomerang short clips for a seamless loop.
+- Prepare clips with `scripts/media/webcraft_media.py`: scan for black openings, burned-in captions, and fades; cut a clean stretch; boomerang short clips for a seamless loop; crop a small caption off the bottom edge with `--crop-bottom`. It reads NASA and Wikimedia Commons (which records each file's licence).
 - Text over bright footage needs a strong scrim. The hero used a top-to-bottom gradient from 92% black to 10% black plus a moved-down media box so the bright limb sits below the headline.
 
 ## Accessibility and fallbacks
@@ -91,7 +95,7 @@ About 15,000 points on desktop (4,800 on mobile) on a 2D canvas. Spiral: `theta 
 
 ## QA
 
-`scripts/qa/beat-fit.js` is a paste-in browser-console snippet. It forces each beat visible and reports whether its content fits between the top bar and the readout. Run it at each size above. Also:
+`scripts/qa/beat-fit.js` is a paste-in browser-console snippet. It forces each beat visible and reports whether its content fits between the top bar and the readout. Run it at each size above. If your class names differ, set `window.BEATFIT = { chapter, pin, beat, top, bottom }` first (the file's header explains). Also:
 - Bring the browser tab to the front and wait before judging a frame; throttled tabs stall the animation loop.
 - Screenshots can lag one step behind. Take a second capture, or measure rectangles and computed styles instead.
 - Scan every video with `webcraft_media.py scan --sheet` and look at the frames.
