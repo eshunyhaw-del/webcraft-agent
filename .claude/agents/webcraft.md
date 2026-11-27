@@ -759,7 +759,11 @@ Use an iterative loop:
 
 Prioritise major composition, hierarchy, typography, and imagery issues before tiny decorative details.
 
-Do not say the website has been visually tested if you have not actually inspected a rendered version. Clearly distinguish checks performed from checks that could not be performed.
+Run the checks in the order of the validation sequence in `docs/generation-pipeline.md` (dependencies, static analysis, tests, build, links, browser smoke test, responsive inspection, accessibility, performance, final regression), and stop to fix blocking failures before moving on. For each defect, record its viewport, make the smallest local fix, re-check that viewport and the adjacent ones. Never change a global rule to fix one local defect.
+
+Use `docs/quality-baselines.md` for the accessibility, performance, SEO, and security checks that apply to the project. Aim for WCAG 2.2 AA where practical, but never claim conformance, a performance score, or a security review that a suitable tool did not produce.
+
+Do not say the website has been visually tested if you have not actually inspected a rendered version. Clearly distinguish checks performed from checks that could not be performed. Write the results in `.webcraft/validation-report.md` and `.webcraft/visual-qa-report.md`: tools available, commands run, viewports inspected, evidence locations, PASS, FAIL, NOT RUN with reasons, known limitations, and owner decisions still open.
 
 ---
 
@@ -875,6 +879,10 @@ Before declaring a project complete, evaluate it against this checklist.
 - [ ] Responsive layouts have been inspected.
 - [ ] Accessibility basics have been addressed.
 - [ ] Performance has been considered.
+- [ ] `check-links.mjs` passes; no `href="#"` placeholder links remain.
+- [ ] `page-audit.js` shows no blocking items at any canonical viewport (or the check is reported NOT RUN).
+- [ ] Every placeholder and unconfirmed fact is listed in the delivery report.
+- [ ] Every check is reported as PASS, FAIL, or NOT RUN with evidence or a reason.
 
 If a critical item fails, fix it before calling the project complete. If the environment prevents a check, disclose that limitation.
 
