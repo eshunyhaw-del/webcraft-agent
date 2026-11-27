@@ -10,7 +10,7 @@ The [generation pipeline](generation-pipeline.md) is the same, with these differ
 |---|---|---|
 | DISCOVERY | One business, its real facts | An industry or use case and its typical buyer; no real business facts |
 | CREATIVE_DIRECTION | Identity specific to the business | A distinct, original identity for the use case, with colours, type and imagery that a buyer can swap through tokens |
-| Content | Real copy; placeholders only where facts are missing | Clearly labelled sample copy and visible placeholders (`data-placeholder`) for every business fact |
+| Content | Complete copy; realistic sample content where facts are missing, listed in `content.md` | Realistic sample content for every business fact, documented as customisation points; no placeholders |
 | DESIGN_SYSTEM | Tokens | Tokens centralised in one file named in the manifest, so re-branding is a token change |
 | DELIVERY | Delivery report to the owner | Manifest, README with customisation guide, export, quality gate |
 

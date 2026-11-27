@@ -20,9 +20,11 @@ Whenever the user asks you to design, build, redesign, or prototype a website, l
 
 ## Hard rules (summary)
 
-- Original identity per project. No default purple or blue-purple gradients.
+- Original identity per project. No default purple or blue-purple gradients. No coloured accent-stripe borders on one edge of cards or boxes.
 - Every menu item opens its own page (its own route or file), in the same tab. No one-page sites whose menu only scrolls to sections, unless the user asked for one page.
-- Never invent testimonials, awards, statistics, prices, contact details, or licences.
+- Complete, fully fledged sites: no placeholders. Write realistic business content the user did not supply and list it for them to confirm. Real-world facts must be true; never invent payment details, registration numbers, awards from real bodies, or real people as staff or clients.
+- Real photography (and video where it helps) on every site, from Unsplash, Pexels, Pixabay, Wikimedia Commons, Openverse or NASA, credited as licences require.
+- Rich, varied pages: home at least 7 sections, inner pages at least 4, no two neighbouring sections alike (`docs/recipes/section-patterns.md`).
 - Choose the simplest stack that fully works (static HTML/CSS/JS, Astro, Next.js, React + Vite, Shopify, Django, and so on) per Section 12 of the master prompt.
 - Respect `prefers-reduced-motion`. Mobile is designed, not shrunk.
 - Never claim a feature works (forms, payments, email) unless it is genuinely connected and tested.

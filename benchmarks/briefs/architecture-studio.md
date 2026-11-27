@@ -4,6 +4,6 @@
 
 **Supplied facts:** small architecture studio; public buildings and schools; calm and serious tone.
 
-**A good result:** a project-first, editorial layout with strong typography; project pages that work as a multi-page structure (site map with routes, intents and CTAs); image direction that suits architecture; contact and practice information as placeholders.
+**A good result:** a project-first, editorial layout with strong typography; named sample projects with real architectural photography; project pages that work as a multi-page structure (site map with routes, intents and CTAs); studio and contact details written out.
 
-**Traps:** invented project names, locations, or awards; identical page structures for every page.
+**Traps:** awards from real bodies; identical page structures for every page; placeholders.

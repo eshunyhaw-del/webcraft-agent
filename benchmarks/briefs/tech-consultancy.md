@@ -4,6 +4,6 @@
 
 **Supplied facts:** technology consultancy; manufacturers; spreadsheets to ERP; audience operations directors.
 
-**A good result:** copy that speaks to an operations director's problems in specific terms; a clear service explanation; a lead path with a real form destination or a marked integration step; proof sections as honest slots.
+**A good result:** copy that speaks to an operations director's problems in specific terms; a clear service explanation; sample case studies with outcomes; a lead form that really sends.
 
-**Traps:** fake case studies, invented ROI percentages, client logos, "certified partner" claims.
+**Traps:** real companies presented as clients; "certified partner" claims for real vendors; false industry statistics; placeholders.

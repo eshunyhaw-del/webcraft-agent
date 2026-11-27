@@ -20,7 +20,7 @@ test("there are ten benchmark briefs, each with the required sections", () => {
 
 test("the rubric covers every scored dimension", () => {
   const rubric = readFileSync(join(root, "benchmarks", "rubric.md"), "utf8").toLowerCase();
-  const names = ["brief adherence", "visual distinctiveness", "typography", "layout", "ux clarity", "conversion clarity", "functional completeness", "responsive", "accessibility", "performance", "maintainability", "factual integrity"];
+  const names = ["brief adherence", "visual distinctiveness", "typography", "layout", "ux clarity", "conversion clarity", "functional completeness", "responsive", "accessibility", "performance", "maintainability", "content completeness and integrity"];
   assert.equal(names.length, DIMENSIONS.length);
   for (const n of names) assert.ok(rubric.includes(n), n);
 });

@@ -25,12 +25,5 @@ Each question, why it changes the result, and the answer (or "delegated: decided
 ## Assumptions
 Decisions made without confirmation. Each must be conservative and reversible.
 
-## Content ledger
-Every factual item that may appear on the site. Never publish PLACEHOLDER or REQUIRES_CONFIRMATION content as fact; render placeholders visibly and mark them with `data-placeholder="what is needed"` so `scripts/qa/page-audit.js` can count them.
-
-| Item | Value | Provenance | Source or note |
-|---|---|---|---|
-| Phone | | PLACEHOLDER | "Add your phone number" |
-| | | USER_PROVIDED / SOURCE_VERIFIED / AGENT_DRAFT / PLACEHOLDER / REQUIRES_CONFIRMATION | |
-
-Provenance labels: **USER_PROVIDED** (from the user), **SOURCE_VERIFIED** (checked against a named source), **AGENT_DRAFT** (copy written by the agent from supplied facts), **PLACEHOLDER** (missing, shown as a slot), **REQUIRES_CONFIRMATION** (plausible but unverified; the owner must confirm before launch).
+## Content
+Every factual item that appears on the site is recorded in `content.md` (template: [content.md](content.md)) with its provenance: USER_PROVIDED, SOURCE_VERIFIED, AGENT_DRAFT or SAMPLE. The site itself has no placeholders (master prompt Section 3.5).

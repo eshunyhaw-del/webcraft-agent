@@ -95,6 +95,6 @@ Details: [examples/cosmos-journey/README.md](../examples/cosmos-journey/README.m
 
 ## Notes
 
-- WEBCraft never invents testimonials, prices, awards, or contact details. Expect clearly marked slots for you to fill.
+- WEBCraft delivers a complete site with real photos and no empty slots. Where you did not give details (team, testimonials, contact details), it writes realistic ones and lists them for you to confirm before going live.
 - Complex requests (online shops, logins, bookings) need a backend or a commerce platform. The AI will say which and explain the setup.
 - Results depend on the AI tool's capabilities. Tools that can run a browser and take screenshots can check their own work. Chat-only tools cannot, and will say so.

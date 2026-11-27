@@ -2,6 +2,9 @@
 // (scripts/qa/viewports.json). It MEASURES; it does not judge design. Bring the tab to the front first.
 // Returns { viewport, blocking: [...], warnings: [...], info: {...} } and logs a readable report.
 // Blocking items must be fixed before delivery. It does not replace a full accessibility audit.
+// It also checks the owner's content rules: no placeholders (blocking), enough sections, varied neighbouring
+// sections, and real images or video (warnings). Set window.PAGEAUDIT = { home: true } for a home page that is
+// not at the site root.
 (async () => {
   const wait = (ms) => new Promise((r) => setTimeout(r, ms));
   await wait(300);
@@ -57,6 +60,20 @@
   if (!focusRules && outlineRemoved) blocking.push("Focus outline is removed on links or buttons and no :focus/:focus-visible style replaces it.");
   else if (!focusRules) warnings.push("No custom :focus or :focus-visible styles; the browser default outline is relied on. Check it is visible on every background by tabbing.");
 
+  // Accent-stripe borders: a thick coloured border on one edge of a box (owner's rule, master prompt Section 3.4)
+  const stripes = [];
+  for (const el of document.body.querySelectorAll("div, article, section, aside, li, blockquote, figure, p, a, details")) {
+    const cs = getComputedStyle(el);
+    const w = ["Top", "Right", "Bottom", "Left"].map((s) => (cs["border" + s + "Style"] === "none" ? 0 : parseFloat(cs["border" + s + "Width"]) || 0));
+    const thick = w.map((x) => x >= 3);
+    const sides = thick.filter(Boolean).length;
+    const others = w.filter((x) => x > 0).length;
+    const padded = parseFloat(cs.paddingTop) + parseFloat(cs.paddingLeft) + parseFloat(cs.paddingRight) > 0 || cs.backgroundColor !== "rgba(0, 0, 0, 0)" || parseFloat(cs.borderTopLeftRadius) > 0;
+    if (sides === 1 && others === 1 && padded && visible(el)) stripes.push(label(el) + " (" + ["top", "right", "bottom", "left"][thick.indexOf(true)] + ")");
+  }
+  info.accentStripes = stripes.length;
+  if (stripes.length) warnings.push("Accent-stripe borders (a thick border on one edge of a box) on " + stripes.length + " element(s); use space, background tone or a 1px neutral divider instead: " + [...new Set(stripes)].slice(0, 6).join(", "));
+
   // Navigation: one page per menu item, in the same tab (owner's rule, master prompt Section 3.4)
   for (const nav of document.querySelectorAll("nav")) {
     const hrefs = [...nav.querySelectorAll("a[href]")].map((a) => a.getAttribute("href").trim());
@@ -65,12 +82,30 @@
   const newTabInternal = [...document.querySelectorAll('a[target="_blank"][href]')].filter((a) => a.origin === location.origin).map((a) => a.getAttribute("href"));
   if (newTabInternal.length) warnings.push('Links to the site\'s own pages open a new tab (remove target="_blank"): ' + newTabInternal.slice(0, 6).join(", "));
 
-  // Content integrity
+  // Content integrity: complete content, no placeholders (owner's rule, master prompt Section 3.5)
   const placeholders = [...document.querySelectorAll("[data-placeholder]")].map((el) => el.getAttribute("data-placeholder") || el.textContent.trim().slice(0, 40));
   info.placeholders = placeholders;
-  if (placeholders.length) warnings.push(placeholders.length + " marked placeholder(s) still on the page; list them in the delivery report: " + placeholders.slice(0, 8).join(", "));
-  const filler = document.body.innerText.match(/lorem ipsum|your tagline here|feature \d\b|\bTODO\b/i);
-  if (filler) blocking.push('Filler text found: "' + filler[0] + '".');
+  if (placeholders.length) blocking.push(placeholders.length + " placeholder element(s) on the page; write the real content instead: " + placeholders.slice(0, 8).join(", "));
+  const filler = document.body.innerText.match(/lorem ipsum|your tagline here|feature \d\b|\bTODO\b|\badd your [a-z ]{3,30}(here)?\b|coming soon/i);
+  if (filler) blocking.push('Placeholder or filler text found: "' + filler[0] + '".');
+
+  // Richness and variety (owner's rule, master prompt Section 3.7)
+  const mainEl = document.querySelector("main") || document.body;
+  const sections = [...mainEl.children].filter((el) => visible(el) && !/^(SCRIPT|STYLE|TEMPLATE)$/.test(el.tagName));
+  // Home is the site root; for a site served from a sub-folder, set window.PAGEAUDIT = { home: true } first.
+  const opts = window.PAGEAUDIT || {};
+  const isHome = typeof opts.home === "boolean" ? opts.home : location.pathname.replace(/index\.html$/, "") === "/";
+  const minSections = isHome ? 7 : 4;
+  info.sections = sections.length;
+  if (sections.length < minSections) warnings.push("Only " + sections.length + " section(s) in <main>; aim for at least " + minSections + (isHome ? " on the home page" : " on an inner page") + " (docs/recipes/section-patterns.md).");
+  const shape = (el) => {
+    const kids = [...el.querySelectorAll(":scope > *, :scope > * > *")].slice(0, 12).map((k) => k.tagName + "." + (getComputedStyle(k).display));
+    return el.tagName + "|" + getComputedStyle(el).display + "|" + (el.querySelector("img,video,picture") ? "media" : "text") + "|" + kids.join(",");
+  };
+  for (let i = 1; i < sections.length; i++) if (shape(sections[i]) === shape(sections[i - 1])) warnings.push("Sections " + i + " and " + (i + 1) + " in <main> have the same structure; vary the layout (" + label(sections[i]) + ").");
+  const media = mainEl.querySelectorAll("img, picture, video, [style*='background-image']").length;
+  info.media = media;
+  if (!media) warnings.push("No images or video in <main>; every page should carry real photography (master prompt Section 3.6).");
 
   // Motion and fonts
   let rm = false;

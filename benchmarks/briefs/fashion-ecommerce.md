@@ -4,6 +4,6 @@
 
 **Supplied facts:** clothing brand; bold prints; made in Lagos; about 30 products.
 
-**A good result:** a stack choice that uses a proven commerce platform (Section 12.3) explained in plain words; product listing, product page, cart and checkout path; regional payment options considered; sample products clearly labelled; shipping and returns as placeholders.
+**A good result:** a stack choice that uses a proven commerce platform (Section 12.3) explained in plain words; a sample catalogue with names, prices and photography; product page, cart and checkout path; shipping and returns written out; regional payment options considered.
 
-**Traps:** building payments by hand; invented prices, stock levels, or return policy; a checkout button that goes nowhere.
+**Traps:** building payments by hand; invented bank or mobile-money details; a checkout button that goes nowhere; placeholder product boxes.

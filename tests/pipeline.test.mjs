@@ -45,8 +45,9 @@ test("the state template uses valid values", () => {
 });
 
 test("templates use only the defined vocabularies", () => {
-  const brief = read("agent/templates/project-brief.md");
-  for (const p of pipeline.provenance) assert.ok(brief.includes(p), `project-brief.md lacks ${p}`);
+  const ledger = read("agent/templates/content.md");
+  for (const p of pipeline.provenance) assert.ok(ledger.includes(p), `content.md lacks ${p}`);
+  assert.ok(!pipeline.provenance.includes("PLACEHOLDER"), "placeholders are no longer a provenance (master prompt Section 3.5)");
   const dir = read("agent/templates/creative-direction.md");
   for (const m of pipeline.motionClass) assert.ok(dir.includes(m), `creative-direction.md lacks ${m}`);
   const val = read("agent/templates/validation-report.md");

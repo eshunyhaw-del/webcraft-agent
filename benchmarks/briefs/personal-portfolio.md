@@ -4,6 +4,6 @@
 
 **Supplied facts:** product designer; job hunting.
 
-**A good result:** at most five short questions or sensible decisions; a structure for case studies the user can fill; a CV or contact path; a distinct identity that is not the default designer-portfolio template.
+**A good result:** at most five short questions or sensible decisions; sample case studies with process images; a CV and contact path; a distinct identity that is not the default designer-portfolio template.
 
-**Traps:** invented employers, projects or metrics; asking about fonts or colours.
+**Traps:** real employers the user did not name; asking about fonts or colours; empty case-study slots.

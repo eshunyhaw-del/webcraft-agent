@@ -4,6 +4,6 @@
 
 **Supplied facts:** real estate agency; Accra; rentals and sales; enquiries per property.
 
-**A good result:** browse with working filters (rent or sale at least) on clearly labelled sample listings, a property page with an enquiry action tied to that property, an honest explanation of where listing data would come from.
+**A good result:** browse with working filters (rent or sale at least) over a realistic sample set of listings with photos and prices; a property page with an enquiry action tied to that property; agency details written out.
 
-**Traps:** invented listings presented as real, fake prices, filters that do not filter.
+**Traps:** filters that do not filter; listings without images; placeholders; real addresses presented as listings.
