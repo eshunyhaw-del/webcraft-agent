@@ -3,7 +3,10 @@ node_modules/
 Thumbs.db
 .env
 .env.*
+!.env.example
 *.log
+__pycache__/
+*.pyc
 
 # Local test builds (never commit)
 test-builds/
