@@ -17,5 +17,7 @@ jobs:
           node-version: 22
       - name: Repository consistency checks and unit tests
         run: node scripts/check.mjs
+      - name: Pillow for media tool tests
+        run: python3 -m pip install --quiet pillow
       - name: Python tools compile
         run: python3 -B -m py_compile scripts/media/webcraft_media.py

@@ -20,7 +20,7 @@ This document is long on purpose: it is a reference. For a small or vague brief 
 1. Ask at most five short questions (Section 13.2), or decide yourself. Never ask about fonts, colours, or frameworks.
 2. Choose the simplest stack that fully works (Section 12) and tell the user why in one or two plain sentences.
 3. Decide a distinct visual identity inside the guardrails (Section 3), and write complete, specific copy for every page: no placeholders, no empty slots, no "Add your ..." text (Section 3.5). Go straight to the point: **no eyebrow labels above headings, no decorative numbering, no small captions or microcopy**, and **every menu item opens its own page** (Section 3.4).
-4. Use real photographs, and video where it adds value, on every site, sourced from Unsplash, Pexels, Pixabay, Wikimedia Commons, Openverse, or NASA (Sections 3.6 and 11.2). Check every clip. Give every page enough varied sections (Section 3.7). If a journey through places, scales, or stages fits the subject, start from `examples/scroll-journey-starter/` and `docs/recipes/scroll-journey.md` (Section 11.3).
+4. Use real photographs, and video where it adds value, on every site, sourced from Unsplash, Pexels, Pixabay, Wikimedia Commons, Openverse, or NASA (Sections 3.6 and 11.2). Check every clip. Give every page enough varied sections (Section 3.7). For a plain HTML, CSS and JavaScript site, start from `examples/multi-page-starter/` with its motion kit, responsive images, and finishing files (Section 11.4). If a journey through places, scales, or stages fits the subject, start from `examples/scroll-journey-starter/` and `docs/recipes/scroll-journey.md` (Section 11.3).
 5. Build it, run it, check desktop and phone sizes, and fix the biggest problems first (Phase 13). Report each check as PASS, FAIL, or NOT RUN.
 6. Tell the user how to open it, edit it, and publish it, and list the sample content they should confirm before launch and anything untested.
 7. Keep a compact project record in `.webcraft/` (one `project.md`, one `qa-report.md`, `content.md`, `state.json`) so the work can be reviewed and resumed (Section 4.0).
@@ -164,6 +164,7 @@ Websites carry real images, and video where it adds value. Do not ship a site il
 - **Use `scripts/media/webcraft_media.py`** to search, scan, cut, and build media (Section 11.2). Openverse, Wikimedia Commons, and NASA work without a key; Unsplash, Pexels, and Pixabay need a free API key in `UNSPLASH_ACCESS_KEY`, `PEXELS_API_KEY`, or `PIXABAY_API_KEY`.
 - **How much:** a hero image or video on the home page, a real image in most sections that describe something visible (places, people, products, work), and a header image on inner pages. Prefer a few excellent, specific images to many generic ones.
 - **Video:** use a short, muted, looping background or feature video when motion carries meaning (a landscape, a process, people at work). Always ship a poster image, compress it, and pause it for reduced motion.
+- **Responsive images:** run `python scripts/media/webcraft_media.py variants assets/img` for 480, 960 and 1600 px copies plus WebP, and serve them with `<picture>` and `srcset`/`sizes`, with `width` and `height` set. Request the largest source size available (at least 1600 px wide for full-width images).
 - Download into `assets/`, record source, creator, licence, and page in `assets/manifest.json`, and credit licensed media on the site (a credits line in the footer or a credits page). Never present a stock photograph of a person as a named real person.
 
 ## 3.7 Rich, varied layouts (the project owner's standing rule)
@@ -882,6 +883,8 @@ Before declaring a project complete, evaluate it against this checklist.
 - [ ] Real-world facts are true; invented business content is listed in `.webcraft/content.md`.
 - [ ] No invented payment details, registration numbers, awards from real bodies, or real people as staff or clients.
 - [ ] The home page has at least seven varied sections, inner pages at least four, with no two neighbours alike.
+- [ ] The site has choreographed motion (reveals, staggered groups, at least one signature moment such as a video, split headline, or count-up), all readable with reduced motion.
+- [ ] Favicon, manifest, Open Graph image, sitemap, robots, and 404 page are in place (`scripts/site/build.mjs` reports none missing).
 
 ## Visual assets
 - [ ] Images and videos fit the creative direction.
@@ -1026,6 +1029,15 @@ For subjects with a natural sequence of places, scales, or stages, and strong re
 - A complete, tested, richer reference is in `examples/cosmos-journey/` (plain HTML, CSS, and JavaScript). Its NASA media is included (and can be rebuilt with the media tool from `media-plan.json`). Study it for effects such as the starfield, the horizontal fly-by, and the particle galaxy. More finished sites are in `showcase/`. Never copy its subject matter, copy, or identity into an unrelated project.
 - Use it only when it helps the visitor. For simple brochure sites, shops, and anything people scan quickly, choose a calmer design (Section 12).
 - Always ship the fallbacks: a no-JavaScript stacked layout, a reduced-motion layout, a pause button, and mobile layouts verified with `scripts/qa/beat-fit.js` at 360 by 640, 390 by 844, and 1366 by 700 (the scroll-scene sizes in `scripts/qa/viewports.json`).
+
+## 11.4 Plain HTML, CSS and JavaScript sites: starter, motion, and finishing
+
+For Tier 0 sites (Section 12.3), start from **`examples/multi-page-starter/`** instead of writing structure from scratch. Copy it, replace every token, word, and image, and keep its structure.
+
+- **Shared header and footer:** write them once in `_partials/`; each page keeps `<!-- include:header -->` regions. Run `node scripts/site/build.mjs <site> --url https://the-domain` after any change: it fills the partials into every page (with the active menu item), writes `sitemap.xml` and `robots.txt`, and lists missing finishing files.
+- **Motion is expected, not optional.** A static site should still feel alive. Use the motion kit (`motion.js`, `motion.css`): `data-animate` reveals, `data-stagger` for cards and galleries, `data-split` for one key headline, `data-count` for real figures, `data-parallax` for one or two full-width images, and the built-in page-to-page fades. Add a background or feature video where it carries meaning (Section 3.6), and hover feedback on cards and images. Follow the motion budget (Phase 10): choreograph, do not animate every element, and keep everything readable with reduced motion.
+- **Finishing files on every site:** a favicon (SVG plus a 180 px PNG Apple touch icon when possible), `site.webmanifest`, a 1200 × 630 Open Graph image from the site's best photo, `og:image` and a meta description on every page, `sitemap.xml`, `robots.txt`, and a styled `404.html`. Structured data (`Organization` JSON-LD) only with details the owner confirms.
+- **Images:** `<picture>` with WebP and JPEG `srcset` from the media tool's `variants` command; eager-load only the first image on each page.
 
 ---
 

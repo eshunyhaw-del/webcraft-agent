@@ -22,6 +22,7 @@ Commands
   cut     in out.mp4 --start S --dur D [...]            Trim, remove audio, compress, optional --boomerang loop and
                                                         --crop-bottom PERCENT (to remove a burned-in caption) or --crop W:H:X:Y.
   build   plan.json --out DIR                           Download and prepare everything listed in a media plan.
+  variants assets/img                                   Responsive sizes (480, 960, 1600 px) and WebP copies of every .jpg.
 
 A plan item may be {"source": "commons", "title": "File:Example.webm", ...}, or {"source": "openverse" | "unsplash" |
 "pexels" | "pixabay", "id": "<id from search>", ...}; the default source is nasa.
@@ -365,6 +366,37 @@ def cmd_cut(a):
 
 
 # ---------------------------------------------------------------- images
+VARIANT_WIDTHS = (480, 960, 1600)
+
+
+def make_variants(path, widths=VARIANT_WIDTHS, quality=80):
+    """Write responsive copies next to an image: name-480.jpg/.webp, name-960..., plus name.webp at full size.
+    Widths larger than the original are skipped. Returns the widths written (the full width included)."""
+    Image = pil()
+    im = Image.open(path).convert("RGB")
+    base = os.path.splitext(path)[0]
+    made = []
+    for w in [x for x in widths if x < im.width]:
+        small = im.resize((w, round(im.height * w / im.width)), Image.LANCZOS)
+        small.save("%s-%d.jpg" % (base, w), quality=quality, optimize=True, progressive=True)
+        small.save("%s-%d.webp" % (base, w), quality=quality)
+        made.append(w)
+    im.save(base + ".webp", quality=quality)
+    return made + [im.width]
+
+
+def cmd_variants(a):
+    folder = a.folder
+    names = sorted(f for f in os.listdir(folder) if f.lower().endswith((".jpg", ".jpeg")) and not re.search(r"-\d+\.jpe?g$", f, re.I))
+    if not names:
+        sys.exit("No .jpg images in %s" % folder)
+    for f in names:
+        made = make_variants(os.path.join(folder, f))
+        print("%-28s widths %s (+ .webp)" % (f, ", ".join(map(str, made))))
+    print("\nUse them with srcset, for example:\n  <picture><source type=\"image/webp\" srcset=\"x-480.webp 480w, x-960.webp 960w, x.webp 1600w\" sizes=\"100vw\">"
+          "<img src=\"x.jpg\" srcset=\"x-480.jpg 480w, x-960.jpg 960w, x.jpg 1600w\" sizes=\"100vw\" width=\"...\" height=\"...\" alt=\"...\"></picture>")
+
+
 def prep_image(raw, dst, max_width, quality=82, crop_to_disc=False):
     Image = pil()
     im = Image.open(io.BytesIO(raw)).convert("RGB")
@@ -501,6 +533,7 @@ def main():
     a.add_argument("--width", type=int, default=1280); a.add_argument("--crf", type=int, default=24); a.add_argument("--boomerang", action="store_true")
     a.add_argument("--crop", help="ffmpeg crop W:H:X:Y"); a.add_argument("--crop-bottom", type=float, help="remove this percent from the bottom edge (burned-in captions)"); a.set_defaults(f=cmd_cut)
     a = s.add_parser("build"); a.add_argument("plan"); a.add_argument("--out", required=True); a.add_argument("--keep-cache", action="store_true"); a.set_defaults(f=cmd_build)
+    a = s.add_parser("variants", help="write responsive sizes and WebP copies of every .jpg in a folder"); a.add_argument("folder"); a.set_defaults(f=cmd_variants)
     args = p.parse_args(); args.f(args)
 
 

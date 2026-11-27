@@ -5,6 +5,7 @@ When the user asks to design or build a website, landing page, online shop, or w
 Tools and patterns in this repository (details are in the master prompt, Sections 11.1 to 11.3):
 
 - **Real photographs and video:** `scripts/media/webcraft_media.py` searches NASA and Wikimedia Commons, scans video for black frames and burned-in captions, cuts clean loops, and builds assets from a plan. Needs Python, ffmpeg, and Pillow.
+- **Plain HTML/CSS/JS sites:** start from `examples/multi-page-starter/` (shared header and footer, motion kit, finishing files) and run `node scripts/site/build.mjs` (Section 11.4).
 - **Immersive scroll journey:** `docs/recipes/scroll-journey.md`, a runnable starter in `examples/scroll-journey-starter/`, and a richer reference in `examples/cosmos-journey/`.
 - **QA tools (`scripts/qa/`):** `detect-tools.mjs` (what can be checked here), `page-audit.js` (browser measurements), `check-links.mjs` (routes and links), `token-audit.mjs` (design-token use), `beat-fit.js` (scroll scenes), and the canonical sizes in `viewports.json` (master prompt Phases 12 and 13).
 - **Craft library (MotionSites, MIT):** `.claude/skills/motionsites-web-builder/references/`.
