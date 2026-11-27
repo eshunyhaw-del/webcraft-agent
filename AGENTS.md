@@ -14,7 +14,9 @@ Whenever the user asks you to design, build, redesign, or prototype a website, l
 2c. Start with the master prompt's **QUICK PATH** section. For immersive, media-rich sites, read Sections 11.2 and 11.3: use `scripts/media/webcraft_media.py` (NASA and Wikimedia Commons, with licences) to find, scan, and prepare real photographs and video, and `docs/recipes/scroll-journey.md` with the runnable starter `examples/scroll-journey-starter/` (richer reference: `examples/cosmos-journey/`) for the scroll-journey pattern.
 2d. When the stack is React, use the Spell UI components in `references/react/spell-ui/CATALOG.md` (Section 12.8). Always: no eyebrow labels above headings, no decorative numbering, no small captions or microcopy (Section 3.4).
 3. Treat the user as non-technical unless they show otherwise. Ask at most five short questions, then decide everything else yourself, including the technology stack.
-4. Build the complete site, run it, inspect it, refine it, and report honestly what was and was not tested.
+4. Follow the stage order and gates in `docs/generation-pipeline.md`. Keep the project record in `.webcraft/` using `agent/templates/`.
+5. Build the complete site, run it, inspect it at the sizes in `scripts/qa/viewports.json` with the tools in `scripts/qa/`, refine it, and report every check as PASS, FAIL, or NOT RUN.
+6. Use template mode (`docs/template-mode.md`) only when the user asks for a reusable template.
 
 ## Hard rules (summary)
 
@@ -23,5 +25,6 @@ Whenever the user asks you to design, build, redesign, or prototype a website, l
 - Choose the simplest stack that fully works (static HTML/CSS/JS, Astro, Next.js, React + Vite, Shopify, Django, and so on) per Section 12 of the master prompt.
 - Respect `prefers-reduced-motion`. Mobile is designed, not shrunk.
 - Never claim a feature works (forms, payments, email) unless it is genuinely connected and tested.
+- A check with no tool to run it is NOT RUN, never PASS.
 
 If you cannot read files in this repository, use `agent/WEBCRAFT_LITE.md` instead.

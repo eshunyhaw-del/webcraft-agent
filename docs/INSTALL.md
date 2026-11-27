@@ -48,7 +48,7 @@ Works with Codex, Cursor, Windsurf, GitHub Copilot, Gemini CLI, and others.
 
 2. Ask for a website. The tool reads `agent/WEBCRAFT_MASTER_PROMPT.md` and the sample prompts, then builds.
 
-To use WEBCraft inside an **existing** project instead, copy the `agent/` and `references/` folders plus the instruction file for your tool into that project's root.
+To use WEBCraft inside an **existing** project instead, copy the `agent/` and `references/` folders plus the instruction file for your tool into that project's root. Copy `scripts/qa/` and `docs/` too if you want the QA tools and the pipeline documents available there.
 
 ## Route C: Chat-only tools (no file access)
 

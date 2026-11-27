@@ -109,3 +109,22 @@ Status: **EXISTS** implemented and usable · **PARTIAL** present but incomplete 
 | 5 | H5 QA report template, then H2 sequence | Builds on 2–3 |
 | 6 | C1–C3, D2–D3, E1–E2, F1, F3, G2 | P1 prompt refinements, one per task |
 | 7 | I-series, K-series, J-series | P2 extensions |
+
+## Implementation status (after the enhancement work)
+
+The tables above are the audit snapshot at `ac9be3c`. What changed since, by item:
+
+| Items | Now | Where |
+|---|---|---|
+| L3 | Done | `scripts/check.mjs`, `tests/`, `.github/workflows/check.yml` |
+| H1, H3, E2 (tool), D3 (tool) | Done | `scripts/qa/` (`detect-tools.mjs`, `viewports.json`, `page-audit.js`, `check-links.mjs`, `token-audit.mjs`); master prompt Phases 12–13 |
+| B1, B2 | Done | `docs/generation-pipeline.md`, `schemas/pipeline.json`, `agent/templates/`, master prompt §4.0 |
+| C1–C3 | Done | Master prompt Phase 2, §9.1, Phase 10; `agent/templates/creative-direction.md` |
+| D1–D3, E1–E2 | Done | Master prompt Phases 3 and 7; `agent/templates/design-system.md`, `site-map.md` |
+| F1, F3, G2, G4 | Done | Master prompt Phase 6, §12.6–12.7; `agent/templates/project-brief.md`, `architecture.md` |
+| H2, H4, H5, I1–I4 | Done | Master prompt Phase 13 and §8; `docs/quality-baselines.md`; report templates |
+| J1–J5 | Done | `docs/template-mode.md`, `schemas/template-manifest.schema.json`, `scripts/template/`, master prompt §15 |
+| K1–K3 | Done; no runs recorded yet | `benchmarks/`, `scripts/bench/`, `schemas/benchmark-run.schema.json` |
+| L2 | Done | Lite prompt, `AGENTS.md`, Cursor and Copilot files synced; drift checked by `scripts/check.mjs` |
+
+Still open: no automated accessibility (axe) or performance (Lighthouse) runner is bundled, `shoot.py` (third party) still captures only 1440×900 and 390×844, and no benchmark brief has been run end to end.
