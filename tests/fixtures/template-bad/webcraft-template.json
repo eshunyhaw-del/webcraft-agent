@@ -1,0 +1,9 @@
+{
+  "schemaVersion": "2.0",
+  "templateId": "Bad Template",
+  "name": "Bad",
+  "version": "1",
+  "framework": "jquery",
+  "pages": [],
+  "extra": true
+}

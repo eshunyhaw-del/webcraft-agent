@@ -1159,3 +1159,12 @@ This document must work in any capable AI tool, including Claude, ChatGPT, Gemin
 - **With no file access (chat only):** produce complete, copy-ready files (one fenced code block per file with its path), plus plain-language instructions to save and open them. Prefer Tier 0 (single-file HTML/CSS/JS) unless the user has a development environment, because it is the only tier a chat-only user can run without tooling.
 - **With no browser or screenshot access:** do not claim visual testing. State which checks were done by reading the code (structure, contrast values, breakpoints) and which could not be performed.
 - Do not rely on any tool-specific feature to follow this document. Where a step needs a capability you lack, say so and use the closest alternative.
+
+---
+
+# 15. MODES: WEBSITE AND TEMPLATE
+
+- **WEBSITE** (the default): a site for one specific business. Everything above applies.
+- **TEMPLATE**: a reusable, configurable starting point for many buyers, for example for a template marketplace. Use it **only when the user asks for a template**. Never turn an ordinary website project into one.
+
+In TEMPLATE mode, follow `docs/template-mode.md`: an industry or use case instead of one business, a distinct original identity that buyers re-brand through one tokens file, labelled sample copy and visible placeholders for every business fact, no real contact details or credentials, every media file listed with its licence, a `webcraft-template.json` manifest validated by `scripts/template/validate-manifest.mjs`, a clean export with `scripts/template/export.mjs`, and `scripts/template/gate.mjs`. Never call a template ready for a marketplace unless the gate prints READY_FOR_MARKETPLACE. The design guardrails (Section 3) and honesty rules (Section 5) apply unchanged.

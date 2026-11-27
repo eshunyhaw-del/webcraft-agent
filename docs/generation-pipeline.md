@@ -95,4 +95,4 @@ Without files or a terminal, run DISCOVERY to IMPLEMENTATION as short headed sec
 
 ## Modes
 
-`WEBSITE` (default) builds for one business. Every stage above applies to it.
+`WEBSITE` (default) builds for one business. `TEMPLATE` builds a reusable starting point for many buyers and adds the manifest, export and quality gate in [template-mode.md](template-mode.md). Use TEMPLATE only when the user asks for a template. Record the mode in `state.json`.

@@ -1,0 +1,33 @@
+{
+  "schemaVersion": "1.0",
+  "templateId": "fixture-cafe",
+  "name": "Fixture Cafe",
+  "version": "1.0.0",
+  "category": "restaurant",
+  "useCase": "A two-page site for a small cafe: home and menu.",
+  "framework": "static",
+  "pages": [
+    { "route": "/", "purpose": "Introduce the cafe" },
+    { "route": "/menu", "purpose": "Show the menu" }
+  ],
+  "features": ["responsive-navigation"],
+  "customization": { "brandName": true, "logo": false, "colors": true, "typography": true, "images": true, "copy": true },
+  "customizationPoints": [
+    { "name": "Colours and spacing", "file": "tokens.css", "description": "Change the custom properties in :root." },
+    { "name": "Home copy", "file": "index.html", "description": "Replace every element marked data-placeholder." }
+  ],
+  "designTokens": "tokens.css",
+  "requiresEnvironmentVariables": [],
+  "commands": { "dev": "python -m http.server 8000" },
+  "buildOutput": ".",
+  "assets": [
+    { "path": "assets/hero.svg", "source": "original-work", "license": "MIT (this repository)" }
+  ],
+  "licenseNotes": ["Code: MIT."],
+  "validation": {
+    "install": { "status": "NOT APPLICABLE", "evidence": "Static template, nothing to install." },
+    "build": { "status": "NOT APPLICABLE", "evidence": "Static template, no build step." },
+    "routes": { "status": "PASS", "evidence": "check-links.mjs: 2 pages, 0 errors" },
+    "responsive": { "status": "NOT RUN", "evidence": "Fixture only; no browser in unit tests." }
+  }
+}

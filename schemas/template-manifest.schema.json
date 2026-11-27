@@ -1,0 +1,101 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/eshunyhaw-del/webcraft-agent/schemas/template-manifest.schema.json",
+  "title": "WEBCraft template manifest",
+  "description": "webcraft-template.json at the root of a reusable template. Validated by scripts/template/validate-manifest.mjs. Bump schemaVersion on breaking changes.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "templateId", "name", "version", "category", "useCase", "framework", "pages", "features", "customization", "customizationPoints", "designTokens", "requiresEnvironmentVariables", "commands", "buildOutput", "assets", "licenseNotes", "validation"],
+  "properties": {
+    "schemaVersion": { "const": "1.0" },
+    "templateId": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$", "description": "Stable kebab-case identifier." },
+    "name": { "type": "string", "minLength": 3 },
+    "version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$", "description": "Template release, semver." },
+    "category": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$", "description": "Industry, for example restaurant, creative-agency, saas." },
+    "useCase": { "type": "string", "minLength": 10, "description": "Who buys it and what the site is for." },
+    "framework": { "enum": ["static", "astro", "next", "react-vite", "vue", "nuxt", "svelte", "sveltekit", "angular", "shopify-theme", "wordpress", "django", "other"] },
+    "pages": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["route", "purpose"],
+        "properties": { "route": { "type": "string", "pattern": "^/" }, "purpose": { "type": "string", "minLength": 3 } }
+      }
+    },
+    "features": { "type": "array", "items": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" } },
+    "customization": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["brandName", "logo", "colors", "typography", "images", "copy"],
+      "properties": {
+        "brandName": { "type": "boolean" },
+        "logo": { "type": "boolean" },
+        "colors": { "type": "boolean" },
+        "typography": { "type": "boolean" },
+        "images": { "type": "boolean" },
+        "copy": { "type": "boolean" }
+      }
+    },
+    "customizationPoints": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "file", "description"],
+        "properties": { "name": { "type": "string" }, "file": { "type": "string" }, "description": { "type": "string", "minLength": 5 } }
+      }
+    },
+    "designTokens": { "type": "string", "description": "Path to the file that holds the design tokens." },
+    "requiresEnvironmentVariables": { "type": "array", "items": { "type": "string", "pattern": "^[A-Z][A-Z0-9_]*$" } },
+    "commands": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": { "install": { "type": "string" }, "dev": { "type": "string" }, "build": { "type": "string" }, "preview": { "type": "string" } }
+    },
+    "buildOutput": { "type": "string", "description": "Folder with the built site, '.' for static templates." },
+    "assets": {
+      "type": "array",
+      "description": "Every image, video, font or other media file shipped with the template, with its usage rights.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "source", "license"],
+        "properties": {
+          "path": { "type": "string" },
+          "source": { "type": "string", "description": "original-work, user-supplied, unsplash, pexels, commons, nasa, google-fonts, …" },
+          "license": { "type": "string", "minLength": 2 },
+          "creator": { "type": "string" },
+          "url": { "type": "string" }
+        }
+      }
+    },
+    "licenseNotes": { "type": "array", "items": { "type": "string" } },
+    "validation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["install", "build", "routes", "responsive"],
+      "properties": {
+        "install": { "$ref": "#/$defs/check" },
+        "build": { "$ref": "#/$defs/check" },
+        "routes": { "$ref": "#/$defs/check" },
+        "responsive": { "$ref": "#/$defs/check" },
+        "accessibility": { "$ref": "#/$defs/check" },
+        "performance": { "$ref": "#/$defs/check" }
+      }
+    }
+  },
+  "$defs": {
+    "check": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "evidence"],
+      "properties": {
+        "status": { "enum": ["PASS", "FAIL", "NOT RUN", "NOT APPLICABLE"] },
+        "evidence": { "type": "string", "minLength": 3, "description": "Command and result, or the reason it was not run." }
+      }
+    }
+  }
+}
