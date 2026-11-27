@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>About | Example Studio</title>
+  <meta name="description" content="Starter inner page for a multi-page WEBCraft site.">
+  <meta property="og:title" content="About | Example Studio">
+  <meta property="og:image" content="../og-image.svg">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../site.webmanifest">
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="../motion.css">
+</head>
+<body>
+<!-- include:header -->
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href=".././">Example Studio</a>
+    <button class="nav-toggle" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav id="site-nav" class="nav" aria-label="Main">
+      <ul>
+        <li><a href=".././" data-nav="">Home</a></li>
+        <li><a href="../about/" data-nav="about/" aria-current="page">About</a></li>
+        <li><a class="btn" href="../about/#contact" data-nav="contact">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+<!-- /include:header -->
+  <main id="main">
+    <section class="section wrap">
+      <h1 data-split>An inner page with the same header</h1>
+      <p class="lede" data-animate="fade-up">Edit _partials/header.html once, run the build, and every page updates.</p>
+    </section>
+    <section class="section wrap" id="contact">
+      <div class="feature">
+        <div data-animate="slide-right"><h2>Split feature</h2><p>Text slides in from one side.</p></div>
+        <div data-animate="mask"><div class="card"><div class="card-body"><p>A photo here reveals with a mask.</p></div></div></div>
+      </div>
+    </section>
+  </main>
+<!-- include:footer -->
+<footer class="site-footer">
+  <div class="wrap">
+    <div><a class="brand" href=".././">Example Studio</a><p>One sentence about what the organisation does and for whom.</p></div>
+    <div><h2>Explore</h2><ul><li><a href=".././">Home</a></li><li><a href="../about/">About</a></li></ul></div>
+    <p class="legal">&copy; <span data-year>2026</span> Example Studio.</p>
+  </div>
+</footer>
+<!-- /include:footer -->
+  <script src="../motion.js"></script>
+</body>
+</html>

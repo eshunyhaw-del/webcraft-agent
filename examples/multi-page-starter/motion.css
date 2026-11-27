@@ -1,0 +1,47 @@
+/* WEBCraft motion kit styles. Pair with motion.js. Hidden states apply only when motion.js has added
+   .motion-on to <html>, so content is always visible without JavaScript or with reduced motion. */
+:root {
+  --motion-dur: 800ms;
+  --motion-ease: cubic-bezier(.2, .8, .2, 1);
+  --motion-distance: 28px;
+}
+
+.motion-on [data-animate] {
+  opacity: 0;
+  transition: opacity var(--motion-dur) var(--motion-ease) var(--motion-delay, 0ms),
+              transform var(--motion-dur) var(--motion-ease) var(--motion-delay, 0ms),
+              clip-path calc(var(--motion-dur) * 1.4) var(--motion-ease) var(--motion-delay, 0ms);
+}
+.motion-on [data-animate="fade-up"] { transform: translateY(var(--motion-distance)); }
+.motion-on [data-animate="zoom"] { transform: scale(.94); }
+.motion-on [data-animate="slide-left"] { transform: translateX(var(--motion-distance)); }
+.motion-on [data-animate="slide-right"] { transform: translateX(calc(var(--motion-distance) * -1)); }
+.motion-on [data-animate="mask"] { opacity: 1; clip-path: inset(0 0 100% 0); }
+.motion-on [data-animate].is-in { opacity: 1; transform: none; clip-path: inset(0 0 0 0); }
+
+/* Word-by-word headline */
+.motion-on [data-split] .motion-word {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(0.45em);
+  transition: opacity 700ms var(--motion-ease), transform 700ms var(--motion-ease);
+  transition-delay: calc(var(--i) * 70ms + var(--motion-delay, 0ms));
+}
+.motion-on [data-split].is-in .motion-word { opacity: 1; transform: none; }
+
+/* Parallax layers need room to move */
+[data-parallax] { will-change: transform; }
+
+/* Smooth fades between pages of the same site (browsers without support simply navigate normally) */
+@view-transition { navigation: auto; }
+::view-transition-old(root), ::view-transition-new(root) { animation-duration: 350ms; }
+
+/* Image hover zoom inside cards and galleries */
+.motion-on .hover-zoom { overflow: hidden; }
+.motion-on .hover-zoom img { transition: transform 900ms var(--motion-ease); }
+.motion-on .hover-zoom:hover img { transform: scale(1.05); }
+
+@media (prefers-reduced-motion: reduce) {
+  @view-transition { navigation: none; }
+  [data-animate], [data-split] .motion-word { opacity: 1 !important; transform: none !important; clip-path: none !important; }
+}

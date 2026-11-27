@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Example Studio</title>
+  <meta name="description" content="Starter home page for a multi-page WEBCraft site.">
+  <meta property="og:title" content="Example Studio">
+  <meta property="og:image" content="og-image.svg">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="site.webmanifest">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="motion.css">
+</head>
+<body>
+<!-- include:header -->
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="./">Example Studio</a>
+    <button class="nav-toggle" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav id="site-nav" class="nav" aria-label="Main">
+      <ul>
+        <li><a href="./" data-nav="" aria-current="page">Home</a></li>
+        <li><a href="about/" data-nav="about/">About</a></li>
+        <li><a class="btn" href="about/#contact" data-nav="contact">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+<!-- /include:header -->
+  <main id="main">
+    <section class="hero-media">
+      <div class="wrap">
+        <h1 data-split>A starter, not a finished design</h1>
+        <p class="lede" data-animate="fade-up" data-delay="300">Replace the tokens, the copy and the media. Keep the structure, the partials and the motion kit.</p>
+        <div class="actions" data-animate="fade-up" data-delay="450"><a class="btn btn--light" href="about/">See the inner page</a></div>
+      </div>
+    </section>
+    <section class="section facts">
+      <div class="wrap">
+        <div class="section-head" data-animate="fade-up"><h2>Real figures count up</h2></div>
+        <ul class="fact-grid" data-stagger="fade-up">
+          <li><strong data-count>82%</strong><span>Any number with a prefix or suffix animates.</span></li>
+          <li><strong data-count>2,400</strong><span>Thousands separators are kept.</span></li>
+          <li><strong>2 in 5</strong><span>Ratios are left as written.</span></li>
+        </ul>
+      </div>
+    </section>
+    <section class="section wrap">
+      <div class="section-head" data-animate="fade-up"><h2>Cards arrive one after another</h2></div>
+      <div class="cards" data-stagger="fade-up">
+        <article class="card"><div class="card-body"><h3>First</h3><p>Use real photos in each card.</p></div></article>
+        <article class="card"><div class="card-body"><h3>Second</h3><p>Children of data-stagger reveal in turn.</p></div></article>
+        <article class="card"><div class="card-body"><h3>Third</h3><p>Reduced motion shows them at once.</p></div></article>
+      </div>
+    </section>
+  </main>
+<!-- include:footer -->
+<footer class="site-footer">
+  <div class="wrap">
+    <div><a class="brand" href="./">Example Studio</a><p>One sentence about what the organisation does and for whom.</p></div>
+    <div><h2>Explore</h2><ul><li><a href="./">Home</a></li><li><a href="about/">About</a></li></ul></div>
+    <p class="legal">&copy; <span data-year>2026</span> Example Studio.</p>
+  </div>
+</footer>
+<!-- /include:footer -->
+  <script src="motion.js"></script>
+</body>
+</html>

@@ -70,6 +70,7 @@ MotionSites' own example designs and media are copyright MotionSites and are not
 | `scripts/media/webcraft_media.py` | Media tool: search NASA and Wikimedia Commons (with licences), scan videos for black frames and burned-in captions, cut clean loops, crop captions, and build all assets from a plan. |
 | `references/react/spell-ui/` | [Spell UI](https://spell.sh) (MIT): catalog of 33 animated React + Tailwind components with install commands and guardrail notes, plus read-only source. Used when the chosen stack is React. |
 | `showcase/` | Real sites built with this repo, viewable as they are. |
+| `examples/multi-page-starter/`, `scripts/site/build.mjs` | Starter for multi-page HTML/CSS/JS sites: shared header and footer, motion kit (reveals, staggered cards, rising headlines, count-ups, parallax, page fades), favicon, manifest, sitemap and robots. |
 | `examples/scroll-journey-starter/` | A small, subject-neutral, runnable starter for the immersive scroll journey (80-line engine). |
 | `docs/generation-pipeline.md`, `schemas/pipeline.json` | The stage-by-stage pipeline: states, gates, the artifact each stage writes, the validation sequence, and resuming. |
 | `agent/templates/` | Templates for the `.webcraft/` project record each build keeps (brief, creative direction, site map, design system, page specs, architecture, validation, visual QA, delivery). |
