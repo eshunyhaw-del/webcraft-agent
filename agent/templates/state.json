@@ -4,9 +4,14 @@
   "record": "full",
   "state": "DISCOVERY",
   "completed": [
-    { "state": "RECEIVED", "artifact": null, "evidence": "Brief received in chat", "at": "YYYY-MM-DD" }
+    {
+      "state": "RECEIVED",
+      "artifact": null,
+      "evidence": "Brief received in chat",
+      "at": "YYYY-MM-DD"
+    }
   ],
   "blockers": [],
-  "placeholders": [],
-  "notRun": []
+  "notRun": [],
+  "sampleContent": []
 }

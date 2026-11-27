@@ -14,8 +14,14 @@ Where the copy and media live and how to edit them.
 ## How to put it online
 The hosting route that fits the stack, step by step.
 
-## What is not real yet
-| Item | Kind (placeholder, unverified fact, prototype feature, unconnected integration) | What the owner needs to supply or decide |
+## Sample content to confirm before launch
+The site is complete. These details were created by the agent (see `content.md`) and should be confirmed or replaced by the owner.
+
+| Item | Where | What to check |
+|---|---|---|
+
+## Integrations still to connect
+| Item | Current behaviour | What the owner needs to do |
 |---|---|---|
 
 ## What was tested

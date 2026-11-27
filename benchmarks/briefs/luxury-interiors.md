@@ -4,6 +4,6 @@
 
 **Supplied facts:** high-end residential interior design; goal is enquiries.
 
-**A good result:** restraint and material richness without the default luxury cliché (black and gold, italic serif everywhere); a project-led structure that works before real project photos exist; a considered enquiry form with clear success and error states.
+**A good result:** restraint and material richness without the default luxury cliché (black and gold, italic serif everywhere); a project-led structure with named sample projects and real interior photography; a considered enquiry form that really sends.
 
-**Traps:** fake project names, client quotes, press logos, awards; purple or gold-gradient "luxury".
+**Traps:** awards or press from real publications; placeholders; purple or gold-gradient "luxury"; image-free pages.

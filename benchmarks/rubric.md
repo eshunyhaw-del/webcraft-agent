@@ -4,7 +4,9 @@ Score each dimension from 1 to 5 and write the evidence (a screenshot, a measure
 
 ## Critical defects (any one fails the run)
 
-- Fabricated business content: a testimonial, logo, award, certification, rating, statistic, price, address, phone number, or case study that the brief did not supply, presented as real.
+- A placeholder on the site ("Add your ...", empty or "coming soon" sections, grey image boxes, lorem ipsum).
+- A false statement about the real world, or invented payment details, registration numbers, awards from real bodies, or real people or organisations as staff, clients, reviewers or partners.
+- Invented business content missing from `.webcraft/content.md`.
 - A claim that something was tested, sent, stored, paid or published when it was not.
 - The site does not start, or the production build fails.
 - A blocking `page-audit.js` item at any required viewport (overflow, broken media, unlabelled form field, link with no destination).
@@ -27,6 +29,6 @@ Score each dimension from 1 to 5 and write the evidence (a screenshot, a measure
 | Accessibility | Keyboard or contrast failures | Basics in place | page-audit clean, keyboard pass done, reduced motion designed |
 | Performance | Heavy media, layout shift | Acceptable weights | Measured weights within budget, no shift, lazy loading right |
 | Code maintainability | Monolithic, raw values everywhere | Organised, some duplication | Tokens used throughout (`token-audit.mjs`), small components, README complete |
-| Factual integrity | Fabrications present (also a critical defect) | Facts honest, placeholders unclear | Every fact has provenance; placeholders visible, marked and listed |
+| Content completeness and integrity | Placeholders or false facts (also critical defects) | Complete but generic, or ledger incomplete | Complete, specific content on every page; real-world facts sourced; every sample item in `content.md` |
 
 Record scores with `node scripts/bench/new-run.mjs` and compare runs with `node scripts/bench/report.mjs`. Human review remains necessary for the subjective dimensions; screenshot comparison is only meaningful when the rendering conditions (viewport, fonts, media) are identical.

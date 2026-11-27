@@ -4,7 +4,7 @@ A fixed set of briefs to run WEBCraft against after changing the master prompt, 
 
 | Path | What it is |
 |---|---|
-| [`briefs/`](briefs/) | Ten fictional briefs across industries. Each states the user's words, the facts supplied, what a good result needs, and the traps (usually invitations to invent facts). No real client information. |
+| [`briefs/`](briefs/) | Ten fictional briefs across industries. Each states the user's words, the facts supplied, what a good result needs, and the traps (placeholders, thin layouts, false facts). No real client information. |
 | [`rubric.md`](rubric.md) | Critical defects that fail a run outright, and twelve dimensions scored 1 to 5 with evidence. |
 | `runs/` | One JSON record per run (schema: [`schemas/benchmark-run.schema.json`](../schemas/benchmark-run.schema.json)). |
 | `RESULTS.md` | Generated summary of the latest run per brief and any regressions. |

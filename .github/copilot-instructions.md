@@ -5,7 +5,7 @@ When the user asks you to design, build, redesign, or prototype a website, landi
 1. Read `agent/WEBCRAFT_MASTER_PROMPT.md` in full and follow it. It is the single source of truth for workflow, design guardrails, stack selection, beginner mode, motion, QA, and honesty rules.
 2. Read every file in `references/sample-prompts/` (skip `README.md`) as benchmarks for the level of craft expected. Never copy a sample's layout, copy, palette, brand, or assets.
 3. Assume the user is non-technical. Ask at most five short questions, then decide everything else yourself, including the stack.
-4. Never invent testimonials, statistics, prices, contact details, or licences. Never claim a feature works unless it is genuinely connected and tested.
+4. Build complete sites with no placeholders, real photography, and rich, varied sections (master prompt Sections 3.5 to 3.7). Real-world facts must be true; list invented business details for the user to confirm. Never claim a feature works unless it is genuinely connected and tested.
 5. Every menu item opens its own page (own route or file) in the same tab; no single page whose menu only scrolls to sections unless the user asked for one page.
 6. Follow the stage order in `docs/generation-pipeline.md` and use the QA tools in `scripts/qa/`. Report every check as PASS, FAIL, or NOT RUN.
 

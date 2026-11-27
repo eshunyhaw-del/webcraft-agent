@@ -33,7 +33,7 @@ Interruptions, and where each one returns:
 | State | When | Returns to |
 |---|---|---|
 | NEEDS_CLARIFICATION | A missing fact would change the architecture, content, direction, or features (master prompt §6) | DISCOVERY |
-| BLOCKED_BY_MISSING_INPUT | A required input cannot be inferred or replaced with a marked placeholder (credentials, a provider choice, legally required text) | DISCOVERY or IMPLEMENTATION |
+| BLOCKED_BY_MISSING_INPUT | A required input cannot be written as realistic sample content and must come from the user (credentials, a provider choice, payment details, legally required text) | DISCOVERY or IMPLEMENTATION |
 | TOOL_UNAVAILABLE | A validation tool is missing (`node scripts/qa/detect-tools.mjs`) | The next stage, with that check recorded as NOT RUN |
 | VALIDATION_FAILED | A blocking check failed | IMPLEMENTATION for code defects; DESIGN_SYSTEM, PAGE_SPECIFICATION, or UX_ARCHITECTURE for design or structure defects |
 | OWNER_REVIEW_REQUIRED | A decision that belongs to the owner: spending money, connecting payments or accounts, publishing, licences with conditions, a direction the owner rejected | The stage that asked |
@@ -44,17 +44,17 @@ Artifacts live in a `.webcraft/` folder at the root of the generated project. Te
 
 | Size of job | Record |
 |---|---|
-| Full (multi-page, shop, app, immersive, or the user wants documentation) | One file per artifact, as listed below, plus `state.json` |
-| Compact (Quick Path: a small or single-page site) | One `.webcraft/project.md` with the brief, direction, site map, design system and architecture as short sections, one `.webcraft/qa-report.md` combining validation, visual QA and delivery, plus `state.json` |
+| Full (multi-page, shop, app, immersive, or the user wants documentation) | One file per artifact, as listed below, plus `content.md` and `state.json` |
+| Compact (Quick Path: a small or single-page site) | One `.webcraft/project.md` with the brief, direction, site map, design system and architecture as short sections, one `.webcraft/qa-report.md` combining validation, visual QA and delivery, plus `content.md` and `state.json` |
 | Chat only (no files) | No folder. The same headings appear, short, in the chat reply |
 
-`state.json` (template: [`agent/templates/state.json`](../agent/templates/state.json)) holds the mode, current state, each completed stage with its artifact and evidence, open blockers, and placeholders still to fill.
+`state.json` (template: [`agent/templates/state.json`](../agent/templates/state.json)) holds the mode, current state, each completed stage with its artifact and evidence, open blockers, and the sample content the owner should confirm (`sampleContent`).
 
 ## Stage contracts
 
 | Stage | Master prompt | Required inputs | Artifact | Complete when | Fails when | Hands on |
 |---|---|---|---|---|---|---|
-| DISCOVERY | Phase 1, §6, §13.2 | The brief; repository or existing site if any | `project-brief.md` | Business, audience, primary action, pages and features are stated; every fact has a provenance label; assumptions are listed apart from confirmed facts | A critical fact is missing and cannot be a marked placeholder | Brief, assumptions, content ledger |
+| DISCOVERY | Phase 1, §6, §13.2 | The brief; repository or existing site if any | `project-brief.md` | Business, audience, primary action, pages and features are stated; every fact has a provenance label in `content.md`; assumptions are listed apart from confirmed facts | A critical fact is missing and cannot be a marked placeholder | Brief, assumptions, content ledger |
 | REQUIREMENTS_READY | §6 | Brief; answers to at most five questions, or "you decide" | `project-brief.md` (status line updated) | No open question blocks direction or architecture | — | Same |
 | CREATIVE_DIRECTION | Phases 2, 4, 5, 9, 10 | Brief | `creative-direction.md` | Concept, type and media direction are specific (no bare "modern"/"premium"); every experience pattern has its 8-field justification; motion budget classifies every motion | Direction contradicts the guardrails (§3) or the brief | Direction, patterns, motion budget |
 | UX_ARCHITECTURE | Phases 6, 7 | Brief, direction | `site-map.md` | Every page has route, intent, primary CTA, sections, data, SEO title and description, internal links; user flows for each conversion | A required page or flow has no route | Site map |
@@ -64,7 +64,7 @@ Artifacts live in a `.webcraft/` folder at the root of the generated project. Te
 | LOCAL_VALIDATION | Phase 13 | Running project, tool list | `validation-report.md` | Every step of the validation sequence (below) is PASS or NOT RUN with a reason, and no blocking FAIL remains | Any blocking FAIL | Report |
 | VISUAL_QA | Phase 13, 12 | Validated project, browser tool | `visual-qa-report.md` + screenshots | Every canonical viewport inspected with evidence, or NOT RUN with a reason | A blocking defect at any viewport | Defect list |
 | REFINEMENT | Phase 13 loop | Defect list | Updated `visual-qa-report.md` | Each fixed defect re-checked at its viewport and the adjacent ones | A fix causes a regression | Updated project |
-| DELIVERY | §9, §13.4, §13.5 | All of the above | `delivery-report.md` | The user knows how to open, edit and publish; every placeholder, unverified fact, unconnected integration and NOT RUN check is listed | — | — |
+| DELIVERY | §9, §13.4, §13.5 | All of the above | `delivery-report.md` | The user knows how to open, edit and publish; every piece of sample content to confirm, unconnected integration and NOT RUN check is listed | — | — |
 
 ## Validation sequence (LOCAL_VALIDATION, then VISUAL_QA)
 

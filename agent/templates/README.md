@@ -5,6 +5,7 @@ Copy these into a generated project's `.webcraft/` folder as each stage of the [
 | Template | Stage |
 |---|---|
 | [project-brief.md](project-brief.md) | DISCOVERY, REQUIREMENTS_READY |
+| [content.md](content.md) | DISCOVERY onward: every fact and its provenance |
 | [creative-direction.md](creative-direction.md) | CREATIVE_DIRECTION |
 | [site-map.md](site-map.md) | UX_ARCHITECTURE |
 | [design-system.md](design-system.md) | DESIGN_SYSTEM |
@@ -18,5 +19,5 @@ Copy these into a generated project's `.webcraft/` folder as each stage of the [
 Vocabularies used across them (defined in [`schemas/pipeline.json`](../../schemas/pipeline.json)):
 
 - **Check status:** PASS, FAIL, NOT RUN (always with a reason).
-- **Content provenance:** USER_PROVIDED, SOURCE_VERIFIED, AGENT_DRAFT, PLACEHOLDER, REQUIRES_CONFIRMATION.
+- **Content provenance:** USER_PROVIDED, SOURCE_VERIFIED, AGENT_DRAFT, SAMPLE.
 - **Motion class:** ESSENTIAL, ENHANCEMENT, DECORATIVE.

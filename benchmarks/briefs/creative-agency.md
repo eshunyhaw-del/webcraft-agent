@@ -4,6 +4,6 @@
 
 **Supplied facts:** branding and motion design; clients are music artists.
 
-**A good result:** motion that demonstrates the craft (classified ESSENTIAL or ENHANCEMENT with reasons), a reduced-motion version that still feels designed, a work section ready for real case studies, a clear contact path.
+**A good result:** motion that demonstrates the craft (classified ESSENTIAL or ENHANCEMENT with reasons); a reduced-motion version that still feels designed; a work section with sample case studies and strong imagery or video; a clear contact path.
 
-**Traps:** invented artist names or case studies; motion everywhere with no purpose; scroll hijacking.
+**Traps:** real artists presented as clients; motion everywhere with no purpose; scroll hijacking; thin pages.

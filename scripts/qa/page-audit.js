@@ -2,6 +2,9 @@
 // (scripts/qa/viewports.json). It MEASURES; it does not judge design. Bring the tab to the front first.
 // Returns { viewport, blocking: [...], warnings: [...], info: {...} } and logs a readable report.
 // Blocking items must be fixed before delivery. It does not replace a full accessibility audit.
+// It also checks the owner's content rules: no placeholders (blocking), enough sections, varied neighbouring
+// sections, and real images or video (warnings). Set window.PAGEAUDIT = { home: true } for a home page that is
+// not at the site root.
 (async () => {
   const wait = (ms) => new Promise((r) => setTimeout(r, ms));
   await wait(300);
@@ -65,12 +68,30 @@
   const newTabInternal = [...document.querySelectorAll('a[target="_blank"][href]')].filter((a) => a.origin === location.origin).map((a) => a.getAttribute("href"));
   if (newTabInternal.length) warnings.push('Links to the site\'s own pages open a new tab (remove target="_blank"): ' + newTabInternal.slice(0, 6).join(", "));
 
-  // Content integrity
+  // Content integrity: complete content, no placeholders (owner's rule, master prompt Section 3.5)
   const placeholders = [...document.querySelectorAll("[data-placeholder]")].map((el) => el.getAttribute("data-placeholder") || el.textContent.trim().slice(0, 40));
   info.placeholders = placeholders;
-  if (placeholders.length) warnings.push(placeholders.length + " marked placeholder(s) still on the page; list them in the delivery report: " + placeholders.slice(0, 8).join(", "));
-  const filler = document.body.innerText.match(/lorem ipsum|your tagline here|feature \d\b|\bTODO\b/i);
-  if (filler) blocking.push('Filler text found: "' + filler[0] + '".');
+  if (placeholders.length) blocking.push(placeholders.length + " placeholder element(s) on the page; write the real content instead: " + placeholders.slice(0, 8).join(", "));
+  const filler = document.body.innerText.match(/lorem ipsum|your tagline here|feature \d\b|\bTODO\b|\badd your [a-z ]{3,30}(here)?\b|coming soon/i);
+  if (filler) blocking.push('Placeholder or filler text found: "' + filler[0] + '".');
+
+  // Richness and variety (owner's rule, master prompt Section 3.7)
+  const mainEl = document.querySelector("main") || document.body;
+  const sections = [...mainEl.children].filter((el) => visible(el) && !/^(SCRIPT|STYLE|TEMPLATE)$/.test(el.tagName));
+  // Home is the site root; for a site served from a sub-folder, set window.PAGEAUDIT = { home: true } first.
+  const opts = window.PAGEAUDIT || {};
+  const isHome = typeof opts.home === "boolean" ? opts.home : location.pathname.replace(/index\.html$/, "") === "/";
+  const minSections = isHome ? 7 : 4;
+  info.sections = sections.length;
+  if (sections.length < minSections) warnings.push("Only " + sections.length + " section(s) in <main>; aim for at least " + minSections + (isHome ? " on the home page" : " on an inner page") + " (docs/recipes/section-patterns.md).");
+  const shape = (el) => {
+    const kids = [...el.querySelectorAll(":scope > *, :scope > * > *")].slice(0, 12).map((k) => k.tagName + "." + (getComputedStyle(k).display));
+    return el.tagName + "|" + getComputedStyle(el).display + "|" + (el.querySelector("img,video,picture") ? "media" : "text") + "|" + kids.join(",");
+  };
+  for (let i = 1; i < sections.length; i++) if (shape(sections[i]) === shape(sections[i - 1])) warnings.push("Sections " + i + " and " + (i + 1) + " in <main> have the same structure; vary the layout (" + label(sections[i]) + ").");
+  const media = mainEl.querySelectorAll("img, picture, video, [style*='background-image']").length;
+  info.media = media;
+  if (!media) warnings.push("No images or video in <main>; every page should carry real photography (master prompt Section 3.6).");
 
   // Motion and fonts
   let rm = false;

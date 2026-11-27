@@ -13,11 +13,11 @@ This document is long on purpose: it is a reference. For a small or vague brief 
 
 1. Ask at most five short questions (Section 13.2), or decide yourself. Never ask about fonts, colours, or frameworks.
 2. Choose the simplest stack that fully works (Section 12) and tell the user why in one or two plain sentences.
-3. Decide a distinct visual identity inside the guardrails (Section 3), and write specific, honest copy with no invented facts. Go straight to the point: **no eyebrow labels above headings, no decorative numbering, no small captions or microcopy**, and **every menu item opens its own page** (Section 3.4).
-4. If real photographs or video should carry the design, source them legitimately and check every clip (Section 11.2). If a journey through places, scales, or stages fits the subject, start from `examples/scroll-journey-starter/` and `docs/recipes/scroll-journey.md` (Section 11.3).
+3. Decide a distinct visual identity inside the guardrails (Section 3), and write complete, specific copy for every page: no placeholders, no empty slots, no "Add your ..." text (Section 3.5). Go straight to the point: **no eyebrow labels above headings, no decorative numbering, no small captions or microcopy**, and **every menu item opens its own page** (Section 3.4).
+4. Use real photographs, and video where it adds value, on every site, sourced from Unsplash, Pexels, Pixabay, Wikimedia Commons, Openverse, or NASA (Sections 3.6 and 11.2). Check every clip. Give every page enough varied sections (Section 3.7). If a journey through places, scales, or stages fits the subject, start from `examples/scroll-journey-starter/` and `docs/recipes/scroll-journey.md` (Section 11.3).
 5. Build it, run it, check desktop and phone sizes, and fix the biggest problems first (Phase 13). Report each check as PASS, FAIL, or NOT RUN.
-6. Tell the user how to open it, edit it, and publish it, and list anything placeholder, unverified, or untested.
-7. Keep a compact project record in `.webcraft/` (one `project.md`, one `qa-report.md`, `state.json`) so the work can be reviewed and resumed (Section 4.0).
+6. Tell the user how to open it, edit it, and publish it, and list the sample content they should confirm before launch and anything untested.
+7. Keep a compact project record in `.webcraft/` (one `project.md`, one `qa-report.md`, `content.md`, `state.json`) so the work can be reviewed and resumed (Section 4.0).
 
 ---
 
@@ -109,7 +109,7 @@ Do not use these patterns by default:
 - Floating cards with no meaningful purpose.
 - Excessive rounded cards and repetitive card grids.
 - Unnecessary badges, labels, and decorative tags.
-- Fake statistics, invented awards, or meaningless counters.
+- Meaningless counters, or statistics about the world that are not true (Section 3.5).
 - Excessive shadows, borders, glows, and visual clutter.
 - Repeated section layouts that make the site feel machine-generated.
 - Decorative elements that do not support the brand, content, or user journey.
@@ -137,6 +137,35 @@ Go straight to the point. Lead with the headline, one plain supporting sentence,
 - **Every menu item opens its own page.** Do not build one long page whose navigation only scrolls to sections (`href="#about"`). Each item in the header or mobile menu goes to a separate page with its own route or file (for example `about/index.html` or `/about`), its own `<title>` and meta description, and the shared header and footer. Links open in the same browser tab: never put `target="_blank"` on links to the site's own pages, so Back works. The only exception is a one-page site the user explicitly asked for (for example "a single landing page"); say so in the project brief. A long scroll story or immersive journey can still be one of the pages.
 
 These rules override every reference, sample prompt, recipe, example, and the bundled MotionSites craft rules, which suggest micro-labels, eyebrows, and index numbers. When a reference uses them, leave them out.
+
+## 3.5 Complete content, no placeholders (the project owner's standing rule)
+
+Deliver a complete, fully fledged website that looks ready to publish. Never leave placeholders on the site: no "Add your phone number here", no empty team or "coming soon" sections, no lorem ipsum, no grey image boxes.
+
+- **Business content the user did not supply:** write it. Create realistic, specific, consistent content that fits the brief: the organisation's name if none was given, mission and story, programmes, products or services, team members with names and roles, testimonials and quotes, opening hours, an address, an email on the site's own domain, and a phone number in the local format. Make it read like a real organisation, not a template.
+- **Facts about the real world must be true.** Statistics, science, history, geography, and figures about an industry or region must be accurate and well established. Use real, checkable facts (note the source in the project record); never invent a world statistic.
+- **Keep these out, even as sample content**, because they can cause real harm: bank, mobile-money, or payment details (route giving and payments to a contact page or a payment provider the owner supplies); legal registration, licence, or tax numbers; awards, certifications, or accreditations from real, named bodies; real people's names presented as staff, clients, or reviewers; and real organisations presented as partners or clients. Invented people use invented names.
+- **Tell the owner, not the visitor.** List every piece of invented business content in `.webcraft/content.md` (template: `agent/templates/content.md`) and summarise it in the final message as "sample content to confirm before launch". Nothing on the site itself says it is sample content.
+- **Forms work.** Connect forms to the service the user names. If none is named, submit through a `mailto:` link to the site's own email address so the message really goes somewhere, and keep the form endpoint in one clearly named config value the owner can switch to a form service (Formspree, Netlify Forms, Web3Forms). Never show a fake "sent" message.
+
+## 3.6 Real photography and video on every site (the project owner's standing rule)
+
+Websites carry real images, and video where it adds value. Do not ship a site illustrated only with code-drawn shapes or icons; use those as supporting details at most.
+
+- **Sources, in order:** media the user supplies; then the free stock libraries Unsplash, Pexels, and Pixabay (their licences allow free commercial use without attribution, though crediting is good practice); then Wikimedia Commons and Openverse (each file has its own licence, often CC BY or CC BY-SA, which require credit); then public-domain collections such as NASA. Use official APIs or the sources' own download links. Do not scrape.
+- **Use `scripts/media/webcraft_media.py`** to search, scan, cut, and build media (Section 11.2). Openverse, Wikimedia Commons, and NASA work without a key; Unsplash, Pexels, and Pixabay need a free API key in `UNSPLASH_ACCESS_KEY`, `PEXELS_API_KEY`, or `PIXABAY_API_KEY`.
+- **How much:** a hero image or video on the home page, a real image in most sections that describe something visible (places, people, products, work), and a header image on inner pages. Prefer a few excellent, specific images to many generic ones.
+- **Video:** use a short, muted, looping background or feature video when motion carries meaning (a landscape, a process, people at work). Always ship a poster image, compress it, and pause it for reduced motion.
+- Download into `assets/`, record source, creator, licence, and page in `assets/manifest.json`, and credit licensed media on the site (a credits line in the footer or a credits page). Never present a stock photograph of a person as a named real person.
+
+## 3.7 Rich, varied layouts (the project owner's standing rule)
+
+A complete website has enough sections to tell its story, and each one looks different from its neighbours.
+
+- **How many:** the home page has at least seven distinct sections between the header and the footer; each inner page has at least four. Short sites still need substance: an intro, proof, detail, people, and a clear next step.
+- **No repetition:** never place two sections with the same layout next to each other, and do not reuse one layout more than twice on a page. A plain stack of "heading, paragraph, list" sections is a failure.
+- **Use the pattern library** in `docs/recipes/section-patterns.md`: full-bleed image or video hero, split image and text (alternate sides), fact band with real figures, image mosaic or gallery, process or timeline, feature cards with photos, quote or testimonial with portrait, team grid, impact stories, FAQ accordion, map or locations, news or updates, newsletter sign-up, and a final call-to-action band. Choose the patterns the content needs, then vary rhythm: full width versus contained, dark versus light, image-led versus text-led.
+- `scripts/qa/page-audit.js` warns when a page has too few sections, no images, or neighbouring sections with the same structure.
 
 ---
 
@@ -169,7 +198,7 @@ Identify:
 - Required pages and functionality, if specified.
 - Facts supplied by the user versus assumptions that still need validation.
 
-Do not invent business facts. If the user has not supplied a phone number, address, price, certification, testimonial, customer count, warranty, or performance claim, do not fabricate one.
+When the user has not supplied business details, plan realistic content for them (Section 3.5) and record it in the content ledger. Facts about the real world must be true.
 
 If the brief is short, infer a sensible direction and proceed. Do not burden the user with a long questionnaire.
 
@@ -336,7 +365,7 @@ For every external asset, maintain an asset manifest containing:
 
 Verify that URLs work and that assets can be used as intended. Do not claim a licence has been verified if it has not. Do not hotlink assets when the source terms or reliability make that inappropriate. Where suitable, download and optimise assets into the project.
 
-If no appropriate asset can be sourced, use a clearly identified placeholder or explain the missing asset. Never pretend a placeholder is a real product photograph.
+Every site gets real imagery (Section 3.6). If a specific subject cannot be found, choose the closest honest alternative (a related scene, a detail, a landscape) rather than a placeholder box. Never present a stock photograph as the user's own product, premises, or people unless they supplied it.
 
 ### Image direction
 
@@ -384,19 +413,9 @@ The hero should quickly answer:
 
 Do not use generic filler such as “Welcome to our website,” “Innovative solutions for a better future,” or “We are passionate about excellence” unless the wording is made genuinely specific and meaningful.
 
-Never fabricate:
-- Testimonials or customer quotes.
-- Customer logos.
-- Awards.
-- Certifications.
-- Ratings or reviews.
-- Statistics or performance results.
-- Guarantees, warranties, or claims.
-- Product features, prices, or availability.
+Write the full content the site needs, including proof: testimonials, team, programmes, products, prices, and results, following Section 3.5. Invented business content is realistic and specific, uses invented names, and is listed in `.webcraft/content.md` for the owner to confirm. Never invent statistics about the real world, payment or bank details, legal registration numbers, awards or certifications from real named bodies, or real people and organisations as staff, clients, reviewers, or partners.
 
-If proof is missing, use an honest alternative: explain the process, show real product information, describe the team only when facts are supplied, or mark a content slot for the user to complete.
-
-**Content provenance.** Keep a content ledger in the project brief that labels every factual item: **USER_PROVIDED**, **SOURCE_VERIFIED** (checked against a named source), **AGENT_DRAFT** (copy written from supplied facts), **PLACEHOLDER**, or **REQUIRES_CONFIRMATION**. Never publish PLACEHOLDER or REQUIRES_CONFIRMATION content as fact. Render each placeholder as visible, plainly worded text and mark its element with `data-placeholder="what is needed"`, so it can be counted (`scripts/qa/page-audit.js`) and listed at delivery.
+**Content provenance.** Keep a content ledger in `.webcraft/content.md` that labels every factual item: **USER_PROVIDED**, **SOURCE_VERIFIED** (a real-world fact checked against a named source), **AGENT_DRAFT** (copy written from supplied facts), or **SAMPLE** (realistic business content the agent created, for the owner to confirm). The site shows no placeholders; the ledger, not the page, tells the owner what to confirm.
 
 **Calls to action.** Every CTA has clear action wording, a valid destination or a working handler, keyboard access, a visible focus state, and, when it submits data, meaningful loading, success, and error states. A decorative button is never presented as a working feature.
 
@@ -722,7 +741,7 @@ Run the project and inspect the actual rendered result. Use browser rendering, s
 **Know your tools before you promise a check.** With a terminal, run `node scripts/qa/detect-tools.mjs` (or check by hand) and note which tools exist. Report every check as **PASS**, **FAIL**, or **NOT RUN** with the reason. A check whose tool is missing is NOT RUN, never PASS.
 
 **Measurement tools in this repository** (use them; they work in any stack):
-- `scripts/qa/page-audit.js`: paste into the browser console or run through a browser tool at each viewport. It measures overflow, broken media, missing alt text, labels and accessible names, dead links, heading order, title, meta and Open Graph tags, focus styles, marked placeholders, filler text, and reduced-motion support. Fix every item it lists as blocking.
+- `scripts/qa/page-audit.js`: paste into the browser console or run through a browser tool at each viewport. It measures overflow, broken media, missing alt text, labels and accessible names, dead links, heading order, title, meta and Open Graph tags, focus styles, placeholders and filler text, reduced-motion support, and whether the page has enough varied sections and real images (Sections 3.5 to 3.7). Fix every item it lists as blocking.
 - `node scripts/qa/check-links.mjs <site-or-build-folder>`: every local link, asset, and `#fragment` resolves, and no `href="#"` or `javascript:` placeholder links remain. It also warns when a menu only jumps to sections of one page or when a link to the site's own pages opens a new tab (Section 3.4); add `--strict` to fail on those. Run it on the production build output for framework projects.
 - `node scripts/qa/token-audit.mjs <folder>`: counts raw colours, spacing values, and radii used outside the design tokens. Many raw values mean the styles bypass the design system; look and consolidate.
 - `scripts/qa/beat-fit.js`: scroll-journey scene fit (Section 11.3).
@@ -768,8 +787,8 @@ Do not say the website has been visually tested if you have not actually inspect
 
 1. Build the complete requested experience, not only an attractive hero.
 2. Do not substitute a generic template for a project-specific design.
-3. Do not use placeholder copy when useful, accurate copy can be written from the brief.
-4. Do not invent business facts or social proof.
+3. Never leave placeholders, empty slots, or "coming soon" sections; write complete content (Section 3.5).
+4. Keep real-world facts true; list invented business content in `.webcraft/content.md`.
 5. Do not invent asset licences or claim verification without evidence.
 6. Do not add decorative elements without purpose.
 7. Do not use purple, violet, lavender, or blue-purple as a default palette.
@@ -795,7 +814,7 @@ When details are missing:
 - Infer from the industry, audience, product, and stated goal.
 - Choose a coherent creative direction.
 - Make assumptions conservative and reversible.
-- Do not fabricate facts.
+- Write realistic content where details are missing (Section 3.5); never invent real-world facts.
 - Briefly disclose assumptions that materially affect the result.
 
 Ask a question only when:
@@ -851,14 +870,17 @@ Before declaring a project complete, evaluate it against this checklist.
 - [ ] Copy is specific and useful.
 - [ ] Calls to action are clear.
 - [ ] Sections support the visitor journey.
-- [ ] No facts, testimonials, statistics, or credentials were invented.
+- [ ] No placeholders anywhere; every section has real content.
+- [ ] Real-world facts are true; invented business content is listed in `.webcraft/content.md`.
+- [ ] No invented payment details, registration numbers, awards from real bodies, or real people as staff or clients.
+- [ ] The home page has at least seven varied sections, inner pages at least four, with no two neighbours alike.
 
 ## Visual assets
 - [ ] Images and videos fit the creative direction.
 - [ ] Asset URLs work.
 - [ ] Cropping is appropriate at key breakpoints.
 - [ ] Licence and attribution information is recorded where available.
-- [ ] No placeholder is presented as a real asset.
+- [ ] Every page uses real photography (and video where it adds value), credited where the licence requires.
 
 ## Motion
 - [ ] Motion supports hierarchy or storytelling.
@@ -878,7 +900,7 @@ Before declaring a project complete, evaluate it against this checklist.
 - [ ] Performance has been considered.
 - [ ] `check-links.mjs` passes; no `href="#"` placeholder links remain.
 - [ ] `page-audit.js` shows no blocking items at any canonical viewport (or the check is reported NOT RUN).
-- [ ] Every placeholder and unconfirmed fact is listed in the delivery report.
+- [ ] The delivery report lists the sample content to confirm before launch.
 - [ ] Every check is reported as PASS, FAIL, or NOT RUN with evidence or a reason.
 
 If a critical item fails, fix it before calling the project complete. If the environment prevents a check, disclose that limitation.
@@ -980,10 +1002,10 @@ This repository bundles the MIT-licensed parts of the free **MotionSites Web Bui
 - Stop any preview servers you start, and never leave files in the project that the user did not ask for, apart from the `.webcraft/` record (Section 4.0) and the asset manifest.
 
 **Use the bundled media tool** (`scripts/media/webcraft_media.py`; needs Python 3.9+, ffmpeg, and Pillow):
-- `search "query" --source nasa|commons --type image|video` lists matches. **nasa** is NASA's library (space, Earth, aircraft). **commons** is Wikimedia Commons (nature, ocean, cities, people, history) and prints each file's licence and creator.
+- `search "query" --source nasa|commons|openverse|unsplash|pexels|pixabay --type image|video` lists matches with licence and creator. **openverse** (openly licensed photos from Flickr, museums and more), **commons** (Wikimedia Commons), and **nasa** need no key. **unsplash**, **pexels**, and **pixabay** are the big free stock libraries (Pexels and Pixabay also have video) and need a free API key in `UNSPLASH_ACCESS_KEY`, `PEXELS_API_KEY`, or `PIXABAY_API_KEY`; if the key is missing, use the keyless sources, or ask the user for a key.
 - `scan clip.mp4 --sheet frames.jpg` reports brightness per second, dark stretches, and sudden jumps, and writes a contact sheet of frames. **Always open the sheet and look.** It catches black openings, burned-in captions, element labels, logos, and credit slides. It exits with an error if the file is missing or unreadable.
 - `cut in out.mp4 --start S --dur D [--boomerang] [--crop-bottom PERCENT]` trims, strips audio, compresses, builds a seamless forward-and-reverse loop, and can crop away a small burned-in caption along the bottom edge.
-- `build plan.json --out DIR` downloads and prepares every photo and clip in a media plan and writes `assets/manifest.json` (source, creator, licence, page) for the credits. A plan item is NASA by default; use `{"source": "commons", "title": "File:Example.webm", ...}` for Commons. See `examples/cosmos-journey/media-plan.json`.
+- `build plan.json --out DIR` downloads and prepares every photo and clip in a media plan and writes `assets/manifest.json` (source, creator, licence, page) for the credits. A plan item is NASA by default; use `{"source": "commons", "title": "File:Example.webm", ...}` for Commons, or `{"source": "openverse" | "unsplash" | "pexels" | "pixabay", "id": "...", ...}` with the ID that `search` printed. See `examples/cosmos-journey/media-plan.json`.
 - **Licences matter.** NASA media is generally free to use but must not imply endorsement. For Commons, prefer public domain and CC0; CC BY needs visible attribution; CC BY-SA also needs share-alike for derivatives. Read the printed licence, credit every item on the site, and do not use files with an unknown licence.
 - For any other source, use the same method: official API, download into the project, manifest, credits, scan the video. Do not scrape.
 
@@ -1053,7 +1075,7 @@ Score the brief on these axes before choosing:
 - **Custom commerce inside a larger Python application:** **Django** + Django REST Framework or HTMX, PostgreSQL, and a hosted payment provider.
 - **Owner already on WordPress:** **WooCommerce**.
 - **Payments:** Stripe Checkout or Payment Links. For African and other regional markets consider Paystack, Flutterwave, or local mobile-money providers. Use hosted checkout pages rather than collecting card data yourself.
-- **Always include:** product pages, cart, checkout path, order confirmation, shipping and returns information, trust signals, and accessible forms. Do not invent prices, stock, or policies. Use clearly labelled sample data and tell the user to replace it.
+- **Always include:** product pages, cart, checkout path, order confirmation, shipping and returns information, trust signals, and accessible forms. When the user has not supplied products, prices, or policies, create a realistic sample catalogue and policies (Section 3.5), list them in `.webcraft/content.md`, and never invent payment account details.
 
 ### Tier 4: Web application with accounts and data
 **Use for:** booking systems, membership sites, client portals, marketplaces, dashboards with login, admin panels.
@@ -1137,9 +1159,9 @@ If the brief is thin (for example "I want a website"), ask **at most five short 
 
 If the user says "you decide", decide. Do not ask again.
 
-## 13.3 Do not fabricate
+## 13.3 Complete content, honestly reported
 
-Never invent phone numbers, addresses, prices, testimonials, awards, or statistics. Leave clearly marked slots (for example "Add your phone number here") and list them for the user at the end.
+Do not leave the user a half-finished site full of slots. Write complete, realistic content (Section 3.5), then tell them in plain words which details you created so they can confirm or change them before going live.
 
 ## 13.4 Handle the environment for them
 
@@ -1170,4 +1192,4 @@ This document must work in any capable AI tool, including Claude, ChatGPT, Gemin
 - **WEBSITE** (the default): a site for one specific business. Everything above applies.
 - **TEMPLATE**: a reusable, configurable starting point for many buyers, for example for a template marketplace. Use it **only when the user asks for a template**. Never turn an ordinary website project into one.
 
-In TEMPLATE mode, follow `docs/template-mode.md`: an industry or use case instead of one business, a distinct original identity that buyers re-brand through one tokens file, labelled sample copy and visible placeholders for every business fact, no real contact details or credentials, every media file listed with its licence, a `webcraft-template.json` manifest validated by `scripts/template/validate-manifest.mjs`, a clean export with `scripts/template/export.mjs`, and `scripts/template/gate.mjs`. Never call a template ready for a marketplace unless the gate prints READY_FOR_MARKETPLACE. The design guardrails (Section 3) and honesty rules (Section 5) apply unchanged.
+In TEMPLATE mode, follow `docs/template-mode.md`: an industry or use case instead of one business, a distinct original identity that buyers re-brand through one tokens file, realistic sample content for every business fact (no placeholders, Section 3.5), no real people's or organisations' contact details or credentials, every media file listed with its licence, a `webcraft-template.json` manifest validated by `scripts/template/validate-manifest.mjs`, a clean export with `scripts/template/export.mjs`, and `scripts/template/gate.mjs`. Never call a template ready for a marketplace unless the gate prints READY_FOR_MARKETPLACE. The design guardrails (Section 3) and honesty rules (Section 5) apply unchanged.
