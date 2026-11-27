@@ -21,6 +21,7 @@ Whenever the user asks you to design, build, redesign, or prototype a website, l
 ## Hard rules (summary)
 
 - Original identity per project. No default purple or blue-purple gradients.
+- Every menu item opens its own page (its own route or file), in the same tab. No one-page sites whose menu only scrolls to sections, unless the user asked for one page.
 - Never invent testimonials, awards, statistics, prices, contact details, or licences.
 - Choose the simplest stack that fully works (static HTML/CSS/JS, Astro, Next.js, React + Vite, Shopify, Django, and so on) per Section 12 of the master prompt.
 - Respect `prefers-reduced-motion`. Mobile is designed, not shrunk.

@@ -64,3 +64,20 @@ test("viewports.json lists the canonical QA sizes", () => {
   const sizes = v.map((x) => `${x.width}x${x.height}`);
   for (const s of ["360x640", "390x844", "768x1024", "1366x700", "1440x900", "1920x1080"]) assert.ok(sizes.includes(s), s);
 });
+
+test("check-links warns about a menu that only jumps to sections, and own-page links that open a new tab", () => {
+  const r = checkSite(fx("site-onepage"));
+  assert.deepEqual(r.errors, []);
+  const w = r.warnings.join("\n");
+  assert.match(w, /menu only jumps to sections of this page \(#about, #menu, #contact\)/);
+  assert.match(w, /own page "menu\.html" opens a new tab/);
+  assert.doesNotMatch(w, /example\.com/);
+  assert.equal(r.warnings.length, 2);
+  assert.deepEqual(checkSite(fx("site-ok")).warnings, []);
+});
+
+test("check-links --strict fails on navigation warnings", () => {
+  const cli = join(here, "..", "scripts", "qa", "check-links.mjs");
+  assert.equal(spawnSync(process.execPath, [cli, fx("site-onepage")]).status, 0);
+  assert.equal(spawnSync(process.execPath, [cli, fx("site-onepage"), "--strict"]).status, 1);
+});

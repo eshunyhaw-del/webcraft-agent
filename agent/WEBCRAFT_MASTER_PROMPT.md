@@ -13,7 +13,7 @@ This document is long on purpose: it is a reference. For a small or vague brief 
 
 1. Ask at most five short questions (Section 13.2), or decide yourself. Never ask about fonts, colours, or frameworks.
 2. Choose the simplest stack that fully works (Section 12) and tell the user why in one or two plain sentences.
-3. Decide a distinct visual identity inside the guardrails (Section 3), and write specific, honest copy with no invented facts. Go straight to the point: **no eyebrow labels above headings, no decorative numbering, no small captions or microcopy** (Section 3.4).
+3. Decide a distinct visual identity inside the guardrails (Section 3), and write specific, honest copy with no invented facts. Go straight to the point: **no eyebrow labels above headings, no decorative numbering, no small captions or microcopy**, and **every menu item opens its own page** (Section 3.4).
 4. If real photographs or video should carry the design, source them legitimately and check every clip (Section 11.2). If a journey through places, scales, or stages fits the subject, start from `examples/scroll-journey-starter/` and `docs/recipes/scroll-journey.md` (Section 11.3).
 5. Build it, run it, check desktop and phone sizes, and fix the biggest problems first (Phase 13). Report each check as PASS, FAIL, or NOT RUN.
 6. Tell the user how to open it, edit it, and publish it, and list anything placeholder, unverified, or untested.
@@ -134,6 +134,7 @@ Go straight to the point. Lead with the headline, one plain supporting sentence,
 - **No decorative numbering.** No "01 / 02 / 03", "[ 02 ] Section", "Stop 1", "Stage 3 of 6", or "Planet 4 of 8" labels used as decoration or section indices. Use numbers only when they carry real information the visitor needs, such as a price, a measured value, or a supplied statistic.
 - **No small-print clutter.** No tiny captions under images, mono micro-labels, meta lines under headings, "Scroll" or "Move your cursor" hints, or other small text that restates or decorates. Say it once, in normal-sized text, or leave it out. Photo and video credits go together in the footer.
 - Interactive tools may show the state a user genuinely needs, such as a selected value or a result, in normal-sized text.
+- **Every menu item opens its own page.** Do not build one long page whose navigation only scrolls to sections (`href="#about"`). Each item in the header or mobile menu goes to a separate page with its own route or file (for example `about/index.html` or `/about`), its own `<title>` and meta description, and the shared header and footer. Links open in the same browser tab: never put `target="_blank"` on links to the site's own pages, so Back works. The only exception is a one-page site the user explicitly asked for (for example "a single landing page"); say so in the project brief. A long scroll story or immersive journey can still be one of the pages.
 
 These rules override every reference, sample prompt, recipe, example, and the bundled MotionSites craft rules, which suggest micro-labels, eyebrows, and index numbers. When a reference uses them, leave them out.
 
@@ -420,6 +421,8 @@ Determine:
 For a single-page site, build a purposeful sequence of sections. For a multi-page site, make each page serve a clear role.
 
 **Model the site before building it.** For multi-page projects, write a page inventory (`.webcraft/site-map.md`): for each page its route, objective, visitor intent, primary CTA and destination, required sections and data, shared components, SEO title and meta description, and internal links. Share layout and tokens across pages, but give each page the composition its purpose needs; do not force every page into the same hero-plus-cards structure.
+
+**Multi-page by default.** If the site has a navigation menu, plan one page per menu item (Section 3.4). Home is a page in its own right, not a container for every other page's content. Section-jump links may appear inside a page (for example a table of contents), never as the site's main menu.
 
 **Route integrity.** Every navigation and footer item points to an existing route or a real external destination. Every required page is reachable. Active navigation state and breadcrumbs (if used) are correct. No `href="#"` or `javascript:` placeholder links ship. No route is duplicated by accident. Where the stack supports it, unknown routes get a deliberate not-found page. Verify with `node scripts/qa/check-links.mjs`.
 
@@ -720,7 +723,7 @@ Run the project and inspect the actual rendered result. Use browser rendering, s
 
 **Measurement tools in this repository** (use them; they work in any stack):
 - `scripts/qa/page-audit.js`: paste into the browser console or run through a browser tool at each viewport. It measures overflow, broken media, missing alt text, labels and accessible names, dead links, heading order, title, meta and Open Graph tags, focus styles, marked placeholders, filler text, and reduced-motion support. Fix every item it lists as blocking.
-- `node scripts/qa/check-links.mjs <site-or-build-folder>`: every local link, asset, and `#fragment` resolves, and no `href="#"` or `javascript:` placeholder links remain. Run it on the production build output for framework projects.
+- `node scripts/qa/check-links.mjs <site-or-build-folder>`: every local link, asset, and `#fragment` resolves, and no `href="#"` or `javascript:` placeholder links remain. It also warns when a menu only jumps to sections of one page or when a link to the site's own pages opens a new tab (Section 3.4); add `--strict` to fail on those. Run it on the production build output for framework projects.
 - `node scripts/qa/token-audit.mjs <folder>`: counts raw colours, spacing values, and radii used outside the design tokens. Many raw values mean the styles bypass the design system; look and consolidate.
 - `scripts/qa/beat-fit.js`: scroll-journey scene fit (Section 11.3).
 
@@ -1023,7 +1026,7 @@ Score the brief on these axes before choosing:
 ## 12.3 Decision framework
 
 ### Tier 0: Static, plain HTML + CSS + JavaScript
-**Use for:** landing pages, brochure sites, portfolios, single-page scroll stories, event pages, campaign pages. These are 1 to 5 pages with no accounts and rare content changes.
+**Use for:** landing pages, brochure sites, portfolios, single-page scroll stories, event pages, campaign pages. These are 1 to 5 pages with no accounts and rare content changes. A multi-page static site is one folder per page (`index.html`, `about/index.html`, `contact/index.html`) sharing one stylesheet; keep the header and footer identical on every page.
 - Single file or a small folder. No build step. Easiest to host and understand.
 - Animation: CSS transitions and keyframes, Web Animations API, IntersectionObserver, native `animation-timeline` where supported. Add **GSAP + ScrollTrigger** for pinned or scrubbed sequences. Canvas or raw WebGL for a single custom effect.
 - This tier can handle very ambitious motion (scroll-scrubbed video, pinned scenes, shaders). Do not assume ambition requires a framework.

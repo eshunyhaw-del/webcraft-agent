@@ -57,6 +57,14 @@
   if (!focusRules && outlineRemoved) blocking.push("Focus outline is removed on links or buttons and no :focus/:focus-visible style replaces it.");
   else if (!focusRules) warnings.push("No custom :focus or :focus-visible styles; the browser default outline is relied on. Check it is visible on every background by tabbing.");
 
+  // Navigation: one page per menu item, in the same tab (owner's rule, master prompt Section 3.4)
+  for (const nav of document.querySelectorAll("nav")) {
+    const hrefs = [...nav.querySelectorAll("a[href]")].map((a) => a.getAttribute("href").trim());
+    if (hrefs.length >= 2 && hrefs.every((h) => h.startsWith("#") && h !== "#")) warnings.push("Menu only jumps to sections of this page (" + hrefs.slice(0, 4).join(", ") + "). Give each menu item its own page, unless the user asked for a one-page site.");
+  }
+  const newTabInternal = [...document.querySelectorAll('a[target="_blank"][href]')].filter((a) => a.origin === location.origin).map((a) => a.getAttribute("href"));
+  if (newTabInternal.length) warnings.push('Links to the site\'s own pages open a new tab (remove target="_blank"): ' + newTabInternal.slice(0, 6).join(", "));
+
   // Content integrity
   const placeholders = [...document.querySelectorAll("[data-placeholder]")].map((el) => el.getAttribute("data-placeholder") || el.textContent.trim().slice(0, 40));
   info.placeholders = placeholders;
