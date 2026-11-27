@@ -1,7 +1,7 @@
 # Site map and page inventory
 
 ## Pages
-One row per route. Every navigation and footer item must point to a route listed here or a real external destination.
+One row per route. Every menu item gets its own page and route (master prompt Section 3.4); a one-page site only when the user asked for one, recorded in the project brief. Every navigation and footer item must point to a route listed here or a real external destination.
 
 | Route | Page objective | Visitor intent | Primary CTA → destination | Required sections | Required content or data | Shared components | SEO title | Meta description | Links to |
 |---|---|---|---|---|---|---|---|---|---|
