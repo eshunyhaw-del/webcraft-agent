@@ -1,0 +1,2 @@
+:root { --color-page: #f4efe6; --color-ink: #1c1a17; --space-section: clamp(4rem, 9vw, 9rem); }
+body { background: var(--color-page); color: var(--color-ink); padding: var(--space-section); }

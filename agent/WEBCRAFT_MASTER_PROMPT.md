@@ -653,12 +653,7 @@ Do not claim that a form sends email, a payment works, a booking is stored, or a
 
 Design responsively from the beginning. Do not treat mobile as a compressed desktop layout.
 
-Inspect and refine at minimum:
-- Large desktop.
-- Standard laptop.
-- Tablet.
-- Mobile portrait.
-- Narrow mobile viewport.
+Inspect and refine at the canonical QA viewports in `scripts/qa/viewports.json`: narrow mobile 360×640, mobile 390×844, tablet 768×1024, desktop 1440×900, and wide 1920×1080, plus a short laptop at 1366×700 for pinned or scroll-driven scenes. Use these sizes everywhere you test, so results are comparable between projects.
 
 For each breakpoint, reconsider:
 - Grid and column structure.
@@ -681,6 +676,14 @@ Mobile should retain the design's character and hierarchy, not feel like an afte
 A website is not finished when the code compiles.
 
 Run the project and inspect the actual rendered result. Use browser rendering, screenshots, or available visual inspection tools when possible.
+
+**Know your tools before you promise a check.** With a terminal, run `node scripts/qa/detect-tools.mjs` (or check by hand) and note which tools exist. Report every check as **PASS**, **FAIL**, or **NOT RUN** with the reason. A check whose tool is missing is NOT RUN, never PASS.
+
+**Measurement tools in this repository** (use them; they work in any stack):
+- `scripts/qa/page-audit.js`: paste into the browser console or run through a browser tool at each viewport. It measures overflow, broken media, missing alt text, labels and accessible names, dead links, heading order, title, meta and Open Graph tags, focus styles, marked placeholders, filler text, and reduced-motion support. Fix every item it lists as blocking.
+- `node scripts/qa/check-links.mjs <site-or-build-folder>`: every local link, asset, and `#fragment` resolves, and no `href="#"` or `javascript:` placeholder links remain. Run it on the production build output for framework projects.
+- `node scripts/qa/token-audit.mjs <folder>`: counts raw colours, spacing values, and radii used outside the design tokens. Many raw values mean the styles bypass the design system; look and consolidate.
+- `scripts/qa/beat-fit.js`: scroll-journey scene fit (Section 11.3).
 
 Review:
 - Overall visual identity.
@@ -920,7 +923,7 @@ This repository bundles the MIT-licensed parts of the free **MotionSites Web Bui
 **Visual QA gotchas**
 - Serve the site from a local web server. A `file://` preview can show an unstyled static snapshot.
 - Browser panes and headless tabs throttle `requestAnimationFrame` when not in front, and screenshots can lag one step behind. Bring the tab to the front, wait, and take a second capture before judging a frame. Prefer measuring (element rectangles, computed styles, pixel counts) over eyeballing.
-- Test the harshest sizes: a small phone (about 360 by 640), a standard phone (390 by 844), and a short laptop (about 1366 by 700). For pinned or scroll-driven scenes, force each scene visible and check that its content fits between the fixed UI.
+- Test at the canonical viewports (Phase 12, `scripts/qa/viewports.json`). The harshest are the small phone (360 by 640), the standard phone (390 by 844), and the short laptop (1366 by 700). For pinned or scroll-driven scenes, force each scene visible and check that its content fits between the fixed UI.
 - Verify interactions numerically where possible, for example by measuring canvas pixels before and during a cursor push.
 - Stop any preview servers you start, and never leave files in the project that the user did not ask for.
 
@@ -940,7 +943,7 @@ For subjects with a natural sequence of places, scales, or stages, and strong re
 - **Start from `examples/scroll-journey-starter/`**: a small, subject-neutral engine (about 80 lines of JavaScript), styles, and a 3-chapter page that runs as it is. Replace its gradients with real media, its copy with yours, and its readout units in `engine.js`.
 - A complete, tested, richer reference is in `examples/cosmos-journey/` (plain HTML, CSS, and JavaScript). Its NASA media is included (and can be rebuilt with the media tool from `media-plan.json`). Study it for effects such as the starfield, the horizontal fly-by, and the particle galaxy. More finished sites are in `showcase/`. Never copy its subject matter, copy, or identity into an unrelated project.
 - Use it only when it helps the visitor. For simple brochure sites, shops, and anything people scan quickly, choose a calmer design (Section 12).
-- Always ship the fallbacks: a no-JavaScript stacked layout, a reduced-motion layout, a pause button, and mobile layouts verified with `scripts/qa/beat-fit.js` at 360 by 640, 390 by 844, and 1366 by 700.
+- Always ship the fallbacks: a no-JavaScript stacked layout, a reduced-motion layout, a pause button, and mobile layouts verified with `scripts/qa/beat-fit.js` at 360 by 640, 390 by 844, and 1366 by 700 (the scroll-scene sizes in `scripts/qa/viewports.json`).
 
 ---
 

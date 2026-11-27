@@ -6,7 +6,7 @@ Tools and patterns in this repository (details are in the master prompt, Section
 
 - **Real photographs and video:** `scripts/media/webcraft_media.py` searches NASA and Wikimedia Commons, scans video for black frames and burned-in captions, cuts clean loops, and builds assets from a plan. Needs Python, ffmpeg, and Pillow.
 - **Immersive scroll journey:** `docs/recipes/scroll-journey.md`, a runnable starter in `examples/scroll-journey-starter/`, and a richer reference in `examples/cosmos-journey/`.
-- **Layout QA for scroll scenes:** `scripts/qa/beat-fit.js`.
+- **QA tools (`scripts/qa/`):** `detect-tools.mjs` (what can be checked here), `page-audit.js` (browser measurements), `check-links.mjs` (routes and links), `token-audit.mjs` (design-token use), `beat-fit.js` (scroll scenes), and the canonical sizes in `viewports.json` (master prompt Phases 12 and 13).
 - **Craft library (MotionSites, MIT):** `.claude/skills/motionsites-web-builder/references/`.
 - **React components (Spell UI, MIT):** `references/react/spell-ui/CATALOG.md`, used when the chosen stack is React (Section 12.8).
 - **Design rules that always apply:** no eyebrow labels above headings, no decorative numbering, no small captions or microcopy (Section 3.4).
