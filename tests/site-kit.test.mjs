@@ -48,6 +48,16 @@ test("sitemap and robots are written, and missing finishing files are reported",
   } finally { rmSync(d, { recursive: true, force: true }); }
 });
 
+test("check-links skips _partials templates and the starter's links resolve", async () => {
+  const { checkSite } = await import("../scripts/qa/check-links.mjs");
+  assert.deepEqual(checkSite(starter).errors, []);
+});
+
+test("motion kit never lets slide-ins widen the page", () => {
+  const css = readFileSync(join(starter, "motion.css"), "utf8");
+  assert.match(css, /\.motion-on body \{ overflow-x: clip; \}/);
+});
+
 test("the starter passes its own finishing check", () => {
   assert.deepEqual(checkFinishing(starter), []);
   for (const f of ["motion.js", "motion.css", "favicon.svg", "site.webmanifest", "_partials/header.html", "_partials/footer.html"]) assert.ok(existsSync(join(starter, f)), f);

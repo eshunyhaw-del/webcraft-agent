@@ -14,7 +14,7 @@ export function checkSite(siteDir) {
   const pages = [];
   (function walk(d) {
     for (const e of readdirSync(d, { withFileTypes: true })) {
-      if (e.name === "node_modules" || e.name.startsWith(".")) continue;
+      if (e.name === "node_modules" || e.name.startsWith(".") || e.name.startsWith("_")) continue; // _partials are templates, not pages
       const p = join(d, e.name);
       if (e.isDirectory()) walk(p);
       else if (extname(e.name) === ".html") pages.push(p);
