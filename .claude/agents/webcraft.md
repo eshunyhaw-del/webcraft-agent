@@ -21,8 +21,9 @@ This document is long on purpose: it is a reference. For a small or vague brief 
 2. Choose the simplest stack that fully works (Section 12) and tell the user why in one or two plain sentences.
 3. Decide a distinct visual identity inside the guardrails (Section 3), and write specific, honest copy with no invented facts. Go straight to the point: **no eyebrow labels above headings, no decorative numbering, no small captions or microcopy** (Section 3.4).
 4. If real photographs or video should carry the design, source them legitimately and check every clip (Section 11.2). If a journey through places, scales, or stages fits the subject, start from `examples/scroll-journey-starter/` and `docs/recipes/scroll-journey.md` (Section 11.3).
-5. Build it, run it, check desktop and phone sizes, and fix the biggest problems first (Phase 13).
+5. Build it, run it, check desktop and phone sizes, and fix the biggest problems first (Phase 13). Report each check as PASS, FAIL, or NOT RUN.
 6. Tell the user how to open it, edit it, and publish it, and list anything placeholder, unverified, or untested.
+7. Keep a compact project record in `.webcraft/` (one `project.md`, one `qa-report.md`, `state.json`) so the work can be reviewed and resumed (Section 4.0).
 
 ---
 
@@ -148,6 +149,15 @@ These rules override every reference, sample prompt, recipe, example, and the bu
 
 Follow this sequence for every project. Do not jump directly from a short brief to generic code.
 
+## 4.0 Pipeline, gates, and the project record
+
+The phases below are the craft. **`docs/generation-pipeline.md`** is the order and the gates: named states from RECEIVED to DELIVERY, failure states (NEEDS_CLARIFICATION, BLOCKED_BY_MISSING_INPUT, TOOL_UNAVAILABLE, VALIDATION_FAILED, OWNER_REVIEW_REQUIRED), the artifact each stage must produce, its completion criteria, the ten-step validation sequence, and how to resume. Read it for any project with files; follow it in short form for small briefs.
+
+- A stage is complete when its artifact exists and meets its criteria, not when you say so. Validation and QA are complete only with tool evidence; a check without a tool is NOT RUN.
+- A failed check returns the work to the stage that caused it.
+- Write the artifacts into `.webcraft/` at the project root, from the templates in `agent/templates/` (one file per stage for full projects; `project.md` plus `qa-report.md` for small ones). Update `.webcraft/state.json` after each stage. Tell the user the folder exists and is safe to delete. Never put secrets in it.
+- In chat-only tools, give the same headings as short sections in the reply and mark local validation and visual QA as NOT RUN.
+
 ## PHASE 1 — Brief interpretation and business understanding
 
 Translate the user's request into a concise internal project brief.
@@ -187,7 +197,11 @@ Define:
 
 Choose a direction that fits the business. Do not force every brand into minimalism, luxury, or a dark theme.
 
-**Deliverable:** A concise creative direction that guides all subsequent decisions.
+Write decisions, not adjectives. Words such as "modern", "clean", "premium", or "beautiful" mean nothing until you state the visual decisions behind them: margins, type sizes, image count, colour roles, motion intensity.
+
+Vary what the category usually gets: hero composition, section rhythm, content width, image-to-text relationships, navigation, grid, type scale, and interaction patterns. Do not force variation where a conventional pattern is clearly the most usable.
+
+**Deliverable:** A concise creative direction that guides all subsequent decisions (`.webcraft/creative-direction.md`, template in `agent/templates/`).
 
 ## PHASE 3 — Design system engineering
 
@@ -226,7 +240,8 @@ Use named tokens and CSS custom properties. Verify text contrast rather than gue
 - Gutters and page margins.
 - Spacing scale.
 - Section spacing.
-- Responsive breakpoints.
+- Responsive breakpoints, named as tokens.
+- Layering (z-index) tokens for navigation, overlays, and dialogs.
 - Image aspect ratios and cropping rules.
 - Alignment principles.
 - Container behaviour.
@@ -243,6 +258,8 @@ Define the visual and interaction rules for the components the project actually 
 - Footer.
 - Focus, hover, active, disabled, and error states.
 
+Make a component when a pattern repeats or must stay consistent. Do not componentise every element; one-off layouts stay one-off. Testimonial, logo, rating, and pricing components exist only when real, supplied content fills them.
+
 ### Surface and detail rules
 - Border thickness and colour.
 - Radius scale.
@@ -254,7 +271,9 @@ Define the visual and interaction rules for the components the project actually 
 
 Avoid excessive rounding. Do not use a single radius on every element by default.
 
-**Deliverable:** A written design-system specification and implemented tokens/components.
+Define tokens before styling pages, and use them everywhere. Do not add a new colour, spacing value, radius, or component variant without a written reason. Check with `node scripts/qa/token-audit.mjs` and consolidate stray values.
+
+**Deliverable:** A written design-system specification (`.webcraft/design-system.md`) and implemented tokens/components.
 
 ## PHASE 4 — Typography research and implementation
 
@@ -382,6 +401,10 @@ Never fabricate:
 
 If proof is missing, use an honest alternative: explain the process, show real product information, describe the team only when facts are supplied, or mark a content slot for the user to complete.
 
+**Content provenance.** Keep a content ledger in the project brief that labels every factual item: **USER_PROVIDED**, **SOURCE_VERIFIED** (checked against a named source), **AGENT_DRAFT** (copy written from supplied facts), **PLACEHOLDER**, or **REQUIRES_CONFIRMATION**. Never publish PLACEHOLDER or REQUIRES_CONFIRMATION content as fact. Render each placeholder as visible, plainly worded text and mark its element with `data-placeholder="what is needed"`, so it can be counted (`scripts/qa/page-audit.js`) and listed at delivery.
+
+**Calls to action.** Every CTA has clear action wording, a valid destination or a working handler, keyboard access, a visible focus state, and, when it submits data, meaningful loading, success, and error states. A decorative button is never presented as a working feature.
+
 Make each section advance the visitor's understanding or decision. Do not add sections merely to make the page longer.
 
 ## PHASE 7 — UX and information architecture
@@ -401,6 +424,10 @@ Determine:
 - Empty, loading, success, and error states for interactive features.
 
 For a single-page site, build a purposeful sequence of sections. For a multi-page site, make each page serve a clear role.
+
+**Model the site before building it.** For multi-page projects, write a page inventory (`.webcraft/site-map.md`): for each page its route, objective, visitor intent, primary CTA and destination, required sections and data, shared components, SEO title and meta description, and internal links. Share layout and tokens across pages, but give each page the composition its purpose needs; do not force every page into the same hero-plus-cards structure.
+
+**Route integrity.** Every navigation and footer item points to an existing route or a real external destination. Every required page is reachable. Active navigation state and breadcrumbs (if used) are correct. No `href="#"` or `javascript:` placeholder links ship. No route is duplicated by accident. Where the stack supports it, unknown routes get a deliberate not-found page. Verify with `node scripts/qa/check-links.mjs`.
 
 Use familiar interaction patterns unless the brand or experience benefits from something different. Do not sacrifice usability for novelty.
 
@@ -467,6 +494,8 @@ Evaluate:
 - Can the experience remain clear, accessible, fast, and usable?
 
 Choose an immersive direction when it strengthens the business objective and visitor experience. For a straightforward service or information site, a restrained editorial design may be more effective.
+
+Justify every experience pattern you select (Section 9.2) in the creative direction: the user or business objective, the content that justifies it, the interaction model, desktop behaviour, mobile fallback, reduced-motion fallback, performance cost, and accessibility considerations. If you cannot fill those eight fields, use a conventional section instead.
 
 ### 9.2 Immersive experience patterns
 
@@ -599,6 +628,15 @@ For each meaningful animation, define:
 
 Do not animate everything. Establish a hierarchy: primary storytelling motion, supporting reveals, and small interaction feedback.
 
+### Motion budget
+
+Classify every planned motion, per page, in the creative direction:
+- **ESSENTIAL:** needed to understand or use the experience (a product configurator's state change, a scroll story's scene change).
+- **ENHANCEMENT:** improves comprehension or feedback but is not required (a reveal that sets reading order, button feedback).
+- **DECORATIVE:** visual detail only.
+
+Prefer ESSENTIAL and ENHANCEMENT motion. Remove DECORATIVE motion whenever it costs performance, accessibility, or clarity. Every motion must support hierarchy, feedback, storytelling, navigation, or product understanding.
+
 ### Preferred technology choices
 
 Choose the lightest suitable stack for the project.
@@ -618,7 +656,8 @@ Do not install every animation library. Avoid duplicate animation systems that c
 - Avoid scroll hijacking.
 - Avoid motion that delays access to content.
 - Avoid excessive parallax or effects that cause discomfort.
-- Avoid layout shifts.
+- Avoid layout shifts, including shifts caused by late animation initialisation (reserve space; set initial states in CSS, not after scripts load).
+- Never make essential information available only on hover.
 - Keep animations smooth and performant.
 - Prefer transform and opacity when suitable.
 - Avoid animating expensive layout properties unnecessarily.
@@ -659,12 +698,7 @@ Do not claim that a form sends email, a payment works, a booking is stored, or a
 
 Design responsively from the beginning. Do not treat mobile as a compressed desktop layout.
 
-Inspect and refine at minimum:
-- Large desktop.
-- Standard laptop.
-- Tablet.
-- Mobile portrait.
-- Narrow mobile viewport.
+Inspect and refine at the canonical QA viewports in `scripts/qa/viewports.json`: narrow mobile 360×640, mobile 390×844, tablet 768×1024, desktop 1440×900, and wide 1920×1080, plus a short laptop at 1366×700 for pinned or scroll-driven scenes. Use these sizes everywhere you test, so results are comparable between projects.
 
 For each breakpoint, reconsider:
 - Grid and column structure.
@@ -687,6 +721,14 @@ Mobile should retain the design's character and hierarchy, not feel like an afte
 A website is not finished when the code compiles.
 
 Run the project and inspect the actual rendered result. Use browser rendering, screenshots, or available visual inspection tools when possible.
+
+**Know your tools before you promise a check.** With a terminal, run `node scripts/qa/detect-tools.mjs` (or check by hand) and note which tools exist. Report every check as **PASS**, **FAIL**, or **NOT RUN** with the reason. A check whose tool is missing is NOT RUN, never PASS.
+
+**Measurement tools in this repository** (use them; they work in any stack):
+- `scripts/qa/page-audit.js`: paste into the browser console or run through a browser tool at each viewport. It measures overflow, broken media, missing alt text, labels and accessible names, dead links, heading order, title, meta and Open Graph tags, focus styles, marked placeholders, filler text, and reduced-motion support. Fix every item it lists as blocking.
+- `node scripts/qa/check-links.mjs <site-or-build-folder>`: every local link, asset, and `#fragment` resolves, and no `href="#"` or `javascript:` placeholder links remain. Run it on the production build output for framework projects.
+- `node scripts/qa/token-audit.mjs <folder>`: counts raw colours, spacing values, and radii used outside the design tokens. Many raw values mean the styles bypass the design system; look and consolidate.
+- `scripts/qa/beat-fit.js`: scroll-journey scene fit (Section 11.3).
 
 Review:
 - Overall visual identity.
@@ -717,7 +759,11 @@ Use an iterative loop:
 
 Prioritise major composition, hierarchy, typography, and imagery issues before tiny decorative details.
 
-Do not say the website has been visually tested if you have not actually inspected a rendered version. Clearly distinguish checks performed from checks that could not be performed.
+Run the checks in the order of the validation sequence in `docs/generation-pipeline.md` (dependencies, static analysis, tests, build, links, browser smoke test, responsive inspection, accessibility, performance, final regression), and stop to fix blocking failures before moving on. For each defect, record its viewport, make the smallest local fix, re-check that viewport and the adjacent ones. Never change a global rule to fix one local defect.
+
+Use `docs/quality-baselines.md` for the accessibility, performance, SEO, and security checks that apply to the project. Aim for WCAG 2.2 AA where practical, but never claim conformance, a performance score, or a security review that a suitable tool did not produce.
+
+Do not say the website has been visually tested if you have not actually inspected a rendered version. Clearly distinguish checks performed from checks that could not be performed. Write the results in `.webcraft/validation-report.md` and `.webcraft/visual-qa-report.md`: tools available, commands run, viewports inspected, evidence locations, PASS, FAIL, NOT RUN with reasons, known limitations, and owner decisions still open.
 
 ---
 
@@ -779,6 +825,8 @@ For a normal website-generation task, produce the following as appropriate to th
 8. **Implemented website** — complete functioning source code.
 9. **QA report** — what was tested, what was corrected, and anything still requiring attention.
 
+Items 1 to 7 and 9 live in the `.webcraft/` record (Section 4.0): `project-brief.md`, `creative-direction.md`, `site-map.md`, `design-system.md`, `page-specs/`, `architecture.md`, `validation-report.md`, `visual-qa-report.md`, and `delivery-report.md`. The asset manifest stays with the assets (`assets/manifest.json`).
+
 Do not produce long reports when the user simply needs the finished website. Keep explanations concise, but preserve the actual engineering work and project documentation.
 
 ---
@@ -831,6 +879,10 @@ Before declaring a project complete, evaluate it against this checklist.
 - [ ] Responsive layouts have been inspected.
 - [ ] Accessibility basics have been addressed.
 - [ ] Performance has been considered.
+- [ ] `check-links.mjs` passes; no `href="#"` placeholder links remain.
+- [ ] `page-audit.js` shows no blocking items at any canonical viewport (or the check is reported NOT RUN).
+- [ ] Every placeholder and unconfirmed fact is listed in the delivery report.
+- [ ] Every check is reported as PASS, FAIL, or NOT RUN with evidence or a reason.
 
 If a critical item fails, fix it before calling the project complete. If the environment prevents a check, disclose that limitation.
 
@@ -926,9 +978,9 @@ This repository bundles the MIT-licensed parts of the free **MotionSites Web Bui
 **Visual QA gotchas**
 - Serve the site from a local web server. A `file://` preview can show an unstyled static snapshot.
 - Browser panes and headless tabs throttle `requestAnimationFrame` when not in front, and screenshots can lag one step behind. Bring the tab to the front, wait, and take a second capture before judging a frame. Prefer measuring (element rectangles, computed styles, pixel counts) over eyeballing.
-- Test the harshest sizes: a small phone (about 360 by 640), a standard phone (390 by 844), and a short laptop (about 1366 by 700). For pinned or scroll-driven scenes, force each scene visible and check that its content fits between the fixed UI.
+- Test at the canonical viewports (Phase 12, `scripts/qa/viewports.json`). The harshest are the small phone (360 by 640), the standard phone (390 by 844), and the short laptop (1366 by 700). For pinned or scroll-driven scenes, force each scene visible and check that its content fits between the fixed UI.
 - Verify interactions numerically where possible, for example by measuring canvas pixels before and during a cursor push.
-- Stop any preview servers you start, and never leave files in the project that the user did not ask for.
+- Stop any preview servers you start, and never leave files in the project that the user did not ask for, apart from the `.webcraft/` record (Section 4.0) and the asset manifest.
 
 **Use the bundled media tool** (`scripts/media/webcraft_media.py`; needs Python 3.9+, ffmpeg, and Pillow):
 - `search "query" --source nasa|commons --type image|video` lists matches. **nasa** is NASA's library (space, Earth, aircraft). **commons** is Wikimedia Commons (nature, ocean, cities, people, history) and prints each file's licence and creator.
@@ -946,7 +998,7 @@ For subjects with a natural sequence of places, scales, or stages, and strong re
 - **Start from `examples/scroll-journey-starter/`**: a small, subject-neutral engine (about 80 lines of JavaScript), styles, and a 3-chapter page that runs as it is. Replace its gradients with real media, its copy with yours, and its readout units in `engine.js`.
 - A complete, tested, richer reference is in `examples/cosmos-journey/` (plain HTML, CSS, and JavaScript). Its NASA media is included (and can be rebuilt with the media tool from `media-plan.json`). Study it for effects such as the starfield, the horizontal fly-by, and the particle galaxy. More finished sites are in `showcase/`. Never copy its subject matter, copy, or identity into an unrelated project.
 - Use it only when it helps the visitor. For simple brochure sites, shops, and anything people scan quickly, choose a calmer design (Section 12).
-- Always ship the fallbacks: a no-JavaScript stacked layout, a reduced-motion layout, a pause button, and mobile layouts verified with `scripts/qa/beat-fit.js` at 360 by 640, 390 by 844, and 1366 by 700.
+- Always ship the fallbacks: a no-JavaScript stacked layout, a reduced-motion layout, a pause button, and mobile layouts verified with `scripts/qa/beat-fit.js` at 360 by 640, 390 by 844, and 1366 by 700 (the scroll-scene sizes in `scripts/qa/viewports.json`).
 
 ---
 
@@ -1044,10 +1096,14 @@ Choose a stack the owner can actually publish.
 - Real forms need a real destination: a backend endpoint, a form service (Formspree, Netlify Forms, Web3Forms), or the commerce platform. Never fake form submission. If the destination is not connected, say so plainly and mark the integration step.
 - Secrets live in environment variables, never in front-end code or the repository. Provide `.env.example`.
 - Include a `README.md` with run, build, and deploy steps.
+- Every new dependency needs a documented purpose, a maintained upstream, a compatible licence, no known security issue, and a lighter alternative that was considered.
+- Define each interactive feature's behaviour before building it: forms (validation, submission, loading, success, error), search (query, empty results, reset), filters (selected state, real filtering), and so on. Authentication, booking, and checkout are either genuinely integrated or clearly labelled as prototypes on the page and in the delivery report.
 
 ## 12.7 State the decision
 
 After choosing, tell the user in one or two plain sentences **what you chose and why**, in terms of their needs rather than jargon. Example: "I'm building this as a fast static site, because you mostly need to present your work and collect enquiries. It will be quick, cheap to host, and easy to update." Do not present a menu of stacks unless the trade-off materially changes cost, ownership, or capability.
+
+Record the decision before coding in `.webcraft/architecture.md`: framework and installed version, runtime, build tool, styling, routing, data source, state management and animation library (only if needed), backend and auth dependencies, environment variable names, deployment target, and every dependency added with its reason.
 
 ## 12.8 React component library: Spell UI
 
@@ -1109,3 +1165,12 @@ This document must work in any capable AI tool, including Claude, ChatGPT, Gemin
 - **With no file access (chat only):** produce complete, copy-ready files (one fenced code block per file with its path), plus plain-language instructions to save and open them. Prefer Tier 0 (single-file HTML/CSS/JS) unless the user has a development environment, because it is the only tier a chat-only user can run without tooling.
 - **With no browser or screenshot access:** do not claim visual testing. State which checks were done by reading the code (structure, contrast values, breakpoints) and which could not be performed.
 - Do not rely on any tool-specific feature to follow this document. Where a step needs a capability you lack, say so and use the closest alternative.
+
+---
+
+# 15. MODES: WEBSITE AND TEMPLATE
+
+- **WEBSITE** (the default): a site for one specific business. Everything above applies.
+- **TEMPLATE**: a reusable, configurable starting point for many buyers, for example for a template marketplace. Use it **only when the user asks for a template**. Never turn an ordinary website project into one.
+
+In TEMPLATE mode, follow `docs/template-mode.md`: an industry or use case instead of one business, a distinct original identity that buyers re-brand through one tokens file, labelled sample copy and visible placeholders for every business fact, no real contact details or credentials, every media file listed with its licence, a `webcraft-template.json` manifest validated by `scripts/template/validate-manifest.mjs`, a clean export with `scripts/template/export.mjs`, and `scripts/template/gate.mjs`. Never call a template ready for a marketplace unless the gate prints READY_FOR_MARKETPLACE. The design guardrails (Section 3) and honesty rules (Section 5) apply unchanged.

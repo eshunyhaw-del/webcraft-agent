@@ -49,7 +49,8 @@ MotionSites' own example designs and media are copyright MotionSites and are not
 
 - **Original identity per project.** A bathroom brand does not look like a SaaS dashboard.
 - **Hard guardrails against generic "AI website" looks.** No default purple gradients, frosted-glass pill buttons, fake stats, decorative numbering, or card-grid sameness.
-- **Honest by design.** It never invents testimonials, awards, prices, or contact details, and it says which checks it really ran.
+- **Honest by design.** It never invents testimonials, awards, prices, or contact details, and it reports every check as PASS, FAIL, or NOT RUN, with evidence.
+- **A verifiable pipeline.** Each stage writes a short record to `.webcraft/` in the project, so the work can be reviewed and resumed, and QA tools measure links, layout, accessibility basics and design-token use instead of guessing.
 - **Beginner mode.** At most five short questions, plain language, and clear next steps.
 - **Benchmark prompts.** Engineered sample prompts in `references/sample-prompts/` calibrate the level of detail and craft. Add your own original ones.
 - **Accessibility and performance built in.** Reduced-motion support, keyboard navigation, contrast checks, and lazy-loaded media.
@@ -70,7 +71,14 @@ MotionSites' own example designs and media are copyright MotionSites and are not
 | `references/react/spell-ui/` | [Spell UI](https://spell.sh) (MIT): catalog of 33 animated React + Tailwind components with install commands and guardrail notes, plus read-only source. Used when the chosen stack is React. |
 | `showcase/` | Real sites built with this repo, viewable as they are. |
 | `examples/scroll-journey-starter/` | A small, subject-neutral, runnable starter for the immersive scroll journey (80-line engine). |
-| `scripts/qa/beat-fit.js` | Paste-in browser snippet that checks every scroll scene fits on phones and laptops. |
+| `docs/generation-pipeline.md`, `schemas/pipeline.json` | The stage-by-stage pipeline: states, gates, the artifact each stage writes, the validation sequence, and resuming. |
+| `agent/templates/` | Templates for the `.webcraft/` project record each build keeps (brief, creative direction, site map, design system, page specs, architecture, validation, visual QA, delivery). |
+| `scripts/qa/` | QA tools: `detect-tools.mjs` (what can be checked here), `page-audit.js` (browser measurements), `check-links.mjs` (routes and links), `token-audit.mjs` (design-token use), `beat-fit.js` (scroll scenes), `viewports.json` (canonical test sizes). |
+| `docs/quality-baselines.md` | Accessibility, performance, SEO and security checklists. |
+| `docs/template-mode.md`, `scripts/template/` | Template mode for reusable, sellable templates: manifest schema and validator, clean export, and a READY_FOR_MARKETPLACE quality gate. |
+| `benchmarks/`, `scripts/bench/` | Ten fixed briefs, a scoring rubric, and run records that flag regressions between prompt versions. |
+| `scripts/check.mjs`, `tests/` | Repository checks and unit tests (`node scripts/check.mjs`), also run in CI. |
+| `docs/architecture-audit.md`, `docs/capability-matrix.md`, `docs/baseline.md` | The engineering audit that guided these additions. |
 | `docs/recipes/scroll-journey.md` | The immersive scroll-journey pattern: architecture, numbers, mobile rules, pitfalls. |
 | `examples/cosmos-journey/` | Tested reference implementation of that pattern, with its NASA media included (rebuildable with the media tool). |
 | `scripts/setup-motionsites.mjs` | Downloads MotionSites' example prompts and media directly from MotionSites (they cannot be redistributed). |

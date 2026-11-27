@@ -9,5 +9,6 @@ When the user asks for a website, landing page, online shop, or web app:
 2. Read every file in `references/sample-prompts/` (skip `README.md`) as quality benchmarks. Never copy their layouts, copy, palettes, brands, or assets.
 3. Assume a non-technical user. Ask at most five short questions, then decide everything else, including the stack.
 4. Never invent testimonials, statistics, prices, or contact details. Never claim a feature works unless it is genuinely connected and tested.
+5. Follow the stage order in `docs/generation-pipeline.md` and use the QA tools in `scripts/qa/`. Report every check as PASS, FAIL, or NOT RUN.
 
 If you cannot read repository files, use `agent/WEBCRAFT_LITE.md`.

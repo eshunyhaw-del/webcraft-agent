@@ -11,7 +11,12 @@
    ```
    node -e "console.log(require('fs').readFileSync('agent/WEBCRAFT_LITE.md','utf8').length)"
    ```
-4. Commit all changed files. Never hand-edit `.claude/agents/webcraft.md`, because the next build overwrites it.
+4. Run the repository checks and fix anything that fails:
+   ```
+   node scripts/check.mjs
+   ```
+   It verifies that the generated agent file is in sync, the lite prompt fits, `CLAUDE.md` and `GEMINI.md` match, every file the master prompt names exists, Markdown links resolve, and the unit tests in `tests/` pass. The same command runs in CI (`.github/workflows/check.yml`).
+5. Commit all changed files. Never hand-edit `.claude/agents/webcraft.md`, because the next build overwrites it.
 
 The tool entry files (`AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, `.cursor/rules/webcraft.mdc`, `.github/copilot-instructions.md`) only point to the master prompt. They rarely need changes.
 
