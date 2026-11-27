@@ -88,6 +88,9 @@
   if (placeholders.length) blocking.push(placeholders.length + " placeholder element(s) on the page; write the real content instead: " + placeholders.slice(0, 8).join(", "));
   const filler = document.body.innerText.match(/lorem ipsum|your tagline here|feature \d\b|\bTODO\b|\badd your [a-z ]{3,30}(here)?\b|coming soon/i);
   if (filler) blocking.push('Placeholder or filler text found: "' + filler[0] + '".');
+  // No tilde shorthand (owner's rule, master prompt Section 3.4): write "about 20%", not "~20%".
+  const tildes = document.body.innerText.match(/.{0,12}~.{0,12}/g);
+  if (tildes) warnings.push('"~" in visible text; write "about", "nearly" or the exact figure instead: ' + tildes.slice(0, 5).map((t) => '"' + t.trim() + '"').join(", "));
 
   // Richness and variety (owner's rule, master prompt Section 3.7)
   const mainEl = document.querySelector("main") || document.body;
