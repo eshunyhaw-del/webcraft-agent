@@ -234,7 +234,8 @@ Use named tokens and CSS custom properties. Verify text contrast rather than gue
 - Gutters and page margins.
 - Spacing scale.
 - Section spacing.
-- Responsive breakpoints.
+- Responsive breakpoints, named as tokens.
+- Layering (z-index) tokens for navigation, overlays, and dialogs.
 - Image aspect ratios and cropping rules.
 - Alignment principles.
 - Container behaviour.
@@ -251,6 +252,8 @@ Define the visual and interaction rules for the components the project actually 
 - Footer.
 - Focus, hover, active, disabled, and error states.
 
+Make a component when a pattern repeats or must stay consistent. Do not componentise every element; one-off layouts stay one-off. Testimonial, logo, rating, and pricing components exist only when real, supplied content fills them.
+
 ### Surface and detail rules
 - Border thickness and colour.
 - Radius scale.
@@ -262,7 +265,9 @@ Define the visual and interaction rules for the components the project actually 
 
 Avoid excessive rounding. Do not use a single radius on every element by default.
 
-**Deliverable:** A written design-system specification and implemented tokens/components.
+Define tokens before styling pages, and use them everywhere. Do not add a new colour, spacing value, radius, or component variant without a written reason. Check with `node scripts/qa/token-audit.mjs` and consolidate stray values.
+
+**Deliverable:** A written design-system specification (`.webcraft/design-system.md`) and implemented tokens/components.
 
 ## PHASE 4 — Typography research and implementation
 
@@ -409,6 +414,10 @@ Determine:
 - Empty, loading, success, and error states for interactive features.
 
 For a single-page site, build a purposeful sequence of sections. For a multi-page site, make each page serve a clear role.
+
+**Model the site before building it.** For multi-page projects, write a page inventory (`.webcraft/site-map.md`): for each page its route, objective, visitor intent, primary CTA and destination, required sections and data, shared components, SEO title and meta description, and internal links. Share layout and tokens across pages, but give each page the composition its purpose needs; do not force every page into the same hero-plus-cards structure.
+
+**Route integrity.** Every navigation and footer item points to an existing route or a real external destination. Every required page is reachable. Active navigation state and breadcrumbs (if used) are correct. No `href="#"` or `javascript:` placeholder links ship. No route is duplicated by accident. Where the stack supports it, unknown routes get a deliberate not-found page. Verify with `node scripts/qa/check-links.mjs`.
 
 Use familiar interaction patterns unless the brand or experience benefits from something different. Do not sacrifice usability for novelty.
 
