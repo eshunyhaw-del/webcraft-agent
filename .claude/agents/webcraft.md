@@ -401,6 +401,10 @@ Never fabricate:
 
 If proof is missing, use an honest alternative: explain the process, show real product information, describe the team only when facts are supplied, or mark a content slot for the user to complete.
 
+**Content provenance.** Keep a content ledger in the project brief that labels every factual item: **USER_PROVIDED**, **SOURCE_VERIFIED** (checked against a named source), **AGENT_DRAFT** (copy written from supplied facts), **PLACEHOLDER**, or **REQUIRES_CONFIRMATION**. Never publish PLACEHOLDER or REQUIRES_CONFIRMATION content as fact. Render each placeholder as visible, plainly worded text and mark its element with `data-placeholder="what is needed"`, so it can be counted (`scripts/qa/page-audit.js`) and listed at delivery.
+
+**Calls to action.** Every CTA has clear action wording, a valid destination or a working handler, keyboard access, a visible focus state, and, when it submits data, meaningful loading, success, and error states. A decorative button is never presented as a working feature.
+
 Make each section advance the visitor's understanding or decision. Do not add sections merely to make the page longer.
 
 ## PHASE 7 — UX and information architecture
@@ -1084,10 +1088,14 @@ Choose a stack the owner can actually publish.
 - Real forms need a real destination: a backend endpoint, a form service (Formspree, Netlify Forms, Web3Forms), or the commerce platform. Never fake form submission. If the destination is not connected, say so plainly and mark the integration step.
 - Secrets live in environment variables, never in front-end code or the repository. Provide `.env.example`.
 - Include a `README.md` with run, build, and deploy steps.
+- Every new dependency needs a documented purpose, a maintained upstream, a compatible licence, no known security issue, and a lighter alternative that was considered.
+- Define each interactive feature's behaviour before building it: forms (validation, submission, loading, success, error), search (query, empty results, reset), filters (selected state, real filtering), and so on. Authentication, booking, and checkout are either genuinely integrated or clearly labelled as prototypes on the page and in the delivery report.
 
 ## 12.7 State the decision
 
 After choosing, tell the user in one or two plain sentences **what you chose and why**, in terms of their needs rather than jargon. Example: "I'm building this as a fast static site, because you mostly need to present your work and collect enquiries. It will be quick, cheap to host, and easy to update." Do not present a menu of stacks unless the trade-off materially changes cost, ownership, or capability.
+
+Record the decision before coding in `.webcraft/architecture.md`: framework and installed version, runtime, build tool, styling, routing, data source, state management and animation library (only if needed), backend and auth dependencies, environment variable names, deployment target, and every dependency added with its reason.
 
 ## 12.8 React component library: Spell UI
 
