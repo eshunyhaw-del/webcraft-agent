@@ -60,6 +60,20 @@
   if (!focusRules && outlineRemoved) blocking.push("Focus outline is removed on links or buttons and no :focus/:focus-visible style replaces it.");
   else if (!focusRules) warnings.push("No custom :focus or :focus-visible styles; the browser default outline is relied on. Check it is visible on every background by tabbing.");
 
+  // Accent-stripe borders: a thick coloured border on one edge of a box (owner's rule, master prompt Section 3.4)
+  const stripes = [];
+  for (const el of document.body.querySelectorAll("div, article, section, aside, li, blockquote, figure, p, a, details")) {
+    const cs = getComputedStyle(el);
+    const w = ["Top", "Right", "Bottom", "Left"].map((s) => (cs["border" + s + "Style"] === "none" ? 0 : parseFloat(cs["border" + s + "Width"]) || 0));
+    const thick = w.map((x) => x >= 3);
+    const sides = thick.filter(Boolean).length;
+    const others = w.filter((x) => x > 0).length;
+    const padded = parseFloat(cs.paddingTop) + parseFloat(cs.paddingLeft) + parseFloat(cs.paddingRight) > 0 || cs.backgroundColor !== "rgba(0, 0, 0, 0)" || parseFloat(cs.borderTopLeftRadius) > 0;
+    if (sides === 1 && others === 1 && padded && visible(el)) stripes.push(label(el) + " (" + ["top", "right", "bottom", "left"][thick.indexOf(true)] + ")");
+  }
+  info.accentStripes = stripes.length;
+  if (stripes.length) warnings.push("Accent-stripe borders (a thick border on one edge of a box) on " + stripes.length + " element(s); use space, background tone or a 1px neutral divider instead: " + [...new Set(stripes)].slice(0, 6).join(", "));
+
   // Navigation: one page per menu item, in the same tab (owner's rule, master prompt Section 3.4)
   for (const nav of document.querySelectorAll("nav")) {
     const hrefs = [...nav.querySelectorAll("a[href]")].map((a) => a.getAttribute("href").trim());

@@ -29,6 +29,13 @@ test("every tool entry point repeats the new rules", () => {
   }
 });
 
+test("accent-stripe borders are a banned pattern everywhere the rules appear", () => {
+  const rules = mp.slice(mp.indexOf("## 3.4"), mp.indexOf("## 3.5"));
+  assert.match(rules, /No accent-stripe borders/);
+  for (const f of ["CLAUDE.md", "GEMINI.md", "AGENTS.md", "agent/WEBCRAFT_LITE.md"]) assert.match(read(f), /accent-stripe borders/i, f);
+  assert.match(read("scripts/qa/page-audit.js"), /Accent-stripe borders/);
+});
+
 test("the section-pattern library exists and states the rhythm rules", () => {
   const t = read("docs/recipes/section-patterns.md");
   assert.match(t, /Never place two sections with the same pattern next to each other/);
