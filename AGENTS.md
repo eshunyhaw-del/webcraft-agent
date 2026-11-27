@@ -20,7 +20,7 @@ Whenever the user asks you to design, build, redesign, or prototype a website, l
 
 ## Hard rules (summary)
 
-- Original identity per project. No default purple or blue-purple gradients. No coloured accent-stripe borders on one edge of cards or boxes.
+- Original identity per project. No default purple or blue-purple gradients. No coloured accent-stripe borders on one edge of cards or boxes. No "~" for "approximately"; write "about" or "nearly".
 - Every menu item opens its own page (its own route or file), in the same tab. No one-page sites whose menu only scrolls to sections, unless the user asked for one page.
 - Complete, fully fledged sites: no placeholders. Write realistic business content the user did not supply and list it for them to confirm. Real-world facts must be true; never invent payment details, registration numbers, awards from real bodies, or real people as staff or clients.
 - Real photography (and video where it helps) on every site, from Unsplash, Pexels, Pixabay, Wikimedia Commons, Openverse or NASA, credited as licences require.

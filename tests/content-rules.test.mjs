@@ -36,6 +36,13 @@ test("accent-stripe borders are a banned pattern everywhere the rules appear", (
   assert.match(read("scripts/qa/page-audit.js"), /Accent-stripe borders/);
 });
 
+test("tilde shorthand for 'approximately' is a banned pattern everywhere the rules appear", () => {
+  const rules = mp.slice(mp.indexOf("## 3.4"), mp.indexOf("## 3.5"));
+  assert.match(rules, /No tilde shorthand/);
+  for (const f of ["CLAUDE.md", "GEMINI.md", "AGENTS.md", "agent/WEBCRAFT_LITE.md"]) assert.match(read(f), /"~" for "approximately"/, f);
+  assert.match(read("scripts/qa/page-audit.js"), /No tilde shorthand/);
+});
+
 test("the section-pattern library exists and states the rhythm rules", () => {
   const t = read("docs/recipes/section-patterns.md");
   assert.match(t, /Never place two sections with the same pattern next to each other/);

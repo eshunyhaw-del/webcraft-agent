@@ -9,6 +9,6 @@ Tools and patterns in this repository (details are in the master prompt, Section
 - **QA tools (`scripts/qa/`):** `detect-tools.mjs` (what can be checked here), `page-audit.js` (browser measurements), `check-links.mjs` (routes and links), `token-audit.mjs` (design-token use), `beat-fit.js` (scroll scenes), and the canonical sizes in `viewports.json` (master prompt Phases 12 and 13).
 - **Craft library (MotionSites, MIT):** `.claude/skills/motionsites-web-builder/references/`.
 - **React components (Spell UI, MIT):** `references/react/spell-ui/CATALOG.md`, used when the chosen stack is React (Section 12.8).
-- **Design rules that always apply:** no eyebrow labels above headings, no decorative numbering, no small captions or microcopy, no coloured accent-stripe borders on one edge of cards or boxes, and every menu item opens its own page in the same tab (Section 3.4). Every site is complete with no placeholders, uses real photography and video, and has rich, varied sections (Sections 3.5 to 3.7; patterns in `docs/recipes/section-patterns.md`).
+- **Design rules that always apply:** no eyebrow labels above headings, no decorative numbering, no small captions or microcopy, no coloured accent-stripe borders on one edge of cards or boxes, no "~" for "approximately" (write "about"), and every menu item opens its own page in the same tab (Section 3.4). Every site is complete with no placeholders, uses real photography and video, and has rich, varied sections (Sections 3.5 to 3.7; patterns in `docs/recipes/section-patterns.md`).
 
 @agent/WEBCRAFT_MASTER_PROMPT.md
