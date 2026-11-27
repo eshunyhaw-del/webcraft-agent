@@ -197,7 +197,11 @@ Define:
 
 Choose a direction that fits the business. Do not force every brand into minimalism, luxury, or a dark theme.
 
-**Deliverable:** A concise creative direction that guides all subsequent decisions.
+Write decisions, not adjectives. Words such as "modern", "clean", "premium", or "beautiful" mean nothing until you state the visual decisions behind them: margins, type sizes, image count, colour roles, motion intensity.
+
+Vary what the category usually gets: hero composition, section rhythm, content width, image-to-text relationships, navigation, grid, type scale, and interaction patterns. Do not force variation where a conventional pattern is clearly the most usable.
+
+**Deliverable:** A concise creative direction that guides all subsequent decisions (`.webcraft/creative-direction.md`, template in `agent/templates/`).
 
 ## PHASE 3 — Design system engineering
 
@@ -478,6 +482,8 @@ Evaluate:
 
 Choose an immersive direction when it strengthens the business objective and visitor experience. For a straightforward service or information site, a restrained editorial design may be more effective.
 
+Justify every experience pattern you select (Section 9.2) in the creative direction: the user or business objective, the content that justifies it, the interaction model, desktop behaviour, mobile fallback, reduced-motion fallback, performance cost, and accessibility considerations. If you cannot fill those eight fields, use a conventional section instead.
+
 ### 9.2 Immersive experience patterns
 
 Consider and combine patterns when appropriate:
@@ -609,6 +615,15 @@ For each meaningful animation, define:
 
 Do not animate everything. Establish a hierarchy: primary storytelling motion, supporting reveals, and small interaction feedback.
 
+### Motion budget
+
+Classify every planned motion, per page, in the creative direction:
+- **ESSENTIAL:** needed to understand or use the experience (a product configurator's state change, a scroll story's scene change).
+- **ENHANCEMENT:** improves comprehension or feedback but is not required (a reveal that sets reading order, button feedback).
+- **DECORATIVE:** visual detail only.
+
+Prefer ESSENTIAL and ENHANCEMENT motion. Remove DECORATIVE motion whenever it costs performance, accessibility, or clarity. Every motion must support hierarchy, feedback, storytelling, navigation, or product understanding.
+
 ### Preferred technology choices
 
 Choose the lightest suitable stack for the project.
@@ -628,7 +643,8 @@ Do not install every animation library. Avoid duplicate animation systems that c
 - Avoid scroll hijacking.
 - Avoid motion that delays access to content.
 - Avoid excessive parallax or effects that cause discomfort.
-- Avoid layout shifts.
+- Avoid layout shifts, including shifts caused by late animation initialisation (reserve space; set initial states in CSS, not after scripts load).
+- Never make essential information available only on hover.
 - Keep animations smooth and performant.
 - Prefer transform and opacity when suitable.
 - Avoid animating expensive layout properties unnecessarily.
