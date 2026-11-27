@@ -15,8 +15,9 @@ This document is long on purpose: it is a reference. For a small or vague brief 
 2. Choose the simplest stack that fully works (Section 12) and tell the user why in one or two plain sentences.
 3. Decide a distinct visual identity inside the guardrails (Section 3), and write specific, honest copy with no invented facts. Go straight to the point: **no eyebrow labels above headings, no decorative numbering, no small captions or microcopy** (Section 3.4).
 4. If real photographs or video should carry the design, source them legitimately and check every clip (Section 11.2). If a journey through places, scales, or stages fits the subject, start from `examples/scroll-journey-starter/` and `docs/recipes/scroll-journey.md` (Section 11.3).
-5. Build it, run it, check desktop and phone sizes, and fix the biggest problems first (Phase 13).
+5. Build it, run it, check desktop and phone sizes, and fix the biggest problems first (Phase 13). Report each check as PASS, FAIL, or NOT RUN.
 6. Tell the user how to open it, edit it, and publish it, and list anything placeholder, unverified, or untested.
+7. Keep a compact project record in `.webcraft/` (one `project.md`, one `qa-report.md`, `state.json`) so the work can be reviewed and resumed (Section 4.0).
 
 ---
 
@@ -141,6 +142,15 @@ These rules override every reference, sample prompt, recipe, example, and the bu
 # 4. THE AGENTIC WORKFLOW
 
 Follow this sequence for every project. Do not jump directly from a short brief to generic code.
+
+## 4.0 Pipeline, gates, and the project record
+
+The phases below are the craft. **`docs/generation-pipeline.md`** is the order and the gates: named states from RECEIVED to DELIVERY, failure states (NEEDS_CLARIFICATION, BLOCKED_BY_MISSING_INPUT, TOOL_UNAVAILABLE, VALIDATION_FAILED, OWNER_REVIEW_REQUIRED), the artifact each stage must produce, its completion criteria, the ten-step validation sequence, and how to resume. Read it for any project with files; follow it in short form for small briefs.
+
+- A stage is complete when its artifact exists and meets its criteria, not when you say so. Validation and QA are complete only with tool evidence; a check without a tool is NOT RUN.
+- A failed check returns the work to the stage that caused it.
+- Write the artifacts into `.webcraft/` at the project root, from the templates in `agent/templates/` (one file per stage for full projects; `project.md` plus `qa-report.md` for small ones). Update `.webcraft/state.json` after each stage. Tell the user the folder exists and is safe to delete. Never put secrets in it.
+- In chat-only tools, give the same headings as short sections in the reply and mark local validation and visual QA as NOT RUN.
 
 ## PHASE 1 — Brief interpretation and business understanding
 
@@ -776,6 +786,8 @@ For a normal website-generation task, produce the following as appropriate to th
 8. **Implemented website** — complete functioning source code.
 9. **QA report** — what was tested, what was corrected, and anything still requiring attention.
 
+Items 1 to 7 and 9 live in the `.webcraft/` record (Section 4.0): `project-brief.md`, `creative-direction.md`, `site-map.md`, `design-system.md`, `page-specs/`, `architecture.md`, `validation-report.md`, `visual-qa-report.md`, and `delivery-report.md`. The asset manifest stays with the assets (`assets/manifest.json`).
+
 Do not produce long reports when the user simply needs the finished website. Keep explanations concise, but preserve the actual engineering work and project documentation.
 
 ---
@@ -925,7 +937,7 @@ This repository bundles the MIT-licensed parts of the free **MotionSites Web Bui
 - Browser panes and headless tabs throttle `requestAnimationFrame` when not in front, and screenshots can lag one step behind. Bring the tab to the front, wait, and take a second capture before judging a frame. Prefer measuring (element rectangles, computed styles, pixel counts) over eyeballing.
 - Test at the canonical viewports (Phase 12, `scripts/qa/viewports.json`). The harshest are the small phone (360 by 640), the standard phone (390 by 844), and the short laptop (1366 by 700). For pinned or scroll-driven scenes, force each scene visible and check that its content fits between the fixed UI.
 - Verify interactions numerically where possible, for example by measuring canvas pixels before and during a cursor push.
-- Stop any preview servers you start, and never leave files in the project that the user did not ask for.
+- Stop any preview servers you start, and never leave files in the project that the user did not ask for, apart from the `.webcraft/` record (Section 4.0) and the asset manifest.
 
 **Use the bundled media tool** (`scripts/media/webcraft_media.py`; needs Python 3.9+, ffmpeg, and Pillow):
 - `search "query" --source nasa|commons --type image|video` lists matches. **nasa** is NASA's library (space, Earth, aircraft). **commons** is Wikimedia Commons (nature, ocean, cities, people, history) and prints each file's licence and creator.

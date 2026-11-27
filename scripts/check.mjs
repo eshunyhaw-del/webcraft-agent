@@ -106,9 +106,10 @@ check("Unit tests pass", () => {
   const testFiles = readdirSync(join(root, "tests")).filter((f) => f.endsWith(".test.mjs")).map((f) => join(root, "tests", f));
   if (!testFiles.length) return "no test files";
   const r = spawnSync(process.execPath, ["--test", ...testFiles], { encoding: "utf8", cwd: root });
-  const summary = (r.stdout.match(/^# (pass|fail) \d+$/gm) || []).join(", ");
+  // The TAP reporter prints "# pass 12"; the spec reporter prints "ℹ pass 12".
+  const summary = (r.stdout.match(/^\S* ?(?:pass|fail) \d+$/gm) || []).map((l) => l.replace(/^\S* /, "")).join(", ");
   if (r.status !== 0) throw new Error(summary + "\n" + r.stdout.split("\n").filter((l) => /not ok|Error|expected|actual/.test(l)).slice(0, 12).join("\n"));
-  return summary.replace(/# /g, "");
+  return summary;
 });
 
 let failed = 0;

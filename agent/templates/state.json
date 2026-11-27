@@ -1,0 +1,12 @@
+{
+  "pipelineVersion": "1.0",
+  "mode": "WEBSITE",
+  "record": "full",
+  "state": "DISCOVERY",
+  "completed": [
+    { "state": "RECEIVED", "artifact": null, "evidence": "Brief received in chat", "at": "YYYY-MM-DD" }
+  ],
+  "blockers": [],
+  "placeholders": [],
+  "notRun": []
+}

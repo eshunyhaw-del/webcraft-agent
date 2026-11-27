@@ -1,0 +1,29 @@
+{
+  "description": "WEBCraft generation pipeline: states, allowed transitions and the artifact each stage must produce. docs/generation-pipeline.md explains it; tests check the two agree.",
+  "version": "1.0",
+  "stages": [
+    { "state": "RECEIVED", "artifact": null, "next": ["DISCOVERY"] },
+    { "state": "DISCOVERY", "artifact": "project-brief.md", "next": ["REQUIREMENTS_READY", "NEEDS_CLARIFICATION", "BLOCKED_BY_MISSING_INPUT"] },
+    { "state": "REQUIREMENTS_READY", "artifact": "project-brief.md", "next": ["CREATIVE_DIRECTION"] },
+    { "state": "CREATIVE_DIRECTION", "artifact": "creative-direction.md", "next": ["UX_ARCHITECTURE", "OWNER_REVIEW_REQUIRED"] },
+    { "state": "UX_ARCHITECTURE", "artifact": "site-map.md", "next": ["DESIGN_SYSTEM"] },
+    { "state": "DESIGN_SYSTEM", "artifact": "design-system.md", "next": ["PAGE_SPECIFICATION"] },
+    { "state": "PAGE_SPECIFICATION", "artifact": "page-specs/", "next": ["IMPLEMENTATION"] },
+    { "state": "IMPLEMENTATION", "artifact": "architecture.md", "next": ["LOCAL_VALIDATION", "BLOCKED_BY_MISSING_INPUT", "OWNER_REVIEW_REQUIRED"] },
+    { "state": "LOCAL_VALIDATION", "artifact": "validation-report.md", "next": ["VISUAL_QA", "VALIDATION_FAILED", "TOOL_UNAVAILABLE"] },
+    { "state": "VISUAL_QA", "artifact": "visual-qa-report.md", "next": ["REFINEMENT", "DELIVERY", "VALIDATION_FAILED", "TOOL_UNAVAILABLE"] },
+    { "state": "REFINEMENT", "artifact": "visual-qa-report.md", "next": ["LOCAL_VALIDATION", "VISUAL_QA"] },
+    { "state": "DELIVERY", "artifact": "delivery-report.md", "next": [] }
+  ],
+  "interruptions": [
+    { "state": "NEEDS_CLARIFICATION", "returnsTo": ["DISCOVERY"] },
+    { "state": "BLOCKED_BY_MISSING_INPUT", "returnsTo": ["DISCOVERY", "IMPLEMENTATION"] },
+    { "state": "TOOL_UNAVAILABLE", "returnsTo": ["VISUAL_QA", "DELIVERY"] },
+    { "state": "VALIDATION_FAILED", "returnsTo": ["IMPLEMENTATION", "DESIGN_SYSTEM", "PAGE_SPECIFICATION", "UX_ARCHITECTURE"] },
+    { "state": "OWNER_REVIEW_REQUIRED", "returnsTo": ["CREATIVE_DIRECTION", "IMPLEMENTATION", "DELIVERY"] }
+  ],
+  "checkStatus": ["PASS", "FAIL", "NOT RUN"],
+  "provenance": ["USER_PROVIDED", "SOURCE_VERIFIED", "AGENT_DRAFT", "PLACEHOLDER", "REQUIRES_CONFIRMATION"],
+  "motionClass": ["ESSENTIAL", "ENHANCEMENT", "DECORATIVE"],
+  "modes": ["WEBSITE", "TEMPLATE"]
+}
