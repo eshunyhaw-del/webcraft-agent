@@ -29,7 +29,7 @@ A plan item may be {"source": "commons", "title": "File:Example.webm", ...}, or 
 Why "scan" matters: source clips often open on black, have captions burned in, or fade to a credits slide.
 Always look at a frame sheet before choosing a window.
 """
-import argparse, io, json, os, re, shutil, subprocess, sys, tempfile, urllib.parse, urllib.request
+import argparse, html, io, json, os, re, shutil, subprocess, sys, tempfile, urllib.parse, urllib.request
 
 API = "https://images-api.nasa.gov"
 # Identify honestly (Wikimedia and NASA ask automated clients to). Deliberately generic: no personal details.
@@ -107,6 +107,9 @@ def commons_api(params):
 def commons_search(q, kind, n):
     ft = {"image": "bitmap", "video": "video"}[kind]
     d = commons_api({"action": "query", "list": "search", "srsearch": "filetype:%s %s" % (ft, q), "srnamespace": 6, "srlimit": n})
+    if "query" not in d:
+        err = (d.get("error") or {}).get("info") or "unexpected reply"
+        sys.exit("Wikimedia Commons search failed: %s. Wait a moment and try again, or rephrase the query." % err)
     return [x["title"] for x in d["query"]["search"]]
 
 
@@ -121,7 +124,7 @@ def commons_info(title, width=None):
     ii = page["imageinfo"][0]
     em = ii.get("extmetadata", {})
     def strip(k):
-        v = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", "", str((em.get(k) or {}).get("value", "")))).strip()
+        v = html.unescape(re.sub(r"\s+", " ", re.sub(r"<[^>]+>", "", str((em.get(k) or {}).get("value", ""))))).strip()
         return "" if v.lower() in ("null", "none", "unknown") else v
     return {"url": ii.get("thumburl") or ii["url"], "orig": ii["url"], "title": title, "license": strip("LicenseShortName"),
             "creator": strip("Artist"), "desc": strip("ImageDescription")[:200], "page": ii.get("descriptionurl"),
