@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "WEBCraft benchmark run record",
+  "description": "One file per run in benchmarks/runs/. Created by scripts/bench/new-run.mjs, compared by scripts/bench/report.mjs.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "runId", "date", "brief", "promptVersion", "commit", "model", "tool", "stack", "build", "qa", "screenshots", "scores", "evidence", "criticalDefects", "defects", "notes"],
+  "properties": {
+    "schemaVersion": { "const": "1.0" },
+    "runId": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}-[a-z0-9-]+-\\d+$" },
+    "date": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+    "brief": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
+    "promptVersion": { "type": "string", "description": "git blob hash of agent/WEBCRAFT_MASTER_PROMPT.md at run time." },
+    "commit": { "type": "string" },
+    "model": { "type": "string", "description": "Model name if known, otherwise 'unknown'." },
+    "tool": { "type": "string", "description": "AI tool and environment, for example 'Claude Code desktop, Windows'." },
+    "stack": { "type": "string" },
+    "build": { "$ref": "#/$defs/check" },
+    "qa": { "$ref": "#/$defs/check" },
+    "screenshots": { "type": "array", "items": { "type": "string" } },
+    "scores": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["briefAdherence", "visualDistinctiveness", "typography", "layout", "uxClarity", "conversionClarity", "functionalCompleteness", "responsive", "accessibility", "performance", "maintainability", "factualIntegrity"],
+      "properties": {
+        "briefAdherence": { "$ref": "#/$defs/score" },
+        "visualDistinctiveness": { "$ref": "#/$defs/score" },
+        "typography": { "$ref": "#/$defs/score" },
+        "layout": { "$ref": "#/$defs/score" },
+        "uxClarity": { "$ref": "#/$defs/score" },
+        "conversionClarity": { "$ref": "#/$defs/score" },
+        "functionalCompleteness": { "$ref": "#/$defs/score" },
+        "responsive": { "$ref": "#/$defs/score" },
+        "accessibility": { "$ref": "#/$defs/score" },
+        "performance": { "$ref": "#/$defs/score" },
+        "maintainability": { "$ref": "#/$defs/score" },
+        "factualIntegrity": { "$ref": "#/$defs/score" }
+      }
+    },
+    "evidence": { "type": "object", "description": "Dimension name to the evidence for its score." },
+    "criticalDefects": { "type": "array", "items": { "type": "string" } },
+    "defects": { "type": "array", "items": { "type": "string" } },
+    "notes": { "type": "string" }
+  },
+  "$defs": {
+    "score": { "enum": [1, 2, 3, 4, 5, null] },
+    "check": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "evidence"],
+      "properties": {
+        "status": { "enum": ["PASS", "FAIL", "NOT RUN", "NOT APPLICABLE"] },
+        "evidence": { "type": "string" }
+      }
+    }
+  }
+}
