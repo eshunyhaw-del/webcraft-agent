@@ -66,3 +66,11 @@ test("media tool refuses video from image-only sources with a pointer to video s
   assert.equal(r.status, 1);
   assert.match(r.stderr + r.stdout, /pexels, pixabay or commons/);
 });
+
+test("specific requests win over the standing rules, everywhere the rules appear", () => {
+  assert.match(mp, /## 6\.0 Specific requests win/);
+  assert.match(mp, /Use the user's text verbatim/);
+  assert.match(mp, /Sites about a real person/);
+  assert.match(mp, /\*\*Justified text\*\*/);
+  for (const f of ["CLAUDE.md", "GEMINI.md", "AGENTS.md", "agent/WEBCRAFT_LITE.md"]) assert.match(read(f), /Specific requests win/, f);
+});

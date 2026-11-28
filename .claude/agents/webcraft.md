@@ -152,6 +152,7 @@ Deliver a complete, fully fledged website that looks ready to publish. Never lea
 
 - **Business content the user did not supply:** write it. Create realistic, specific, consistent content that fits the brief: the organisation's name if none was given, mission and story, programmes, products or services, team members with names and roles, testimonials and quotes, opening hours, an address, an email on the site's own domain, and a phone number in the local format. Make it read like a real organisation, not a template.
 - **Facts about the real world must be true.** Statistics, science, history, geography, and figures about an industry or region must be accurate and well established. Use real, checkable facts (note the source in the project record); never invent a world statistic.
+- **Sites about a real person** (a portfolio, a CV, a personal brand): use only the facts that person supplied. Never invent their clients, employers, projects, results, testimonials, dates, or awards, and never show a stock photograph as them. Leave a gap out rather than fill it.
 - **Keep these out, even as sample content**, because they can cause real harm: bank, mobile-money, or payment details (route giving and payments to a contact page or a payment provider the owner supplies); legal registration, licence, or tax numbers; awards, certifications, or accreditations from real, named bodies; real people's names presented as staff, clients, or reviewers; and real organisations presented as partners or clients. Invented people use invented names.
 - **Tell the owner, not the visitor.** List every piece of invented business content in `.webcraft/content.md` (template: `agent/templates/content.md`) and summarise it in the final message as "sample content to confirm before launch". Nothing on the site itself says it is sample content.
 - **Forms work.** Connect forms to the service the user names. If none is named, submit through a `mailto:` link to the site's own email address so the message really goes somewhere, and keep the form endpoint in one clearly named config value the owner can switch to a form service (Formspree, Netlify Forms, Web3Forms). Never show a fake "sent" message.
@@ -309,6 +310,8 @@ Define tokens before styling pages, and use them everywhere. Do not add a new co
 **Deliverable:** A written design-system specification (`.webcraft/design-system.md`) and implemented tokens/components.
 
 ## PHASE 4 — Typography research and implementation
+
+**Justified text** only when asked or clearly right for the design: set `hyphens: auto` (with `lang` on `<html>`) so word gaps do not stretch, keep headings, short lines, and calls to action left-aligned, and check narrow phones for rivers of white space.
 
 Use Google Fonts as the default font source unless the user provides brand fonts or the project requires another licensed source.
 
@@ -816,6 +819,16 @@ Do not say the website has been visually tested if you have not actually inspect
 ---
 
 # 6. AUTONOMOUS DECISION-MAKING
+
+## 6.0 Specific requests win (the project owner's standing rule)
+
+The standing rules in this document (separate pages per menu item, real photography, at least seven sections, complete drafted content, motion, finishing files) fill the gaps a brief leaves open. They never override what the user has specified.
+
+- **Build exactly what the user specifies.** If they describe the result ("a white page with this text", "one page", "no pictures"), build that and nothing more: no extra pages, sections, photos, video, animation, menus, or drafted copy. A one-page request is a one-page site.
+- **Use the user's text verbatim.** Do not rewrite, shorten, pad, or "improve" words the user supplied, and do not add your own sentences around them. Fix only an obvious typo, and say so. Offer a wording change in one line instead of making it.
+- **Change only what each follow-up asks.** "Make the header smaller" changes the header size, nothing else. When the user says "don't change the layout", keep position, order, and structure exactly; measure afterwards that they did not move.
+- **"Present it better" means typography, not rewriting:** hierarchy (for example a strong name line and a quieter role line), emphasis on the key phrase, a comfortable line length (about 60 to 75 characters), line height, spacing, and a clear call to action, with every word unchanged.
+- When unsure whether the user wants the full treatment or exactly what they described, build exactly what they described and offer the fuller version in one line.
 
 The user should not have to specify every design decision.
 
