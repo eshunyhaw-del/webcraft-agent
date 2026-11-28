@@ -19,6 +19,12 @@
 .motion-on [data-animate="mask"] { opacity: 1; clip-path: inset(0 0 100% 0); }
 .motion-on [data-animate].is-in { opacity: 1; transform: none; clip-path: inset(0 0 0 0); }
 
+/* Elements waiting to slide in must never widen the page. On phones, slides become a rise. */
+.motion-on body { overflow-x: clip; }
+@media (max-width: 47.99rem) {
+  .motion-on [data-animate="slide-left"], .motion-on [data-animate="slide-right"] { transform: translateY(var(--motion-distance)); }
+}
+
 /* Word-by-word headline */
 .motion-on [data-split] .motion-word {
   display: inline-block;
